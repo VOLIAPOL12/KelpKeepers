@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
   return (
-    <div className="bg-cyan-700 text-white">
+    <div className="bg-white text-black">
       <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -18,26 +19,18 @@ function Navbar() {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost normal-case text-xl">
-            <img src="/src/assets/img/logo.png" alt="KelpKeepers Logo" className="w-8 h-8 mr-2" />
+            <img src="/src/assets/logo.png" alt="KelpKeepers Logo" className="w-8 h-8 mr-2" />
             KelpKeepers
           </Link>
         </div>
         
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/kelp">Kelp</Link></li>
             <li><Link to="/sea-urchins">Sea Urchins</Link></li>
           </ul>
-        </div>
-        
-        <div className="navbar-end">
           <Link to="/login" className="btn btn-ghost">Login</Link>
-          <div className="avatar placeholder ml-2">
-            <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-              <span>J</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
