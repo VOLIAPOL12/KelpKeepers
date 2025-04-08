@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { LucideAArrowDown } from 'lucide-react';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function BouncingArrow() {
   useEffect(() => {
@@ -32,7 +33,7 @@ function BouncingArrow() {
         animation: 'bounce 2s infinite'
       }}
     >
-      <LucideAArrowDown />
+      <ArrowForwardIcon />
     </IconButton>
   );
 }
