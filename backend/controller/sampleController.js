@@ -1,0 +1,1 @@
+export const sampleController = async (req, res) => {};
