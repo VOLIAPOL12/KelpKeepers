@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import HomePage from './pages/HomePage'
+import { Routes, Route } from "react-router-dom";
+import UnauthenticatedPageWrapper from "./containers/UnauthenticatedPageWrapper"
 
 function App() {
-  return(
-    <div className='text-red-500'>WHAH</div>
-  )
+    return(
+        <Routes>
+            <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} /> 
+        </Routes>
+    )
 }
 
 export default App
