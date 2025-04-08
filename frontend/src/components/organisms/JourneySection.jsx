@@ -208,7 +208,6 @@ function JourneySection({ showText1, showText2, progressValue,
           zIndex: 1
         }}>
           <Box sx={{
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
             borderRadius: 2,
             p: 4,
             mb: 4,
@@ -271,76 +270,6 @@ function JourneySection({ showText1, showText2, progressValue,
               <ProgressBar value={progressValue} />
             </Box>
         </Container>
-      )}
-
-      {visiblePage === 2 && (
-        <Fade in={!fadingOut} timeout={1000}>
-          <Container maxWidth="md" sx={{ 
-            height: '100%', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            justifyContent: 'center', 
-            alignItems: 'center',
-            textAlign: 'center',
-            position: 'relative',
-            zIndex: 1
-          }}>
-            <Box sx={{
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              borderRadius: 2,
-              p: 4,
-              mb: 4,
-              maxWidth: '90%'
-            }}>
-              <FadeTypography 
-                show={showDangerText1}
-                timeout={1000}
-                variant="h4" 
-                component="div" 
-                sx={{ 
-                  color: 'white', 
-                  maxWidth: 800,
-                  mb: 4,
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                  fontWeight: 500
-                }}
-              >
-                Unfortunately these underwater jungles are vanishing. As ocean temperatures rise, a silent invasion is taking place. Sea urchins, once balanced by nature, are now exploding in number tearing apart these ecosystems.
-              </FadeTypography>
-            </Box>
-
-            <FadeTypography 
-              show={showDangerText2}
-              timeout={1000}
-              variant="h5" 
-              component="p" 
-              sx={{ 
-                color: 'white', 
-                mb: 6,
-                textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
-                fontWeight: 700,
-                fontSize: '1.8rem'
-              }}
-            >
-              The damage is swift, and the consequences are enormous!
-            </FadeTypography>
-
-            {/* Scroll indicator at bottom */}
-            <Box sx={{ 
-              position: 'absolute', 
-              bottom: 40, 
-              left: 0, 
-              right: 0, 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center' 
-            }}>
-              <Box onClick={handleArrowClick} sx={{ cursor: 'pointer' }}>
-                <BouncingArrow />
-              </Box>
-            </Box>
-          </Container>
-        </Fade>
       )}
 
       {visiblePage === 3 && (
