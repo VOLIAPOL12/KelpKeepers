@@ -5,7 +5,7 @@ import UnauthenticatedPageWrapper from "./containers/UnauthenticatedPageWrapper"
 function App() {
     return(
         <Routes>
-            <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} /> 
+            <Route path="/" element={<HomePage />} /> 
         </Routes>
     )
 }

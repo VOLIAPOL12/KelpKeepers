@@ -3,8 +3,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
-import sampleRoutes from "./routes/sampleRoutes.js"
 import path from "path";
+
+import clothingRoutes from "./routes/clothingRoutes.js";
+
 
 dotenv.config();
 
@@ -17,10 +19,11 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
-app.get('/api/sample', sampleRoutes);
+
+app.use("/api/clothing", clothingRoutes);
 
 if(process.env.NODE_ENV==="production") {
-    app.use(express.static(path.join(__dirname, "/frontend/dist")))
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
     app.get("*", (req, res) => {
         res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
