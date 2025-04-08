@@ -14,7 +14,6 @@ import {
   } from '@mui/material';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import InfoDetailView from './InfoDetailView';
 import CloseButton from '../atoms/CloseButton';
 
 const GrowFromOrigin = React.forwardRef(function GrowFromOrigin(props, ref) {
