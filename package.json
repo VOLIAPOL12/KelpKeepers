@@ -1,0 +1,34 @@
+{
+  "name": "kelpkeepers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "nodemon backend/server.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VOLIAPOL12/KelpKeepers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VOLIAPOL12/KelpKeepers/issues"
+  },
+  "homepage": "https://github.com/VOLIAPOL12/KelpKeepers#readme",
+  "dependencies": {
+    "@arcjet/node": "^1.0.0-beta.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.12",
+    "nodemon": "^3.1.9"
+  }
+}
