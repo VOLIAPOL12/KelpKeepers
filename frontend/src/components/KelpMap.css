@@ -1,0 +1,84 @@
+/* frontend/src/components/KelpMap.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f1eeee;
+}
+
+.kelp-map-container {
+    /* width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fefefe; */
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(15, 14, 14, 0.8); 
+    border-radius: 8px;
+}
+
+
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    color: white;
+}
+
+
+.controls select {
+    background-color: #333;  
+    color: white;            
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.controls select option {
+    background-color: #333; 
+    color: white;
+}
+
+.kelp-toggle-button {
+    position: absolute;
+    bottom: 20%;
+    right: 20%;
+    z-index: 1000;
+    padding: 8px 12px;
+    background-color: #668b8b;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.abalone-marker {
+    filter: hue-rotate(60deg) brightness(1.2) saturate(2.5);
+}
+
+.seadragon-marker {
+    filter: hue-rotate(120deg) brightness(1.2) saturate(2.5);
+}
+
+.seastar-marker {
+    filter: hue-rotate(240deg) brightness(1.2) saturate(2.5);
+}
+
+.handfish-marker {
+    filter: hue-rotate(300deg) brightness(1.2) saturate(2.5);
+}
+
+.kelp-marker {
+    filter: hue-rotate(90deg); 
+}
+
+.urchin-marker {
+    filter: hue-rotate(210deg); 
+}
+
+
