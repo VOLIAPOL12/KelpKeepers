@@ -1,9 +1,24 @@
-// ProcessOfDestruction.jsx
 import React from 'react';
 import { Box, Typography, CardMedia } from '@mui/material';
 import Slider from 'react-slick';
 
+// 你可以在组件顶部直接引入所有图片
+import img1 from '../assets/images/1.jpeg';
+import img2 from '../assets/images/2.jpeg';
+import img3 from '../assets/images/3.jpeg';
+import img4 from '../assets/images/4.jpeg';
+import img5 from '../assets/images/5.jpeg';
+import img6 from '../assets/images/6.jpeg';
+import img7 from '../assets/images/7.jpeg';
+import img8 from '../assets/images/8.jpeg';
+import img9 from '../assets/images/9.jpeg';
+import img10 from '../assets/images/10.jpeg';
+import img11 from '../assets/images/11.jpeg';
+import img12 from '../assets/images/12.jpeg';
+import img13 from '../assets/images/13.jpeg';
+
 const ProcessOfDestruction = () => {
+  // 更新后的sliderContent，包括第五个页面的13张图片内容
   const sliderContent = [
     {
       title: "Rising sea temperatures",
@@ -20,7 +35,26 @@ const ProcessOfDestruction = () => {
     {
       title: "Ecosystem collapse",
       description: `The destruction of kelp forests disrupts marine ecosystems, leading to declines in biodiversity and negatively impacting the endemic species that depend on these habitats.`,
-    }
+    },
+    {
+      title: "5",  // 第五个页面的title
+      description: (
+        <Slider dots={true} infinite={true} speed={500} slidesToShow={1} slidesToScroll={1}>
+          {[
+            img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13
+          ].map((img, index) => (
+            <Box key={index}>
+              <CardMedia
+                component="img"
+                image={img}  // 使用import的图片
+                alt={`Image ${index + 1}`}
+                sx={{ width: '100%', height: '300px', objectFit: 'cover' }}
+              />
+            </Box>
+          ))}
+        </Slider>
+      ),  // 第五个页面的description替换为13张图片的slider
+    },
   ];
 
   const settings = {
@@ -37,19 +71,13 @@ const ProcessOfDestruction = () => {
       <Slider {...settings}>
         {sliderContent.map((item, index) => (
           <Box key={index} sx={{ position: 'relative', width: '100%' }}>
-            <CardMedia
-              component="img"
-              image="frontend/src/assets/images/sky-high-seaweed.jpg"
-              alt={item.title}
-              sx={{ width: '100%', height: '300px', objectFit: 'cover' }}
-            />
-            <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 3 }}>
-              <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold', mb: 2 }}>
+            <Box sx={{ padding: 3 }}>
+              <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
                 {item.title}
               </Typography>
-              <Typography variant="body1" sx={{ color: 'white', fontSize: '1.1rem', lineHeight: 1.6, textAlign: 'center' }}>
-                {item.description}
-              </Typography>
+              <Box>
+                {item.description}  {/* 渲染13张图片的slider */}
+              </Box>
             </Box>
           </Box>
         ))}
