@@ -151,62 +151,7 @@ const KelpMap = () => {
             </div>
         </div>
 
-        // <div className="kelp-map-container">
-        //     <h1 style={{ textAlign: 'center', color: 'white' }}>Kelp Map Visualization</h1>
-        //     <div className="controls">
-        //         <label htmlFor="yearSelect">Select Year: </label>
-        //         {minYear && maxYear && (
-        //             <>
-        //                 <select 
-        //                     id="yearSelect" 
-        //                     value={selectedYear} 
-        //                     onChange={(e) => {
-        //                         setSelectedYear(e.target.value);
-        //                         setAutoPlay(false); 
-        //                     }}
-        //                 >
-        //                     {years.map(year => (
-        //                         <option key={year} value={year}>{year}</option>
-        //                     ))}
-        //                 </select>
-                        
-        //                 <input 
-        //                     type="range" 
-        //                     min={minYear} 
-        //                     max={maxYear} 
-        //                     value={selectedYear === 'All' ? minYear : selectedYear} 
-        //                     onChange={(e) => {
-        //                         setSelectedYear(e.target.value);
-        //                         setAutoPlay(false); 
-        //                     }}
-        //                     style={{ marginLeft: '10px', width: '60%' }}
-        //                 />
-
-        //                 <button onClick={() => setAutoPlay(!autoPlay)}>
-        //                     {autoPlay ? 'Stop AutoPlay' : 'Start AutoPlay'}
-        //                 </button>
-        //             </>
-        //         )}
-        //     </div>
-
-        //     <MapContainer center={[-35, 148]} zoom={4} style={{ height: '60vh', width: '100%' }}>
-        //         <TileLayer
-        //             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        //             attribution="&copy; OpenStreetMap contributors"
-        //         />
-        //         {filteredKelp.map((point, index) => {
-        //             const lat = parseFloat(point.decimalLatitude);
-        //             const lng = parseFloat(point.decimalLongitude);
-        //             if (isNaN(lat) || isNaN(lng)) return null;
-
-        //             return (
-        //                 <Marker key={index} position={[lat, lng]} icon={kelpIcon}>
-        //                     <Popup>Year: {point.year}<br />Location: {point.stateProvince} (Kelp)</Popup>
-        //                 </Marker>
-        //             );
-        //         })}
-        //     </MapContainer>
-        // </div>
+        
     );
 };
 
