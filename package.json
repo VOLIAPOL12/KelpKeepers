@@ -22,12 +22,18 @@
   "homepage": "https://github.com/VOLIAPOL12/KelpKeepers#readme",
   "dependencies": {
     "@arcjet/node": "^1.0.0-beta.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.1",
+    "@mui/material": "^7.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "helmet": "^8.1.0",
     "morgan": "^1.10.0",
-    "pg": "^8.14.1"
+    "pg": "^8.14.1",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "daisyui": "^5.0.12",
