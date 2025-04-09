@@ -1,4 +1,7 @@
 // frontend/src/App.js
+import HomePage from './pages/HomePage'
+import { Routes, Route } from "react-router-dom";
+import UnauthenticatedPageWrapper from "./containers/UnauthenticatedPageWrapper"
 
 // import React from 'react';
 import React, { useState } from 'react';
@@ -44,19 +47,24 @@ function App() {
   };
 
   return (
-      <div>
-          <h1>Visualization Dashboard</h1>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
-              <button onClick={() => setCurrentMap('Kelp')}>Kelp</button>
-              <button onClick={() => setCurrentMap('SeaUrchin')}>Sea Urchin</button>
-              <button onClick={() => setCurrentMap('Abalone')}>Abalone</button>
-              <button onClick={() => setCurrentMap('Seadragon')}>Seadragon</button>
-              <button onClick={() => setCurrentMap('Seastar')}>Seastar</button>
-              <button onClick={() => setCurrentMap('Handfish')}>Handfish</button>
-          </div>
-          {renderMap()}
-      </div>
-  );
+    
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <div>
+                <h1>Visualization Dashboard</h1>
+                <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
+                    <button onClick={() => setCurrentMap('Kelp')}>Kelp</button>
+                    <button onClick={() => setCurrentMap('SeaUrchin')}>Sea Urchin</button>
+                    <button onClick={() => setCurrentMap('Abalone')}>Abalone</button>
+                    <button onClick={() => setCurrentMap('Seadragon')}>Seadragon</button>
+                    <button onClick={() => setCurrentMap('Seastar')}>Seastar</button>
+                    <button onClick={() => setCurrentMap('Handfish')}>Handfish</button>
+                </div>
+                {renderMap()}
+            </div>
+        </Routes>
+        
+    );
 }
 
 export default App;
