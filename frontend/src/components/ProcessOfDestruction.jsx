@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, CardMedia } from '@mui/material';
 import Slider from 'react-slick';
 
-// 你可以在组件顶部直接引入所有图片
+
 import img1 from '../assets/images/1.jpeg';
 import img2 from '../assets/images/2.jpeg';
 import img3 from '../assets/images/3.jpeg';
@@ -18,7 +18,7 @@ import img12 from '../assets/images/12.jpeg';
 import img13 from '../assets/images/13.jpeg';
 
 const ProcessOfDestruction = () => {
-  // 更新后的sliderContent，包括第五个页面的13张图片内容
+  
   const sliderContent = [
     {
       title: "Rising sea temperatures",
@@ -37,7 +37,7 @@ const ProcessOfDestruction = () => {
       description: `The destruction of kelp forests disrupts marine ecosystems, leading to declines in biodiversity and negatively impacting the endemic species that depend on these habitats.`,
     },
     {
-      title: "5",  // 第五个页面的title
+      title: "Simulation",  
       description: (
         <Slider dots={true} infinite={true} speed={500} slidesToShow={1} slidesToScroll={1}>
           {[
@@ -46,14 +46,14 @@ const ProcessOfDestruction = () => {
             <Box key={index}>
               <CardMedia
                 component="img"
-                image={img}  // 使用import的图片
+                image={img}  
                 alt={`Image ${index + 1}`}
                 sx={{ width: '100%', height: '300px', objectFit: 'cover' }}
               />
             </Box>
           ))}
         </Slider>
-      ),  // 第五个页面的description替换为13张图片的slider
+      ),  
     },
   ];
 
@@ -76,7 +76,7 @@ const ProcessOfDestruction = () => {
                 {item.title}
               </Typography>
               <Box>
-                {item.description}  {/* 渲染13张图片的slider */}
+                {item.description}  {}
               </Box>
             </Box>
           </Box>

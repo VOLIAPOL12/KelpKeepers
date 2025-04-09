@@ -6,6 +6,12 @@ import image5 from '../assets/images/great-southern-reef.jpg';
 import image6 from '../assets/images/biodiversity-hotspot.jpg';
 import image7 from '../assets/images/economic-contribution.png';
 import image8 from '../assets/images/loss-in-tasmania.jpg';
+import image9 from '../assets/images/formidable-fortresses.jpg';
+import image10 from '../assets/images/process-of-destruction.jpg';
+import image11 from '../assets/images/rapid-population-expansion.jpg';
+import image12 from '../assets/images/natural-predators.jpg';
+import image13 from '../assets/images/culinary-delicacy.jpg';
+import image14 from '../assets/images/harvesting-urchins.jpg';
 
 export const hotspotData = [
   {
@@ -96,7 +102,7 @@ export const hotspotData = [
       {
         id: 9,
         title: "Formidable Fortresses",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image9,
         description: `The Purple Sea Urchin (Heliocidaris erythrogramma) is a spiny survivor of Australia’s southern coast, clinging to rocky
         shores and shallow waters up to 35 m deep. Ranging in colour from olive to vivid purple, this striking urchin was once mistaken for multiple
         species. It burrows into stone, hides beneath shells and sand, and gathers in tight clusters armored for survival.`,
@@ -105,7 +111,7 @@ export const hotspotData = [
       {
         id: 10,
         title: "Process of Destruction",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image10,
         descriptions: [
           {
             title: "Rising sea temperatures",
@@ -133,7 +139,7 @@ export const hotspotData = [
       {
         id: 11,
         title: "Rapid Population Expansion",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image11,
         description: `Rising ocean temperatures have facilitated their southward migration. In Tasmania, numbers have surged from 11 million to over 20
         million in 15 years. If unchecked, 50% or remaining kelp could disappear by 2030, as seen in southern NSW and eastern Victoria.`,
         type: "info-graph",
@@ -141,7 +147,7 @@ export const hotspotData = [
       {
         id: 12,
         title: "Natural Predators",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image12,
         description: `​The decline of key sea urchin predators, such as sunflower sea stars due to sea star wasting disease linked to warming waters, has
         led to unchecked sea urchin populations, resulting in the degradation of vital kelp forest ecosystems.​`,
         type: "info-graph",
@@ -149,7 +155,7 @@ export const hotspotData = [
       {
         id: 13,
         title: "Culinary Delicacy",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image13,
         description: `Beneath their prickly armor lies a gastronomic gem: the sea urchin's gonads, known as "uni." Revered across global cuisines, uni is
       celebrated for its rich, creamy texture and briny sweetness. In Japan, it's a sushi staple, often served atop rice to highlight its delicate flavor.
       Mediterranean cultures savor it spread on crostini or blended into pasta dishes, adding a touch of the sea to their culinary creations​`,
@@ -158,7 +164,7 @@ export const hotspotData = [
       {
         id: 14,
         title: "Harvesting Urchins",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image14,
         description: `Efforts in harvesting sea urchins are small because removing them is time consuming and labor intensive. This is where you can make
         a difference! Voluntary culling efforts and raising awareness can help restore balance to these vital ecosystems. ​`,
         type: "info",
