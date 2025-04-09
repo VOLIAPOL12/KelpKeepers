@@ -220,18 +220,10 @@ const SeastarMap = () => {
             
             <div style={{ width: '55%', padding: '20px', color: 'white', textAlign: 'justify', backgroundColor: '#2E2E2E', borderRadius: '10px', marginRight: '10px' }}>
                 <h1>Seastar Information</h1>
+                
                 <p>
-                    Seastars, also known as starfish, are marine invertebrates belonging to the class Asteroidea. 
-                    They are known for their radial symmetry and ability to regenerate lost arms. Seastars are found in 
-                    various marine environments worldwide, including Tasmania and southern Australia.
-                </p>
-                <p>
-                    This visualization allows you to explore the distribution of Seastar sightings over time. 
-                    Use the slider or dropdown to select a year and visualize the cumulative presence of Seastars.
-                </p>
-                <p>
-                    The kelp toggle allows you to compare Seastar data with kelp distribution, which can provide insights 
-                    into habitat preferences or environmental changes over time.
+                One of the world’s rarest seastars, once abundant in Tasmania’s coastal waters, has declined by nearly 90% over the past 20 years.
+                Habitat destruction and competition from invasive seastar species have driven it to the brink of extinction.
                 </p>
             </div>
 

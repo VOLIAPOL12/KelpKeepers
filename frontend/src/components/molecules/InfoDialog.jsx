@@ -15,6 +15,10 @@ import {
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseButton from '../atoms/CloseButton';
+import SeastarMap from '../SeastarMap';
+import SeadragonMap from '../SeadragonMap';
+import HandfishMap from '../HandfishMap';
+import AbaloneMap from '../AbaloneMap';
 
 const GrowFromOrigin = React.forwardRef(function GrowFromOrigin(props, ref) {
     const { originPosition, ...other } = props;
@@ -177,6 +181,7 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                         <Box sx={{ px: 4, pb: 10 }}>
                             <Grid container spacing={2}>
                                 {hotspot.content && hotspot.content.map((card) => (
+                                    
                                     <Grid 
                                         item 
                                         size={{
@@ -186,8 +191,10 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                         }}
                                         key={card.id}
                                     >
+                                        
+
                                         <Card 
-                                            onClick={() => handleCardClick(card)} 
+                                            onClick={() => handleCardClick(card)}    
                                             sx={{ 
                                             cursor: 'pointer',
                                             position: 'relative',
@@ -373,7 +380,46 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                         </Box>
                                     </Box>
                                 </Box>
-                            )};
+                            )}
+                            {selectedCard.type === "info-graph" && (
+                                <Box
+                                    sx={{
+                                    height: '80vh',
+                                    width: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    p: 2,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                                    borderRadius: '16px',
+                                    overflow: 'hidden',
+                                    boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                                    }}
+                                >
+                                    <Typography 
+                                    variant="h5" 
+                                    sx={{ 
+                                        color: 'white', 
+                                        fontWeight: 'bold',
+                                        mt:2,
+                                        mb: 2,
+                                        textShadow: '0 2px 4px rgba(0,0,0,0.6)'
+                                    }}
+                                    >
+                                    {selectedCard.title} Visualization
+                                    </Typography>
+
+                                    
+                                    <Box sx={{ height: '100%', width: '100%' }}>
+                                    {selectedCard.title === "Sea Star" && <SeastarMap />}
+                                    {selectedCard.title === "Leafy Seadragon" && <SeadragonMap />}
+                                    {selectedCard.title === "Spotted Handfish" && <HandfishMap />}
+                                    {selectedCard.title === "Abalone" && <AbaloneMap />}
+                                    </Box>
+                                </Box>
+                                )}
+
                         </Box>
                     </Fade>
                 )}

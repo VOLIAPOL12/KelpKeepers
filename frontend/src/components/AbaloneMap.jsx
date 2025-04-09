@@ -93,17 +93,10 @@ const AbaloneMap = () => {
             
             <div style={{ width: '55%', padding: '20px', color: 'white', textAlign: 'justify', backgroundColor: '#2E2E2E', borderRadius: '10px', marginRight: '10px' }}>
                 <h1>Abalone Information</h1>
+                
                 <p>
-                    Abalone are a group of marine snails known for their beautiful shells and their role in marine ecosystems. They are 
-                    commonly found along the coastal waters of Australia, particularly in Tasmania.
-                </p>
-                <p>
-                    This visualization allows you to explore the distribution of Abalone sightings over time. 
-                    Use the slider or dropdown to select a year and visualize the cumulative presence of Abalone.
-                </p>
-                <p>
-                    The kelp toggle allows you to compare Abalone data with kelp distribution, providing insights 
-                    into habitat preferences or environmental changes over time.
+                The marine jewels of Australia’s reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
+                kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.
                 </p>
             </div>
 

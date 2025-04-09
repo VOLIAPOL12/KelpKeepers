@@ -49,20 +49,33 @@
 //   module.exports = router;
   
 import express from 'express';
-import pool from '../db.js';  
+import { pool } from '../db.js';  
 
 const router = express.Router();
 
 
+// router.get('/kelp', async (req, res) => {
+//     try {
+//         const result = await pool.query('SELECT * FROM clean_kelp_each_year LIMIT 100;'); 
+//         res.json(result.rows);
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(500).send('Server Error');
+//     }
+// });
 router.get('/kelp', async (req, res) => {
+    console.log("Received GET /api/kelp/kelp request");
+
     try {
         const result = await pool.query('SELECT * FROM clean_kelp_each_year LIMIT 100;'); 
         res.json(result.rows);
     } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server Error');
+        console.error(" Error during GET /kelp:", error); 
+        res.status(500).json({ error: error.message || "Unknown error" });
     }
+    
 });
+
 
 
 router.get('/sea-urchin', async (req, res) => {

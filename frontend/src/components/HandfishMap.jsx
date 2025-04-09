@@ -220,18 +220,10 @@ const HandfishMap = () => {
             
             <div style={{ width: '55%', padding: '20px', color: 'white', textAlign: 'justify', backgroundColor: '#2E2E2E', borderRadius: '10px', marginRight: '10px' }}>
                 <h1>Handfish Information</h1>
+                
                 <p>
-                    Handfish are a fascinating and unique group of anglerfish that are known for their ability to "walk" along the sea floor 
-                    using their pectoral fins rather than swim. These small fish are primarily found in the coastal waters of southern 
-                    Australia and Tasmania.
-                </p>
-                <p>
-                    This visualization allows you to explore the distribution of Handfish sightings over time. 
-                    Use the slider or dropdown to select a year and visualize the cumulative presence of Handfish.
-                </p>
-                <p>
-                    The kelp toggle allows you to compare Handfish data with kelp distribution, which can provide insights 
-                    into habitat preferences or environmental changes over time.
+                Once abundant in Tasmania’s Derwent Estuary, the first marine fish listed as critically endangered. Its sharp decline is tied to habitat
+                degradation and the loss of vital kelp covered breeding sites, making it a symbol of marine crisis.
                 </p>
             </div>
 

@@ -5,6 +5,10 @@ dotenv.config();
 
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, PGPORT } = process.env;
 
+console.log(' Loaded DB env variables:', {
+    PGUSER, PGHOST, PGDATABASE, PGPASSWORD: PGPASSWORD ? '********' : 'undefined', PGPORT
+  });
+
 export const pool = new pg.Pool({
     user: PGUSER,
     database: PGDATABASE,

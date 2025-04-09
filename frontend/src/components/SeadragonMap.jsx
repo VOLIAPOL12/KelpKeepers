@@ -220,17 +220,10 @@ const SeadragonMap = () => {
             
             <div style={{ width: '55%', padding: '20px', color: 'white', textAlign: 'justify', backgroundColor: '#2E2E2E', borderRadius: '10px', marginRight: '10px' }}>
                 <h1>Seadragon Information</h1>
+                
                 <p>
-                    The Seadragon is a beautiful and enigmatic species found along the southern and eastern coasts of Australia. 
-                    Known for their leaf-like appendages, they blend into their surroundings and are considered to be closely related to seahorses.
-                </p>
-                <p>
-                    This visualization allows you to explore the distribution of Seadragon sightings over time. 
-                    Use the slider or dropdown to select a year and visualize the cumulative presence of Seadragons.
-                </p>
-                <p>
-                    The kelp toggle allows you to compare Seadragon data with kelp distribution, providing insights 
-                    into habitat preferences or environmental changes over time.
+                The  seadragon, with its leaf-like appendages, is listed as near threatened. Its survival depends on disappearing kelp, taking with
+                them the seadragon’s refuge and breeding grounds, pushing the species closer to extinction.
                 </p>
             </div>
 
