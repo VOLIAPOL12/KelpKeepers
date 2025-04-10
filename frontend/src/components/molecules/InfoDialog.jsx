@@ -386,7 +386,7 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                         </Box>
                                     </Box>
                                 </Box>
-                            )};
+                            )}
                             {selectedCard.type === "slider" && (
                                 <ProcessOfDestruction />
                             )}
