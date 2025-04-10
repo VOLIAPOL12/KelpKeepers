@@ -16,6 +16,11 @@ import image19 from '../assets/images/restores-balance.jpg';
 import image20 from '../assets/images/coast-shield.jpg';
 import image21 from '../assets/images/oxygen-machine.jpg';
 import image22 from '../assets/images/ocean-tree-power.png';
+import image23 from '../assets/images/process-of-destruction.jpg';
+import image24 from '../assets/images/abalone.png';
+import image25 from '../assets/images/leafy-seadragon.png';
+import image26 from '../assets/images/sea-star.jpg';
+import image27 from '../assets/images/spotted-handfish.png';
 
 
 export const hotspotData = [
@@ -102,7 +107,7 @@ export const hotspotData = [
     position: { top: '40%', left: '13%' },
     title: 'THE URCHIN INVASION',
     dialogType: 'cards',
-    layout: { xs: 12, sm: 6, md: 4 },
+    layout: { xs: 12, sm: 6, md: 3 },
     content: [
       {
         id: 9,
@@ -116,7 +121,7 @@ export const hotspotData = [
       {
         id: 10,
         title: "Process of Destruction",
-        image: image10,
+        image: image23,
         descriptions: [
           {
             title: "Rising sea temperatures",
@@ -143,6 +148,14 @@ export const hotspotData = [
       },
       {
         id: 11,
+        title: "Simulation",
+        simulationImages: [
+
+        ],
+        type: "simulation",
+      },
+      {
+        id: 12,
         title: "Rapid Population Expansion",
         image: image11,
         description: `Rising ocean temperatures have facilitated their southward migration. In Tasmania, numbers have surged from 11 million to over 20
@@ -150,15 +163,15 @@ export const hotspotData = [
         type: "info-graph",
       },
       {
-        id: 12,
+        id: 13,
         title: "Natural Predators",
         image: image12,
         description: `​The decline of key sea urchin predators, such as sunflower sea stars due to sea star wasting disease linked to warming waters, has
         led to unchecked sea urchin populations, resulting in the degradation of vital kelp forest ecosystems.​`,
-        type: "info-graph",
+        type: "info",
       },
       {
-        id: 13,
+        id: 14,
         title: "Culinary Delicacy",
         image: image13,
         description: `Beneath their prickly armor lies a gastronomic gem: the sea urchin's gonads, known as "uni." Revered across global cuisines, uni is
@@ -167,7 +180,7 @@ export const hotspotData = [
         type: "info",
       },
       {
-        id: 14,
+        id: 15,
         title: "Harvesting Urchins",
         image: image14,
         description: `Efforts in harvesting sea urchins are small because removing them is time consuming and labor intensive. This is where you can make
@@ -182,36 +195,36 @@ export const hotspotData = [
     position: { top: '60%', left: '22%' },
     title: 'THE COMMUNITY AT RISK',
     dialogType: 'cards',
-    layout: { xs: 12, sm: 6, md: 3 },
+    layout: { xs: 12, sm: 6, md: 6 },
     content: [
       {
-        id: 15,
+        id: 16,
         title: "Sea Star",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image26,
         description: `One of the world’s rarest seastars, once abundant in Tasmania’s coastal waters, has declined by nearly 90% over the past 20 years.
         Habitat destruction and competition from invasive seastar species have driven it to the brink of extinction.​`,
         type: "info-graph",
       },
       {
-        id: 16,
+        id: 17,
         title: "Leafy Seadragon",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image25,
         description: `The  seadragon, with its leaf-like appendages, is listed as near threatened. Its survival depends on disappearing kelp, taking with
         them the seadragon’s refuge and breeding grounds, pushing the species closer to extinction.​`,
         type: "info-graph",
       },
       {
-        id: 17,
+        id: 18,
         title: "Spotted Handfish",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image27,
         description: `Once abundant in Tasmania’s Derwent Estuary, the first marine fish listed as critically endangered. Its sharp decline is tied to habitat
         degradation and the loss of vital kelp covered breeding sites, making it a symbol of marine crisis.​`,
         type: "info-graph",
       },
       {
-        id: 18,
+        id: 19,
         title: "Abalone",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
+        image: image24,
         description: `The marine jewels of Australia’s reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
         kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.​`,
         type: "info-graph",
@@ -227,28 +240,28 @@ export const hotspotData = [
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
       {
-        id: 19,
+        id: 20,
         title: "Restores Balance",
         image: image19,
         description: `These submerged forests are bustling metropolises, providing sanctuary and sustenance to a myriad of marine species. From the elusive spotted handfish to the vibrant abalone, countless creatures depend on kelp forests for survival. The decline of these habitats spells disaster for marine biodiversity, leading to cascading effects throughout the ecosystem.​`,
         type: "info",
       },
       {
-        id: 20,
+        id: 21,
         title: "Coast Shield",
         image: image20,
         description: `Acting as formidable barriers, kelp forests absorb the ocean's fury, dissipating wave energy and safeguarding coastlines from erosion. In an era where climate change intensifies storm activity and accelerates sea-level rise, the protective role of kelp becomes increasingly vital.​`,
         type: "info",
       },
       {
-        id: 21,
+        id: 22,
         title: "Oxygen Machine",
         image: image21,
         description: `Through relentless photosynthesis, kelp forests are prolific oxygen factories, contributing significantly to the Earth's oxygen supply. Their unparalleled productivity not only supports marine life but also enriches the very air we breathe.​`,
         type: "info",
       },
       {
-        id: 22,
+        id: 23,
         title: "Ocean Tree Power",
         image: image22,
         description: `In the battle against climate change, kelp forests emerge as unsung heroes. They efficiently capture and store vast amounts of carbon dioxide, with Australian kelp forests accounting for over 30% of the nation's blue carbon sequestration. This remarkable capacity positions them as crucial allies in mitigating global warming.​`,
@@ -260,9 +273,30 @@ export const hotspotData = [
   {
     id: 'diver',
     position: { top: '65%', left: '46%' },
-    title: 'THE COMMUNITY AT RISK',
-    dialogType: 'cards',
-    content: [], 
+    title: 'BATTLE TO REVIVE KELP',
+    dialogType: 'card-video',
+    content: [
+      {
+        id: 24,
+        title: "Urchin Culling and Harvesting",
+        image: image19,
+        description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that
+        have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through
+        Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized
+        roe and as agricultural fertilizer, thereby financing further restoration efforts.​`,
+        type: "info",
+      },
+      {
+        id: 25,
+        title: "Innovative Restoration",
+        image: image19,
+        description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking
+        $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive
+        seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms
+        aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.​`,
+        type: "info",
+      },
+    ], 
     unlocked: false,
   },
 ];

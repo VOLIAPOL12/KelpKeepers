@@ -8,8 +8,7 @@ import InteractiveBackground from './InteractiveBackground';
 import jorney from "../../assets/journey.png"
 import { useEffect, useState } from 'react';
 
-function JourneySection({ showText1, showText2, progressValue,
-    onPageComplete  }) {
+function JourneySection({ journeyStarted, showJourneyContent }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [showDangerText1, setShowDangerText1] = useState(false);
     const [showDangerText2, setShowDangerText2] = useState(false);
@@ -18,9 +17,51 @@ function JourneySection({ showText1, showText2, progressValue,
     const [fadingOut, setFadingOut] = useState(false);
     const [visiblePage, setVisiblePage] = useState(1);
 
+    const [showJourneyText1, setShowJourneyText1] = useState(false);
+    const [showJourneyText2, setShowJourneyText2] = useState(false);
+    const [progressValue, setProgressValue] = useState(0)
+
+    // during the journey, user can skip to the next page
+    const handlePageComplete = () => {
+      setProgressValue(100);
+    };
+    
     useEffect(() => {
-      if (progressValue >= 100 && currentPage === 1) {
-        handlePageTransition(2);
+      if (!journeyStarted || !showJourneyContent) return;
+      
+      const progressTimer = setInterval(() => {
+        setProgressValue((prevValue) => {
+          if (prevValue >= 100) {
+            clearInterval(progressTimer);
+            return 100;
+          }
+          return prevValue + 0.5;
+        });
+      }, 50);
+  
+      const text1Timer = setTimeout(() => {
+        setShowJourneyText1(true);
+      }, 1000);
+  
+      const text2Timer = setTimeout(() => {
+        setShowJourneyText2(true);
+      }, 2500);
+  
+      return () => {
+        clearInterval(progressTimer);
+        clearTimeout(text1Timer);
+        clearTimeout(text2Timer);
+      };
+    }, [journeyStarted, showJourneyContent]);
+
+    useEffect(() => {
+      if (progressValue >= 100) {
+        if (currentPage === 1) {
+          handlePageTransition(2);
+          setProgressValue(0);
+        } else if (currentPage === 2) {
+          handlePageTransition(3);
+        }
       }
     }, [progressValue, currentPage]);
 
@@ -42,25 +83,14 @@ function JourneySection({ showText1, showText2, progressValue,
         }
       }, 1000);
     };
-
-    useEffect(() => {
-        if (progressValue >= 100 && currentPage === 1) {
-          setCurrentPage(2);
-          
-          setTimeout(() => setShowDangerText1(true), 1000);
-          setTimeout(() => setShowDangerText2(true), 2500);
-        }
-      }, [progressValue, currentPage]);
-      const handleArrowClick = () => {
-        if (currentPage === 1 && progressValue < 100) {
-          onPageComplete();
-        } else if (currentPage === 1) {
-          handlePageTransition(2);
-        } else if (currentPage === 2) {
-          handlePageTransition(3);
-        }
-      };
-
+      
+    const handleArrowClick = () => {
+      if (currentPage === 1) {
+        handlePageTransition(2);
+      } else if (currentPage === 2) {
+        handlePageTransition(3);
+      }
+    }
 
     return (
     <Box sx={{
@@ -137,7 +167,7 @@ function JourneySection({ showText1, showText2, progressValue,
             zIndex: 1
           }}>
             <FadeTypography 
-              show={showText1}
+              show={showJourneyText1}
               timeout={1000}
               variant="h4" 
               component="h2" 
@@ -153,7 +183,7 @@ function JourneySection({ showText1, showText2, progressValue,
             </FadeTypography>
 
             <FadeTypography 
-              show={showText2}
+              show={showJourneyText2}
               timeout={1000}
               variant="h5" 
               component="p" 

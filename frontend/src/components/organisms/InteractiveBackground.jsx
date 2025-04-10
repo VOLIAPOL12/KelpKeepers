@@ -1,21 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from '@mui/material';
 import journey from "../../assets/journey.png";
 import { hotspotData } from "../../assets/information.js";
 import HotspotButton from "../molecules/HotspotButton";
 import InfoDialog from "../molecules/InfoDialog";
+import logo from "../../assets/logo.png";
+import { GlobalStyles } from '@mui/material';
 
 function InteractiveBackground() {
   const [unlockedHotspots, setUnlockedHotspots] = useState(['kelp']);
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
-  const [clickedPosition, setClickedPosition] = useState(null);
+  const [showLogo, setShowLogo] = useState(false);
+
+  const [clickState, setClickState] = useState(
+    hotspotData.map(h => ({
+      id: h.id,
+      clicked: false
+    }))
+  );
+
+  useEffect(() => {
+    const numClicked = clickState.filter(h => h.clicked).length;
+    if (numClicked >= 3) {
+      setShowLogo(true);
+    }
+  }, [clickState])
+
   
   const handleHotspotClick = (hotspotId) => {
+    setClickState(prev =>
+      prev.map(h =>
+        h.id === hotspotId ? { ...h, clicked: true } : h
+      )
+    );
+
     if (unlockedHotspots.includes(hotspotId)) {
       const hotspot = hotspotData.find(h => h.id === hotspotId);
       setActiveHotspot(hotspot);
-      setClickedPosition(hotspot.position);
       setOpenDialog(true);
       
       if (hotspotId === 'kelp' && unlockedHotspots.length === 1) {
@@ -26,22 +48,6 @@ function InteractiveBackground() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-  };
-
-  const getAccentColor = (id) => {
-    switch(id) {
-      case 'kelp':
-      case 'kelp2':
-        return '#4CAF50';
-      case 'fish':
-        return '#FFC107';
-      case 'diver':
-        return '#2196F3';
-      case 'sunlight':
-        return '#FF9800';
-      default:
-        return '#009688';
-    }
   };
 
   return (
@@ -59,7 +65,6 @@ function InteractiveBackground() {
         sx={{
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
         }}
       />
 
@@ -96,9 +101,51 @@ function InteractiveBackground() {
           open={openDialog}
           onClose={handleCloseDialog}
           hotspot={activeHotspot}
-          originPosition={clickedPosition}
         />
       )}
+
+      {showLogo && (
+        <>
+          <Box sx={{
+            position: 'absolute',
+            top: "30%",
+            left: '47%',
+            transform: 'translateX(-50%)',
+            color: '#fff',
+            px: 3,
+            py: 2,
+            borderRadius: 2,
+            zIndex: 20
+          }}>
+            <img
+              src={logo}
+              alt="Milestone Logo"
+              style={{
+                height: '160px',
+                marginBottom: '16px',
+                filter: 'drop-shadow(0 0 10px gold) drop-shadow(0 0 20px goldenrod)',
+                animation: 'pulseGlow 2s infinite ease-in-out'
+              }}
+            />
+          </Box>
+        </>
+      )}
+
+      
+      <GlobalStyles styles={{
+        '@keyframes pulseGlow': {
+          '0%': {
+            filter: 'drop-shadow(0 0 5px gold) drop-shadow(0 0 10px goldenrod)',
+          },
+          '50%': {
+            filter: 'drop-shadow(0 0 150px gold) drop-shadow(0 0 50px goldenrod)',
+          },
+          '100%': {
+            filter: 'drop-shadow(0 0 5px gold) drop-shadow(0 0 10px goldenrod)',
+          }
+        }
+      }}
+      />
     </Box>
   );
 }
