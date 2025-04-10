@@ -1,36 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { Box, Typography, CardMedia } from '@mui/material';
+import { Box, Typography, CardMedia, LinearProgress, Card } from '@mui/material';
 import Slider from 'react-slick';
-
-import img1 from '../assets/images/1.jpeg';
-import img2 from '../assets/images/2.jpeg';
-import img3 from '../assets/images/3.jpeg';
-import img4 from '../assets/images/4.jpeg';
-import img5 from '../assets/images/5.jpeg';
-import img6 from '../assets/images/6.jpeg';
-import img7 from '../assets/images/7.jpeg';
-import img8 from '../assets/images/8.jpeg';
-import img9 from '../assets/images/9.jpeg';
-import img10 from '../assets/images/10.jpeg';
-import img11 from '../assets/images/11.jpeg';
-import img12 from '../assets/images/12.jpeg';
-import img13 from '../assets/images/13.jpeg';
-
 
 const ProcessOfDestruction = ({ cardDetails }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isSimulation, setIsSimulation] = useState(false);
-  const simulationSliderRef = useRef(null);
   const [isSlider, setIsSlider] = useState(true);
 
   const handleToggle = () => {
     setIsSlider(!isSlider);
   }
-
-  const simulationImages = [
-    img1, img2, img3, img4, img5, img6, img7,
-    img8, img9, img10, img11, img12, img13,
-  ];
 
   const outerSliderSettings = {
     dots: true,
@@ -40,10 +19,15 @@ const ProcessOfDestruction = ({ cardDetails }) => {
     slidesToScroll: 1,
     arrows: true,
     swipe: false,
+  
     beforeChange: (oldIndex, newIndex) => {
       setCurrentSlide(newIndex);
     },
   };
+
+  // Calculate progress percentage based on current slide and total slides
+  const totalSlides = cardDetails.descriptions ? cardDetails.descriptions.length : 4;
+  const progress = (currentSlide / (totalSlides - 1)) * 100;
 
   return (
     <Box
@@ -52,104 +36,132 @@ const ProcessOfDestruction = ({ cardDetails }) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            p: 3
+            p: 3,
+            position: 'relative',
+            height: 550,
+            borderRadius: 1,
+            overflow: 'hidden'
         }}
     >
-      {currentSlide !== 4 && !isSimulation && (
+      {/* Fixed background image that doesn't change with the slider */}
+      <CardMedia
+        component="img"
+        image={cardDetails.image}
+        alt="Background"
+        sx={{
+          height: '100%',
+          width: '100%',
+          objectFit: 'cover',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 0,
+          borderRadius: 1,
+        }}
+      />
+      
+      {/* Dark overlay for better text readability */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          backdropFilter: 'brightness(0.6)',
+          borderRadius: 1,
+        }}
+      />
+
+      {/* MUI Linear Progress bar */}
+
         <Box sx={{
           width: '100%',
-          height: '8px',
-          backgroundColor: '#f0f0f0',
-          top: '10px',
-          borderRadius: '50px',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-          zIndex: 1,
-          marginBottom: '12px',
+          zIndex: 2,
+          marginBottom: '20px',
+          position: 'relative'
         }}>
-          <Box sx={{
-            width: `${(currentSlide / 3) * 100}%`,
-            height: '100%',
-            background: 'linear-gradient(90deg, #00bfae, #00796b)',
-            borderRadius: '50px',
-            transition: 'width 0.3s ease-in-out',
-          }} />
-        </Box>
-      )}
-
-      <Slider {...outerSliderSettings}>
-        {cardDetails.descriptions.map((card, index) => (
-          <Box
-            key={index}
+          <LinearProgress 
+            variant="determinate" 
+            value={progress} 
             sx={{
-              position: 'relative',
-              width: '100%',
-              height: index === 4 ? 550 : 500,
-              borderRadius: 1,
-              overflow: 'hidden',
-              p: 2,
-              boxSizing: 'border-box',
+              height: 8,
+              borderRadius: 4,
+              margin: 'auto',
+              width: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: '#00bfae',
+                borderRadius: 4,
+              }
+            }}
+          />
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: '#fff',
+              textShadow: '0 1px 3px rgba(0,0,0,0.7)',
+              mt: 2,
+              mb: 20,
             }}
           >
-            <CardMedia
-              component="img"
-              image={cardDetails.image}
-              alt={card.title}
-              sx={{
-                height: '100%',
-                width: '100%',
-                objectFit: 'cover',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex: 0,
-                borderRadius: 1,
-              }}
-            />
+            {cardDetails.title}
+          </Typography>
+      </Box>
 
+      {/* Slider for the text content only */}
+      <Box sx={{ zIndex: 2, position: 'relative', height: '100%' }}>
+        <Slider {...outerSliderSettings}>
+          {cardDetails.descriptions.map((card, index) => (
             <Box
+              key={index}
               sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                height: '100%',
                 width: '100%',
-                zIndex: 1,
+                height: index === 4 ? 500 : 450,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backdropFilter: 'brightness(0.6)',
-                borderRadius: 1,
                 px: 3,
                 textAlign: 'center',
+                
               }}
             >
-              <Typography
-                variant="h5"
+              <Card
                 sx={{
-                  fontWeight: 'bold',
-                  color: '#fff',
-                  textShadow: '0 1px 3px rgba(0,0,0,0.7)',
-                  mb: 2,
+                  backgroundColor: 'rgba(255, 255, 255, 0.55)',
+                  width: '60%',
+                  margin: 'auto',
+                  p: 10,
                 }}
               >
-                {card.title}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#fff',
-                  textShadow: '0 1px 3px rgba(0,0,0,0.7)',
-                  lineHeight: 1.6,
-                  maxWidth: '85%',
-                }}
-              >
-                {card.description}
-              </Typography>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 'bold',
+                    mb: 2,
+                  }}
+                >
+                  {card.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    margin: 'auto',
+                    lineHeight: 1.6, 
+                    maxWidth: '85%',
+                  }}
+                >
+                  {card.description}
+                </Typography>
+              </Card>
             </Box>
-          </Box>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      </Box>
     </Box>
   );
 };

@@ -155,12 +155,15 @@ function InteractiveBackground() {
         '@keyframes pulseGlow': {
           '0%': {
             filter: 'drop-shadow(0 0 5px gold) drop-shadow(0 0 10px goldenrod)',
+            transform: 'scale(1)'
           },
           '50%': {
-            filter: 'drop-shadow(0 0 150px gold) drop-shadow(0 0 50px goldenrod)',
+            filter: 'drop-shadow(0 0 20px gold) drop-shadow(0 0 30px goldenrod)',
+            transform: 'scale(1.1)'
           },
           '100%': {
             filter: 'drop-shadow(0 0 5px gold) drop-shadow(0 0 10px goldenrod)',
+            transform: 'scale(1)'
           }
         }
       }} />

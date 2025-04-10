@@ -69,6 +69,7 @@ const KelpMap = () => {
         <div className="kelp-map-container" style={{ display: 'flex', 
             alignItems: 'center',  
             justifyContent: 'space-between', 
+            backgroundColor: '#22222',
             height: '80vh', 
             padding: '20px' }}>
     
@@ -131,7 +132,7 @@ const KelpMap = () => {
 
                 <MapContainer center={[-42.0, 146.5]} 
                     zoom={6.5}
-                    style={{ height: '60vh', width: '100%' }}>
+                    style={{ height: '50vh', width: '100%' }}>
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution="&copy; OpenStreetMap contributors"
