@@ -42,6 +42,7 @@ export const hotspotData = [
     id: 'kelp',
     position: { top: '60%', right: '22%' },
     title: 'THE UNDERWATER JUNGLE',
+    show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -120,6 +121,7 @@ export const hotspotData = [
     id: 'kelp-dead',
     position: { top: '40%', left: '13%' },
     title: 'THE URCHIN INVASION',
+    show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -273,6 +275,7 @@ export const hotspotData = [
     id: 'fish',
     position: { top: '60%', left: '22%' },
     title: 'THE COMMUNITY AT RISK',
+    show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 6 },
     content: [
@@ -315,6 +318,7 @@ export const hotspotData = [
     id: 'sunlight',
     position: { top: '10%', left: '45%', color: 'black' },
     title: 'CLIMATE FIGHTING POWERHOUSE',
+    show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -354,6 +358,7 @@ export const hotspotData = [
     position: { top: '65%', left: '46%' },
     title: 'BATTLE TO REVIVE KELP',
     dialogType: 'cards',
+    show: false,
     layout: { xs: 12, sm: 6, md: 4 },
     content: [
       {
@@ -385,6 +390,7 @@ export const hotspotData = [
     position: { top: '30%', right: '47%' },
     title: ' ',
     dialogType: 'cards',
+    show: false,
     layout: { xs: 12, sm: 6, md: 6 },
     content: [
       {
