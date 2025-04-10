@@ -299,4 +299,30 @@ export const hotspotData = [
     ], 
     unlocked: false,
   },
+  {
+    id: 'logo',
+    position: { top: '30%', right: '47%' },
+    title: ' ',
+    dialogType: 'cards',
+    layout: { xs: 12, sm: 6, md: 6 },
+    content: [
+      {
+        id: 26,
+        title: "Our Mission",
+        image: image1,
+        description: `KelpKeepers is a call to action. We are building a platform that unites curious, ocean-loving divers with marine ecologists in a shared mission: to fight back against the sea urchin invasion and bring our disappearing kelp forests back to life.
+We are transforming concern into impact. This is more than conservation, it is a movement. And it starts with you.`,
+        type: "info",
+      },
+      {
+        id: 27,
+        title: "Our Vision",
+        image: image2,
+        description: `A thriving, resilient ocean in the Great Southern Reef, where restored kelp forests flourish, nurtured by a united community of everyday ocean stewards.`,
+        type: "info",
+      },
+      
+    ],
+    unlocked: true,
+  },
 ];
