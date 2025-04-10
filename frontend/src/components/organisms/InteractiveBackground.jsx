@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box } from '@mui/material';
 import journey from "../../assets/journey.png";
-import { hotspotData } from "../../assets/information.js";
+import { hotspotData } from "../../assets/information.js"; // 导入所有的 hotspot 数据
 import HotspotButton from "../molecules/HotspotButton";
 import InfoDialog from "../molecules/InfoDialog";
 import logo from "../../assets/logo.png";
@@ -25,9 +25,9 @@ function InteractiveBackground() {
     if (numClicked >= 3) {
       setShowLogo(true);
     }
-  }, [clickState])
+  }, [clickState]);
 
-  
+  // 点击 Hotspot 时的处理
   const handleHotspotClick = (hotspotId) => {
     setClickState(prev =>
       prev.map(h =>
@@ -44,6 +44,24 @@ function InteractiveBackground() {
         setUnlockedHotspots(hotspotData.map(h => h.id));
       }
     }
+  };
+
+  // 点击 Logo 时的处理
+  const handleLogoClick = () => {
+    // 获取 logo 数据并显示对应的内容
+    const logoHotspot = hotspotData.find(h => h.id === 'logo');
+
+    setClickState(prev =>
+      prev.map(h =>
+        h.id === logoHotspot.id ? { ...h, clicked: true } : h
+      )
+    );
+
+    setActiveHotspot(logoHotspot);
+    setOpenDialog(true);
+    
+    // 解锁logo的内容（如果需要）
+    setUnlockedHotspots(prev => [...prev, logoHotspot.id]);
   };
 
   const handleCloseDialog = () => {
@@ -105,8 +123,8 @@ function InteractiveBackground() {
       )}
 
       {showLogo && (
-        <>
-          <Box sx={{
+        <Box
+          sx={{
             position: 'absolute',
             top: "30%",
             left: '47%',
@@ -115,23 +133,24 @@ function InteractiveBackground() {
             px: 3,
             py: 2,
             borderRadius: 2,
-            zIndex: 20
-          }}>
-            <img
-              src={logo}
-              alt="Milestone Logo"
-              style={{
-                height: '160px',
-                marginBottom: '16px',
-                filter: 'drop-shadow(0 0 10px gold) drop-shadow(0 0 20px goldenrod)',
-                animation: 'pulseGlow 2s infinite ease-in-out'
-              }}
-            />
-          </Box>
-        </>
+            zIndex: 20,
+            cursor: 'pointer',
+          }}
+          onClick={handleLogoClick}  // 点击 logo 时触发 handleLogoClick
+        >
+          <img
+            src={logo}
+            alt="Milestone Logo"
+            style={{
+              height: '160px',
+              marginBottom: '16px',
+              filter: 'drop-shadow(0 0 10px gold) drop-shadow(0 0 20px goldenrod)',
+              animation: 'pulseGlow 2s infinite ease-in-out'
+            }}
+          />
+        </Box>
       )}
 
-      
       <GlobalStyles styles={{
         '@keyframes pulseGlow': {
           '0%': {
@@ -144,8 +163,7 @@ function InteractiveBackground() {
             filter: 'drop-shadow(0 0 5px gold) drop-shadow(0 0 10px goldenrod)',
           }
         }
-      }}
-      />
+      }} />
     </Box>
   );
 }
