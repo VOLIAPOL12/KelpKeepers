@@ -1,11 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 
-function SpeciesCard({ image, name, description }) {
+
+function SpeciesCard({ image, name, description, link}) {
     const [isFlipped, setIsFlipped] = useState(false);
   
     const handleFlip = () => {
-        setIsFlipped(!isFlipped);
+        setIsFlipped(!isFlipped);   
     };
     
     return (

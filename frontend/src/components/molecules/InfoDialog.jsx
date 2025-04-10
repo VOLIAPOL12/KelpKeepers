@@ -12,6 +12,10 @@ import {
     Button,
     Grow
   } from '@mui/material';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { styled } from '@mui/system'; 
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseButton from '../atoms/CloseButton';
@@ -29,6 +33,12 @@ const GrowFromOrigin = React.forwardRef(function GrowFromOrigin(props, ref) {
         />
     );
 });
+const CustomSlider = styled(Slider)({
+    '& .slick-prev, & .slick-next': {
+      color: 'red',  // 修改箭头颜色为红色
+      fontSize: '30px',
+    },
+  });
 
 function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
     const [showTitle, setShowTitle] = useState(true);
@@ -177,6 +187,7 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                         <Box sx={{ px: 4, pb: 10 }}>
                             <Grid container spacing={2}>
                                 {hotspot.content && hotspot.content.map((card) => (
+                                    
                                     <Grid 
                                         item 
                                         size={{
@@ -186,8 +197,10 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                         }}
                                         key={card.id}
                                     >
+                                        
+
                                         <Card 
-                                            onClick={() => handleCardClick(card)} 
+                                            onClick={() => handleCardClick(card)}    
                                             sx={{ 
                                             cursor: 'pointer',
                                             position: 'relative',
