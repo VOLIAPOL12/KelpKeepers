@@ -4,15 +4,15 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-
-import clothingRoutes from "./routes/clothingRoutes.js";
-
+import kelpRoutes from './routes/kelpRoutes.js';
+import diveSitesRoutes from './routes/diveSitesRoutes.js';
+import newSpeciesRoutes from './routes/newSpeciesRoutes.js';
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
+const app = express();
 
 app.use(express.json());
 app.use(cors());
@@ -21,8 +21,9 @@ app.use(helmet({
 }));
 app.use(morgan("dev"));
 
-
-app.use("/api/clothing", clothingRoutes);
+app.use('/api/kelp', kelpRoutes);
+app.use('/api/dive-sites', diveSitesRoutes);
+app.use('/api/new-species', newSpeciesRoutes);
 
 if(process.env.NODE_ENV==="production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
@@ -32,6 +33,4 @@ if(process.env.NODE_ENV==="production") {
     })
 }
 
-app.listen(PORT, () => {
-    console.log("3000");
-})
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

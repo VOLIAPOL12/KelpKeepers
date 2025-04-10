@@ -13,7 +13,7 @@ function HeroSection({
     const theme = useTheme();
   return (
     <>
-      <VideoBackground videoSrc="/src/assets/kelp-bg.mp4" darkOverlay={darkOverlay} />
+      <VideoBackground videoSrc="/videos/kelp-bg.mp4" darkOverlay={darkOverlay} />
 
       <Container maxWidth="md" sx={{ 
         height: '100%', 

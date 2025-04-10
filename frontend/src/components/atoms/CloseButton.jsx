@@ -2,7 +2,7 @@ import React from 'react'
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-function CloseButton({ onClick, color = 'white' }) {
+function CloseButton({ onClick, color = 'black' }) {
   return (
     <IconButton
         aria-label="close"
