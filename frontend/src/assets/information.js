@@ -16,6 +16,9 @@ import image19 from '../assets/images/restores-balance.jpg';
 import image20 from '../assets/images/coast-shield.jpg';
 import image21 from '../assets/images/oxygen-machine.jpg';
 import image22 from '../assets/images/ocean-tree-power.png';
+import image23 from '../assets/images/urchin-culling-and-harvesting.png';
+import image24 from '../assets/images/innovative-restoration.jpg';
+import image25 from '../assets/images/video-reviving-giants.png';
 
 
 export const hotspotData = [
@@ -260,9 +263,34 @@ export const hotspotData = [
   {
     id: 'diver',
     position: { top: '65%', left: '46%' },
-    title: 'THE COMMUNITY AT RISK',
+    title: 'BATTLE TO REVIVE KELP',
     dialogType: 'cards',
-    content: [], 
+    layout: { xs: 12, sm: 6, md: 4 },
+    content: [
+      {
+        id: 23,
+        title: "Urchin Culling and Harvesting",
+        image: image23,
+        description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized roe and as agricultural fertilizer, thereby financing further restoration efforts.​​`,
+        type: "info",
+      },
+      {
+        id: 24,
+        title: "Innovative Restoration",
+        image: image24,
+        description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.​`,
+        type: "info",
+      },
+      {
+        id: 25,
+        title: "YouTube Video",
+        image: image25, 
+        type: "video",
+        videoUrl: "https://www.youtube.com/embed/rCRncbD1X7g",
+      }
+      
+    
+    ], 
     unlocked: false,
   },
 ];

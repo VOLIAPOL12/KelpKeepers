@@ -386,10 +386,33 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                         </Box>
                                     </Box>
                                 </Box>
-                            )};
+                            )}
                             {selectedCard.type === "slider" && (
                                 <ProcessOfDestruction />
                             )}
+                            {selectedCard.type === 'video' && (
+                                <Card>
+                                    <h3>{selectedCard.title}</h3>
+                                    <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+                                        <iframe
+                                            src={selectedCard.videoUrl}
+                                            title={selectedCard.title}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                            style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                            }}
+                                        />
+                                    </div>
+                                </Card>
+                            )}
+
+
                         </Box>
                     </Fade>
                 )}
