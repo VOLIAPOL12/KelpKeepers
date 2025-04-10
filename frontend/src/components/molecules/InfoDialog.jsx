@@ -26,6 +26,7 @@ import KelpMap from '../KelpMap';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseButton from '../atoms/CloseButton';
+import Restoration from './Restoration';
 
 const GrowFromOrigin = React.forwardRef(function GrowFromOrigin(props, ref) {
     const { originPosition, ...other } = props;
@@ -502,6 +503,10 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                 <ProcessOfDestruction cardDetails={selectedCard}/>
                             )}
 
+                            {selectedCard.type === "simulation" && (
+                                <Restoration simulationData={selectedCard}/>
+                            )}
+
                             {selectedCard.type === "info-graph" && (
                                  <Box
                                      sx={{
@@ -541,7 +546,28 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                      {selectedCard.title === "Great Southern Reef" && <KelpMap />}
                                      </Box>
                                  </Box>
-                                 )}
+                                )}
+                                {selectedCard.type === 'video' && (
+                                    <Card>
+                                        <h3>{selectedCard.title}</h3>
+                                        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+                                            <iframe
+                                                src={selectedCard.videoUrl}
+                                                title={selectedCard.title}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '80%',
+                                                    height: '80%',
+                                                }}
+                                            />
+                                        </div>
+                                    </Card>
+                                )}
                         </Box>
                     </Fade>
                 )}

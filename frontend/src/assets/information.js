@@ -20,8 +20,21 @@ import image24 from '../assets/images/abalone.png';
 import image25 from '../assets/images/leafy-seadragon.png';
 import image26 from '../assets/images/sea-star.jpg';
 import image27 from '../assets/images/spotted-handfish.png';
-import image28 from '../assets/images/harvest-urchin.png';
-import image29 from '../assets/images/innovative-restoration.jpg'
+import image28 from '../assets/images/9.jpeg';
+import img1 from '../assets/images/1.jpeg';
+import img2 from '../assets/images/2.jpeg';
+import img3 from '../assets/images/3.jpeg';
+import img4 from '../assets/images/4.jpeg';
+import img5 from '../assets/images/5.jpeg';
+import img6 from '../assets/images/6.jpeg';
+import img7 from '../assets/images/7.jpeg';
+import img8 from '../assets/images/8.jpeg';
+import img9 from '../assets/images/9.jpeg';
+import img10 from '../assets/images/10.jpeg';
+import img11 from '../assets/images/11.jpeg';
+import img12 from '../assets/images/12.jpeg';
+import img13 from '../assets/images/13.jpeg';
+
 
 
 export const hotspotData = [
@@ -149,9 +162,74 @@ export const hotspotData = [
       },
       {
         id: 11,
-        title: "Simulation",
+        title: "Devastation to Renewal",
+        image: image28,
         simulationImages: [
-
+          {
+            image: img1,
+            Title: 'Thriving Forest',
+            Description: 'A vibrant kelp forest teeming with marine life',
+          },
+          {
+            image: img2,
+            Title: 'Urchin Arrival',
+            Description: 'Sea urchin numbers increase, but the forest remains healthy',
+          },
+          {
+            image: img3,
+            Title: 'Early Grazing',
+            Description: 'Urchins begin grazing; kelp thins and marine life slightly declines',
+          },
+          {
+            image: img4,
+            Title: 'Decline Begins',
+            Description: 'Grazing intensifies; kelp dies back, marine life diminishes',
+          },
+          {
+            image: img5,
+            Title: 'Severe Damage',
+            Description: 'Kelp loss accelerates; marine life nearly vanishes',
+          },
+          {
+            image: img6,
+            Title: 'Urchin Overrun',
+            Description: 'Urchins dominate the seabed; a ghostly, lifeless forest remains',
+          },
+          {
+            image: img7,
+            Title: 'Urchin Barren',
+            Description: 'The forest collapses into a desolate urchin wasteland',
+          },
+          {
+            image: img8,
+            Title: 'First Response',
+            Description: 'Divers step in to start harvesting urchins',
+          },
+          {
+            image: img9,
+            Title: 'Community Action',
+            Description: 'More divers (including viewers) join the urchin removal effort',
+          },
+          {
+            image: img10,
+            Title: 'Restoration Begins',
+            Description: 'Divers harvest urchins and replant kelp; marine life trickles back',
+          },
+          {
+            image: img11,
+            Title: 'Rebirth in Motion',
+            Description: 'Kelp grows rapidly; marine life steadily returns',
+          },
+          {
+            image: img12,
+            Title: 'Flourishing Again',
+            Description: 'Giant kelp tower above; marine life thrives under their canopy',
+          },
+          {
+            image: img13,
+            Title: 'Restored Forest',
+            Description: 'A revived, biodiverse kelp jungle stands strong once more',
+          },
         ],
         type: "simulation",
       },
@@ -275,28 +353,30 @@ export const hotspotData = [
     id: 'diver',
     position: { top: '65%', left: '46%' },
     title: 'BATTLE TO REVIVE KELP',
-    dialogType: 'card-video',
+    dialogType: 'cards',
+    layout: { xs: 12, sm: 6, md: 4 },
     content: [
       {
-        id: 24,
+        id: 23,
         title: "Urchin Culling and Harvesting",
-        image: image28,
-        description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that
-        have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through
-        Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized
-        roe and as agricultural fertilizer, thereby financing further restoration efforts.​`,
+        image: image23,
+        description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized roe and as agricultural fertilizer, thereby financing further restoration efforts.​​`,
+        type: "info",
+      },
+      {
+        id: 24,
+        title: "Innovative Restoration",
+        image: image24,
+        description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.​`,
         type: "info",
       },
       {
         id: 25,
-        title: "Innovative Restoration",
-        image: image29,
-        description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking
-        $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive
-        seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms
-        aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.​`,
-        type: "info",
-      },
+        title: "YouTube Video",
+        image: image25, 
+        type: "video",
+        videoUrl: "https://www.youtube.com/embed/rCRncbD1X7g",
+      }
     ], 
     unlocked: false,
   },
