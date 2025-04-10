@@ -12,6 +12,11 @@ import image11 from '../assets/images/rapid-population-expansion.jpg';
 import image12 from '../assets/images/natural-predators.jpg';
 import image13 from '../assets/images/culinary-delicacy.jpg';
 import image14 from '../assets/images/harvesting-urchins.jpg';
+import image19 from '../assets/images/restores-balance.jpg';
+import image20 from '../assets/images/coast-shield.jpg';
+import image21 from '../assets/images/oxygen-machine.jpg';
+import image22 from '../assets/images/ocean-tree-power.png';
+
 
 export const hotspotData = [
   {
@@ -223,11 +228,31 @@ export const hotspotData = [
     content: [
       {
         id: 19,
-        title: "Sky-High Seaweed ",
-        image: "frontend/src/assets/images/sky-high-seaweed.jpg",
-        description: `The marine jewels of Australia’s reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
-        kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.​`,
-        type: "info-graph",
+        title: "Restores Balance",
+        image: image19,
+        description: `These submerged forests are bustling metropolises, providing sanctuary and sustenance to a myriad of marine species. From the elusive spotted handfish to the vibrant abalone, countless creatures depend on kelp forests for survival. The decline of these habitats spells disaster for marine biodiversity, leading to cascading effects throughout the ecosystem.​`,
+        type: "info",
+      },
+      {
+        id: 20,
+        title: "Coast Shield",
+        image: image20,
+        description: `Acting as formidable barriers, kelp forests absorb the ocean's fury, dissipating wave energy and safeguarding coastlines from erosion. In an era where climate change intensifies storm activity and accelerates sea-level rise, the protective role of kelp becomes increasingly vital.​`,
+        type: "info",
+      },
+      {
+        id: 21,
+        title: "Oxygen Machine",
+        image: image21,
+        description: `Through relentless photosynthesis, kelp forests are prolific oxygen factories, contributing significantly to the Earth's oxygen supply. Their unparalleled productivity not only supports marine life but also enriches the very air we breathe.​`,
+        type: "info",
+      },
+      {
+        id: 22,
+        title: "Ocean Tree Power",
+        image: image22,
+        description: `In the battle against climate change, kelp forests emerge as unsung heroes. They efficiently capture and store vast amounts of carbon dioxide, with Australian kelp forests accounting for over 30% of the nation's blue carbon sequestration. This remarkable capacity positions them as crucial allies in mitigating global warming.​`,
+        type: "info",
       },
     ],
     unlocked: false,
