@@ -167,86 +167,213 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                     </Box>
 
                     <Fade in={showCards} timeout={800}>
-                        <Box sx={{ px: 4, pb: 10 }}>
-                            <Grid container spacing={2}>
-                                {hotspot.content && hotspot.content.map((card) => (
-                                    
-                                    <Grid 
-                                        item 
-                                        size={{
-                                            xs: hotspot.layout?.xs || 12,
-                                            sm: hotspot.layout?.sm || 6,
-                                            md: hotspot.layout?.md || 3
-                                        }}
-                                        key={card.id}
-                                    >
-                                        
-
-                                        <Card 
-                                            onClick={() => handleCardClick(card)}    
-                                            sx={{ 
-                                            cursor: 'pointer',
-                                            position: 'relative',
-                                            borderRadius: '20px',
-                                            height: 200,
-                                            transition: 'transform 0.3s, box-shadow 0.3s',
-                                            '&:hover': {
-                                                transform: 'scale(1.03)',
-                                            },
-                                            ...getCardStyle(card.type)
+                        {hotspot.dialogType === "cards" ? (
+                            <Box sx={{ px: 4, pb: 10 }}>
+                                <Grid container spacing={2}>
+                                    {hotspot.content && hotspot.content.map((card) => (
+                                        <Grid 
+                                            item 
+                                            size={{
+                                                xs: hotspot.layout?.xs || 12,
+                                                sm: hotspot.layout?.sm || 6,
+                                                md: hotspot.layout?.md || 3
                                             }}
+                                            key={card.id}
                                         >
-                                            {/* Image as background layer */}
-                                            <CardMedia
-                                            component="img"
-                                            image={card.image}
-                                            alt={card.title}
-                                            sx={{
-                                                height: '100%',
-                                                width: '100%',
-                                                objectFit: 'cover',
-                                                position: 'absolute',
-                                                top: 0,
-                                                left: 0,
-                                                zIndex: 0,
-                                                borderRadius: 1
-                                            }}
-                                            />
+                                            
 
-                                            {/* Overlay content */}
-                                            <Box
-                                            sx={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                left: 0,
-                                                height: '100%',
-                                                width: '100%',
-                                                zIndex: 1,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                backdropFilter: 'brightness(0.6)',
-                                                borderRadius: '20px',
-                                                px: 1
-                                            }}
-                                            >
-                                            <Typography 
-                                                variant="subtitle1" 
-                                                align="center"
+                                            <Card 
+                                                onClick={() => handleCardClick(card)}    
                                                 sx={{ 
-                                                fontWeight: 'bold',
-                                                color: '#fff',
-                                                textShadow: '0 1px 3px rgba(0,0,0,0.7)'
+                                                cursor: 'pointer',
+                                                position: 'relative',
+                                                borderRadius: '20px',
+                                                height: 200,
+                                                transition: 'transform 0.3s, box-shadow 0.3s',
+                                                '&:hover': {
+                                                    transform: 'scale(1.03)',
+                                                },
+                                                ...getCardStyle(card.type)
                                                 }}
                                             >
-                                                {card.title}
-                                            </Typography>
+                                                {/* Image as background layer */}
+                                                <CardMedia
+                                                component="img"
+                                                image={card.image}
+                                                alt={card.title}
+                                                sx={{
+                                                    height: '100%',
+                                                    width: '100%',
+                                                    objectFit: 'cover',
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    zIndex: 0,
+                                                    borderRadius: 1
+                                                }}
+                                                />
+
+                                                {/* Overlay content */}
+                                                <Box
+                                                sx={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    height: '100%',
+                                                    width: '100%',
+                                                    zIndex: 1,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    backdropFilter: 'brightness(0.6)',
+                                                    borderRadius: '20px',
+                                                    px: 1
+                                                }}
+                                                >
+                                                <Typography 
+                                                    variant="subtitle1" 
+                                                    align="center"
+                                                    sx={{ 
+                                                    fontWeight: 'bold',
+                                                    color: '#fff',
+                                                    textShadow: '0 1px 3px rgba(0,0,0,0.7)'
+                                                    }}
+                                                >
+                                                    {card.title}
+                                                </Typography>
+                                                </Box>
+                                            </Card>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </Box>
+                        ): (
+                            <>
+                    <Box sx={{ 
+                        textAlign: 'center',
+                        py: titlePosition === 'center' ? 10 : 2,
+                        transition: 'padding 0.5s ease-in-out',
+                        backgroundColor: 'transparent'
+                    }}>
+                        <Typography 
+                            variant="h2" 
+                            component="h1"
+                            sx={{ 
+                                fontFamily: "'Reggae One', cursive",
+                                fontWeight: 'bold',
+                                fontSize: titlePosition === 'center' ? '3.5rem' : '2rem',
+                                transition: 'font-size 0.5s ease-in-out',
+                                color: '#333'
+                            }}
+                        >
+                            {hotspot.title || "BATTLE TO REVIVE KELP"}
+                        </Typography>
+                    </Box>
+
+                    <Fade in={showCards} timeout={800}>
+                        <Box sx={{ px: 4, pb: 10 }}>
+                            <Grid container spacing={4}>
+                                {/* Left Column - Cards */}
+                                <Grid item xs={12} md={3}>
+                                    {hotspot.content.map((card, index) => (
+                                        <Card 
+                                            key={card.id || index}
+                                            onClick={() => handleCardClick(card)}    
+                                            sx={{ 
+                                                cursor: 'pointer',
+                                                position: 'relative',
+                                                borderRadius: '20px',
+                                                height: '200px',
+                                                marginBottom: index < hotspot.content.length - 1 ? 3 : 0,
+                                                transition: 'transform 0.3s, box-shadow 0.3s',
+                                                '&:hover': {
+                                                    transform: 'scale(1.03)',
+                                                },
+                                                ...getCardStyle(card.type)
+                                            }}
+                                        >
+                                            <CardMedia
+                                                component="img"
+                                                image={card.image}
+                                                alt={card.title}
+                                                sx={{
+                                                    height: '100%',
+                                                    width: '100%',
+                                                    objectFit: 'cover',
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    zIndex: 0,
+                                                    borderRadius: '20px'
+                                                }}
+                                            />
+
+                                            <Box
+                                                sx={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    height: '100%',
+                                                    width: '100%',
+                                                    zIndex: 1,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    backdropFilter: 'brightness(0.6)',
+                                                    borderRadius: '20px',
+                                                    px: 1
+                                                }}
+                                            >
+                                                <Typography 
+                                                    variant="subtitle1" 
+                                                    align="center"
+                                                    sx={{ 
+                                                        fontWeight: 'bold',
+                                                        color: '#fff',
+                                                        textShadow: '0 1px 3px rgba(0,0,0,0.7)'
+                                                    }}
+                                                >
+                                                    {card.title}
+                                                </Typography>
                                             </Box>
                                         </Card>
-                                    </Grid>
-                                ))}
+                                    ))}
+                                </Grid>
+
+                                {/* Right Column - YouTube Video */}
+                                <Grid item xs={12} md={9} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+                                    <Box
+                                        sx={{
+                                            position: 'relative',
+                                            width: '100%',
+                                            height: 0,
+                                            paddingBottom: '56.25%', // 16:9 aspect ratio
+                                            overflow: 'hidden',
+                                            borderRadius: '8px'
+                                        }}
+                                    >
+                                        <iframe 
+                                            style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                                border: 0
+                                            }}
+                                            src="https://www.youtube.com/embed/rCRncbD1X7g?si=1iqezVk2sV-XEi6S" 
+                                            title="YouTube video player" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                            referrerPolicy="strict-origin-when-cross-origin" 
+                                            allowFullScreen
+                                        />
+                                    </Box>
+                                </Grid>
                             </Grid>
                         </Box>
+                    </Fade>
+                </>
+                        )}
                     </Fade>
                 </>
                 ) : (

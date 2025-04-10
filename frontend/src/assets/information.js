@@ -7,7 +7,6 @@ import image6 from '../assets/images/biodiversity-hotspot.jpg';
 import image7 from '../assets/images/economic-contribution.png';
 import image8 from '../assets/images/loss-in-tasmania.jpg';
 import image9 from '../assets/images/formidable-fortresses.jpg';
-import image10 from '../assets/images/process-of-destruction.jpg';
 import image11 from '../assets/images/rapid-population-expansion.jpg';
 import image12 from '../assets/images/natural-predators.jpg';
 import image13 from '../assets/images/culinary-delicacy.jpg';
@@ -21,6 +20,8 @@ import image24 from '../assets/images/abalone.png';
 import image25 from '../assets/images/leafy-seadragon.png';
 import image26 from '../assets/images/sea-star.jpg';
 import image27 from '../assets/images/spotted-handfish.png';
+import image28 from '../assets/images/harvest-urchin.png';
+import image29 from '../assets/images/innovative-restoration.jpg'
 
 
 export const hotspotData = [
@@ -279,7 +280,7 @@ export const hotspotData = [
       {
         id: 24,
         title: "Urchin Culling and Harvesting",
-        image: image19,
+        image: image28,
         description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that
         have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through
         Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized
@@ -289,7 +290,7 @@ export const hotspotData = [
       {
         id: 25,
         title: "Innovative Restoration",
-        image: image19,
+        image: image29,
         description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking
         $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive
         seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms
