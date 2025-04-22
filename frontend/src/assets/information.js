@@ -34,6 +34,7 @@ import img10 from '../assets/images/10.jpeg';
 import img11 from '../assets/images/11.jpeg';
 import img12 from '../assets/images/12.jpeg';
 import img13 from '../assets/images/13.jpeg';
+import logo from '../assets/logo.png';
 
 
 
@@ -387,8 +388,9 @@ export const hotspotData = [
   },
   {
     id: 'logo',
-    position: { top: '30%', right: '47%' },
-    title: ' ',
+    position: { top: '35%', left: '47%' },
+    image: logo,
+    title: 'Our Vision',
     dialogType: 'cards',
     show: false,
     layout: { xs: 12, sm: 6, md: 6 },

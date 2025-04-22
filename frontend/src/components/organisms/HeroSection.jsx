@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, useTheme } from '@mui/material';
+import { Button, Container, Typography, useTheme } from '@mui/material';
 import FadeTypography from '../atoms/FadeTypography';
 import VideoBackground from '../molecules/VideoBackground';
 
@@ -8,7 +8,7 @@ function HeroSection({
         showSubtitle, 
         showButton, 
         darkOverlay, 
-        onStartJourney 
+        onStartJourney,
     }) {
     const theme = useTheme();
   return (
@@ -33,7 +33,7 @@ function HeroSection({
           sx={{ 
             color: 'white', 
             fontFamily: "'Reggae One', cursive", 
-            fontSize: { xs: '3rem', sm: '4rem', md: '5rem' },
+            fontSize: { xs: '3rem', sm: '3rem', md: '5rem' },
             lineHeight: 1.2,
             mb: 2,
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
@@ -51,7 +51,9 @@ function HeroSection({
             color: 'white', 
             maxWidth: 600,
             mb: 4,
-            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+            fontSize: { sm: '1rem', md: '1.2rem' },
+            textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+            marginBottom: { sm: '9px', md: '18px'}
           }}
         >
           Help safeguarding these irreplaceable marine habitats for future generations.
@@ -61,11 +63,13 @@ function HeroSection({
           <Button 
             variant="contained" 
             size="large"
-            onClick={onStartJourney}
+            onClick={() => onStartJourney(false)}
             sx={{ 
               bgcolor: theme.palette.primary.main,
               color: 'white',
+              fontSize: { sm: '0.7rem', md: '1.5rem' },
               borderRadius: 28,
+              display: 'block',
               px: 4,
               '&:hover': {
                 bgcolor: theme.palette.primary.dark,
@@ -74,6 +78,10 @@ function HeroSection({
           >
             Start the journey
           </Button>
+          <Typography variant='boy1' sx={{marginTop: '20px', display: 'block', color: 'white'}}>
+            been here before? <br/>
+            skip to <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={() => onStartJourney(true)}>Kelp Page</span>
+          </Typography>
         </FadeTypography>
       </Container>
     </>
