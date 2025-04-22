@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Box } from '@mui/material';
-import journey from "../../assets/journey.png";
-import { hotspotData } from "../../assets/information.js"; // 导入所有的 hotspot 数据
-import HotspotButton from "../molecules/HotspotButton";
-import InfoDialog from "../molecules/InfoDialog";
-import logo from "../../assets/logo.png";
+import journey from "../assets/journey.png";
+import { hotspotData } from "../assets/information.js"; // 导入所有的 hotspot 数据
+import HotspotButton from "../components/molecules/HotspotButton.jsx";
+import InfoDialog from "../components/molecules/InfoDialog";
+import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
 
-function InteractiveBackground() {
+function ExplorePage() {
   const [unlockedHotspots, setUnlockedHotspots] = useState(['kelp']);
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
@@ -72,9 +72,8 @@ function InteractiveBackground() {
     <Box sx={{ 
       position: 'relative', 
       width: '100%', 
-      height: '100%',
       overflow: 'hidden',
-      backgroundColor: '#000'
+      aspectRatio: '16/9',
     }}>
       <Box 
         component="img"
@@ -98,20 +97,52 @@ function InteractiveBackground() {
           borderRadius: '24px',
           textAlign: 'center',
           maxWidth: '90%',
-          zIndex: 20
+          zIndex: 23
         }}>
           Click the glowing + sign on the kelp to begin exploring
         </Box>
       )}
       
       {hotspotData.map((hotspot) => (
-        <HotspotButton
-          key={hotspot.id}
-          position={hotspot.position}
-          isUnlocked={unlockedHotspots.includes(hotspot.id)}
-          onClick={() => handleHotspotClick(hotspot.id)}
-          tooltip={hotspot.title}
-        />
+        hotspot.id === "logo" ?
+            <Box
+                sx={{
+                position: 'absolute',
+                ...hotspot.position,
+                color: '#fff',
+                px: 3,
+                py: 2,
+                borderRadius: 2,
+                width: {
+                    xs: '25%',
+                    sm: '24%',
+                    md: '17%',
+                    lg: '15%',
+                },
+                zIndex: 20,
+                cursor: 'pointer',
+                transform: 'translate(-50%, -50%)',
+                }}
+                onClick={handleLogoClick}  // 点击 logo 时触发 handleLogoClick
+            >
+                <img
+                src={logo}
+                alt="Milestone Logo"
+                style={{
+                    marginBottom: '16px',
+                    filter: 'drop-shadow(0 0 10px gold) drop-shadow(0 0 20px goldenrod)',
+                    animation: 'pulseGlow 2s infinite ease-in-out'
+                }}
+                />
+            </Box>
+            :
+            <HotspotButton
+                key={hotspot.id}
+                position={hotspot.position}
+                isUnlocked={unlockedHotspots.includes(hotspot.id)}
+                onClick={() => handleHotspotClick(hotspot.id)}
+                tooltip={hotspot.title}
+            />
       ))}
       
       {activeHotspot && (
@@ -120,35 +151,6 @@ function InteractiveBackground() {
           onClose={handleCloseDialog}
           hotspot={activeHotspot}
         />
-      )}
-
-      {showLogo && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: "30%",
-            left: '47%',
-            transform: 'translateX(-50%)',
-            color: '#fff',
-            px: 3,
-            py: 2,
-            borderRadius: 2,
-            zIndex: 20,
-            cursor: 'pointer',
-          }}
-          onClick={handleLogoClick}  // 点击 logo 时触发 handleLogoClick
-        >
-          <img
-            src={logo}
-            alt="Milestone Logo"
-            style={{
-              height: '160px',
-              marginBottom: '16px',
-              filter: 'drop-shadow(0 0 10px gold) drop-shadow(0 0 20px goldenrod)',
-              animation: 'pulseGlow 2s infinite ease-in-out'
-            }}
-          />
-        </Box>
       )}
 
       <GlobalStyles styles={{
@@ -171,4 +173,4 @@ function InteractiveBackground() {
   );
 }
 
-export default InteractiveBackground;
+export default ExplorePage;
