@@ -17,5 +17,7 @@ export const pool = new pg.Pool({
     host: PGHOST,
     ssl: {
         rejectUnauthorized:false, // Required for DigitalOcean Managed PostgreSQL
-        }
-    })
+    }
+})
+
+export const query = (text, params) => pool.query(text, params);
