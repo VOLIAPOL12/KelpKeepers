@@ -1,11 +1,11 @@
 import { createResetToken, validateEmail, validatePassword } from '../utils/authUtils.js';
-import User from '../models/userModel.js';
+import {findOne, addUser} from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
     
         // Validate input
         if (!name || !email || !password) {
@@ -23,17 +23,85 @@ export const register = async (req, res, next) => {
         }
 
         try {
+            const existingUser = await findOne(email);
+
+            if(existingUser) {
+                return res.json({ success: false, message: "user already exists"});
+            }
+
             const salt = bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password, salt);
+            const hashedPassword = bcrypt.hash(password, salt);
 
-            // Create user
-            const result = await User.addUser(name, email, hashedPassword)
+            const result = await addUser(name, email, hashedPassword, role);
 
-            const token = jwt.sign(({}))
+            const user = result.rows[0];
+
+            const token = jwt.sign({ user_id: user.user_id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+                maxAge: 24 * 60 * 60 * 1000, // 1 day
+            });
+
+            return res.json({success: true});
+
         } catch (error) {
-
+            res.json({success: false, message: error.message});
         }
     } catch (error) {
         next(error);
+    }
+}
+
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    if(!email || !password) {
+        return res.json({success: false, message: "Email and Password are required" });
+    }
+
+    try {
+        const result = await findOne(email);
+
+        if (result.rows.length === 0) {
+            return res.json({ success: false, message: 'Invalid credentials' });
+        }
+
+        const user = result.rows[0];
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch) {
+            return res.json({ success: false, message: 'Invalid password' });
+        }
+
+        const token = jwt.sign({ user_id: user.user_id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+        });
+
+        return res.json({success: true});
+    } catch (error) {
+        return res.json ({ success: false, message: error.message });
+    }
+}
+
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        })
+
+        return res.json({ success: true, message: 'Logged Out' });
+    } catch(error) {
+        return res.json ({ success: false, message: error.message });
     }
 }

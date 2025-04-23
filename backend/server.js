@@ -7,6 +7,7 @@ import path from "path";
 import kelpRoutes from './routes/kelpRoutes.js';
 import diveSitesRoutes from './routes/diveSitesRoutes.js';
 import newSpeciesRoutes from './routes/newSpeciesRoutes.js';
+import authRouter from './routes/authRoutes.js'
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(morgan("dev"));
 app.use('/api/kelp', kelpRoutes);
 app.use('/api/dive-sites', diveSitesRoutes);
 app.use('/api/new-species', newSpeciesRoutes);
+app.use('/api/auth', authRouter)
 
 if(process.env.NODE_ENV==="production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
