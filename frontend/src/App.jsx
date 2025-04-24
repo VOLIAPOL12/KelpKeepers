@@ -8,8 +8,10 @@ import './components/KelpMap.css';
 import LoginPage from './pages/authentication/LoginPage';
 import UnauthenticatedPageWrapper from './containers/UnauthenticatedPageWrapper';
 import Dashboard from './pages/DashBoard';
-import DivingHistory from './pages/DivingHistory';
-import Scoreboard from './pages/ScoreBoard';
+import DivingHistory from './pages/DivingHistory.jsx';
+import Scoreboard from './pages/Scoreboard';
+import UserProfile from './pages/UserProfile';
+import ActivityDetail from './pages/ActivityDetail';
 
 
   
@@ -23,6 +25,8 @@ import Scoreboard from './pages/ScoreBoard';
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/history" element={<DivingHistory />} />
         <Route path="/scoreboard" element={<Scoreboard />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/activity/:id" element={<ActivityDetail />} />
         
       </Routes>
     );
