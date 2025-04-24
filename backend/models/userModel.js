@@ -1,7 +1,7 @@
 import { query } from '../db.js';  
 
 export const findOne = async (email) => {
-    const result = await query('SELECT * FROM User WHERE email = $1', [email]);
+    const result = await query('SELECT * FROM "User" WHERE "email" = $1', [email]);
     return result.rows;
 }
 

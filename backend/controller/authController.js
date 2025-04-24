@@ -25,16 +25,23 @@ export const register = async (req, res, next) => {
         try {
             const existingUser = await findOne(email);
 
-            if(existingUser) {
+            if(existingUser.length !== 0) {
                 return res.json({ success: false, message: "user already exists"});
             }
 
-            const salt = bcrypt.genSalt(10);
-            const hashedPassword = bcrypt.hash(password, salt);
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
 
-            const result = await addUser(name, email, hashedPassword, role);
+            const userObj = {
+                name,
+                email,
+                hashedPassword,
+                role
+            };
 
-            const user = result.rows[0];
+            const users = await addUser(userObj);
+
+            const user = users[0];
 
             const token = jwt.sign({ user_id: user.user_id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
@@ -63,15 +70,15 @@ export const login = async (req, res) => {
     }
 
     try {
-        const result = await findOne(email);
+        const users = await findOne(email);
 
-        if (result.rows.length === 0) {
+        if (!users || users.length === 0) {
             return res.json({ success: false, message: 'Invalid credentials' });
         }
 
-        const user = result.rows[0];
+        const user = users[0];
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password_hash);
 
         if(!isMatch) {
             return res.json({ success: false, message: 'Invalid password' });
@@ -88,7 +95,7 @@ export const login = async (req, res) => {
 
         return res.json({success: true});
     } catch (error) {
-        return res.json ({ success: false, message: error.message });
+        return res.status(400).json ({ success: false, message: error.message });
     }
 }
 
