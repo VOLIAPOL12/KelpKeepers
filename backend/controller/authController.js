@@ -2,6 +2,7 @@ import { createResetToken, validateEmail, validatePassword } from '../utils/auth
 import {findOne, addUser} from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import transporter from '../config/nodemailer.js';
 
 export const register = async (req, res, next) => {
     try {
@@ -52,10 +53,19 @@ export const register = async (req, res, next) => {
                 maxAge: 24 * 60 * 60 * 1000, // 1 day
             });
 
+            const mailOptions = {
+                from: process.env.SENDER_EMAIL,
+                to: email,
+                subject: 'Welcome to KelpKeepers',
+                text: `Welcome to KelpKeepers website. Your account has been created with email: ${email}`
+            }
+
+            await transporter.sendMail(mailOptions);
+
             return res.json({success: true});
 
         } catch (error) {
-            res.json({success: false, message: error.message});
+            res.status(400).json({success: false, message: error.message});
         }
     } catch (error) {
         next(error);
@@ -64,6 +74,7 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
+    console.log(req.body);
 
     if(!email || !password) {
         return res.json({success: false, message: "Email and Password are required" });
