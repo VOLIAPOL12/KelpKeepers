@@ -7,13 +7,7 @@ export const getDivingHistory = () => {
     ]);
   };
   
-  export const getScoreboard = () => {
-    return Promise.resolve([
-      { id: 1, name: 'Alice', score: 95 },
-      { id: 2, name: 'Bob', score: 89 },
-      { id: 3, name: 'Charlie', score: 76 },
-    ]);
-  };
+  
   
   export const getUserProfile = () => {
     return Promise.resolve({
@@ -31,3 +25,55 @@ export const getDivingHistory = () => {
     return Promise.resolve(mockActivities[id]);
   };
   
+  export function getScoreboard() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          {
+            id: '1',
+            name: 'Alice',
+            score: 95,
+            avatar: 'https://i.pravatar.cc/150?img=1',
+          },
+          {
+            id: '2',
+            name: 'Bob',
+            score: 88,
+            avatar: 'https://i.pravatar.cc/150?img=2',
+          },
+          {
+            id: '3',
+            name: 'Charlie',
+            score: 82,
+            avatar: 'https://i.pravatar.cc/150?img=3',
+          },
+          {
+            id: '4',
+            name: 'Diana',
+            score: 78,
+            avatar: 'https://i.pravatar.cc/150?img=4',
+          },
+          {
+            id: '5',
+            name: 'Evan',
+            score: 74,
+            avatar: 'https://i.pravatar.cc/150?img=5',
+          },
+        ]);
+      }, 500); // 模拟网络延迟
+    });
+  };
+
+  // mocks/api.js
+export function updateUserProfile(newProfile) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // 模拟返回更新后的用户数据，假设avatar和joined保持不变
+      resolve({
+        ...newProfile,
+        avatar: '/avatar.png',
+        joined: '2023-01-15',
+      });
+    }, 800);
+  });
+};
