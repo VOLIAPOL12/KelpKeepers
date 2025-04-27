@@ -7,6 +7,7 @@ import React from 'react';
 import './components/KelpMap.css';
 import LoginPage from './pages/authentication/LoginPage';
 import UnauthenticatedPageWrapper from './containers/UnauthenticatedPageWrapper';
+import ResetPasswordPage from './pages/authentication/ResetPasswordPage';
 
 
   
@@ -17,6 +18,7 @@ import UnauthenticatedPageWrapper from './containers/UnauthenticatedPageWrapper'
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="reset-password" element={<ResetPasswordPage />} />
       </Routes>
     );
   }

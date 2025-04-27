@@ -14,12 +14,14 @@ import userRouter from "./routes/userRoutes.js";
 
 dotenv.config();
 
+const allowedOrigins = ['http://localhost:5137']
+
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: allowedOrigins, credentials: true}));
 app.use(cookieParser());
 
 app.use(helmet({
