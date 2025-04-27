@@ -3,23 +3,48 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import React, { useContext, useState } from "react";
 import { AppContent } from "../../context/AppContext";
 import { Link as RouterLink } from 'react-router-dom'
+import { Person, Lock, Email } from '@mui/icons-material';
 import axios from "axios";
+import CustomInput from "../../components/atoms/CustomInput";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 
 
 function LoginPage() {
-    const [state, setState] = useState('Sign Up');
+    const [state, setState] = useState('Login');
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const { backendUrl, setIsLoggedIn } = useContext(AppContent);
+    const { backendUri, setIsLoggedIn } = useContext(AppContent);
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            
             axios.defaults.withCredentials = true;
-            const { data } = await axios.post(backendUrl + '/api/auth/login', {email, password})
-            console.log(data);
+
+            if(state === "Sign Up") {
+                const { data } = await axios.post(backendUri + '/api/auth/register', {name, email, password});
+                if(data.success) {
+                    setIsLoggedIn(true);
+                    navigate('/dashboard');
+                } else {
+                    toast.error(data.message);
+                }
+            } else {
+                const { data } = await axios.post(backendUri + '/api/auth/login', {email, password});
+                if(data.success) {
+                    setIsLoggedIn(true);
+                    navigate('/dashboard');
+                } else {
+                    toast.error(data.message);
+                }
+            }
+            
         } catch (error) {
-            console.log(error);
+            toast.error(data.message);
         }
     }
 
@@ -33,25 +58,55 @@ function LoginPage() {
                     {state === 'Sign Up' ? 'Create Account' : 'Login'}
                 </Typography>
                 <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt : 1 }}>
-                    <TextField placeholder="Enter username" fullWidth required autoFocus sx={{ mb: 2 }}/>
-                    <TextField placeholder="Enter password" fullWidth required autoFocus type="password"/>
+                    {state === 'Sign Up' && (
+                        <CustomInput
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Full Name"
+                            icon={<Person style={{ color: '#ccc' }} />}
+                        />
+                    )}
+                    <CustomInput
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
+                        icon={<Email style={{ color: '#ccc' }} />}
+                    />
+                    <CustomInput
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                        type="password"
+                        icon={<Lock style={{ color: '#ccc' }} />}
+                    />
                     <Button type="submit" variant="contained" fullWidth sx={{ mt : 1 }}>
                         {state}
                     </Button>
                 </Box>
 
-                <Grid container justifyContent='space-between' sx={{ mt : 1 }}>
+                <Grid container justifyContent='space-between' sx={{ my : 1 }}>
                     <Grid item>
                         <Link component={RouterLink} to="/forgot">
                             Forgot Password?
                         </Link>
                     </Grid>
-                    <Grid item>
-                        <Link component={RouterLink} to="/register">
-                            Sign Up
-                        </Link>
-                    </Grid>
                 </Grid>
+
+                { state === 'Sign Up' ? (
+                    <p className="text-muted">
+                        Already have an account?{' '}
+                        <span className="text-primary" role="button" style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => setState('Login')}>
+                            Login here
+                        </span>
+                    </p>
+                ) : (
+                    <p className="text-muted">
+                        Don't have an account?{' '}
+                        <span className="text-primary" role="button" style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => setState('Sign Up')}>
+                            Sign up
+                        </span>
+                    </p>
+                )}
             </Paper>
         </Container>
     )

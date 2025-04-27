@@ -8,18 +8,31 @@ import './components/KelpMap.css';
 import LoginPage from './pages/authentication/LoginPage';
 import UnauthenticatedPageWrapper from './containers/UnauthenticatedPageWrapper';
 import ResetPasswordPage from './pages/authentication/ResetPasswordPage';
+import DashboardPage from './pages/DashboardPage';
+import { ToastContainer } from 'react-toastify';
+import ProtectedWrapper from './containers/ProtectedWrapper';
 
-
-  
   function App() {
     return (
-      <Routes>
-        <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} />
-        <Route path="/journey" element={<JourneyPage />} />
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="reset-password" element={<ResetPasswordPage />} />
-      </Routes>
+      <div>
+        <ToastContainer/>
+        <Routes>
+          
+          <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} />
+          <Route path="/journey" element={<JourneyPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedWrapper>
+                <DashboardPage />
+              </ProtectedWrapper>
+            }
+          />
+        </Routes>
+      </div>
     );
   }
   
