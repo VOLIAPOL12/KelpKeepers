@@ -12,7 +12,7 @@ import DivingHistory from './pages/DivingHistory.jsx';
 import Scoreboard from './pages/Scoreboard';
 import UserProfile from './pages/UserProfile';
 import ActivityDetail from './pages/ActivityDetail';
-
+import CreateActivity from './pages/CreateActivity';
 
   
   function App() {
@@ -27,6 +27,7 @@ import ActivityDetail from './pages/ActivityDetail';
         <Route path="/scoreboard" element={<Scoreboard />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/activity/:id" element={<ActivityDetail />} />
+        <Route path="/create-activity" element={<CreateActivity />} />
         
       </Routes>
     );
