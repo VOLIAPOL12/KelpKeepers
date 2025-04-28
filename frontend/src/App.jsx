@@ -13,7 +13,6 @@ import UserProfile from './pages/UserProfile';
 import ActivityDetail from './pages/ActivityDetail';
 import CreateActivity from './pages/CreateActivity';
 import ResetPasswordPage from './pages/authentication/ResetPasswordPage';
-import DashboardPage from './pages/DashboardPage';
 import { ToastContainer } from 'react-toastify';
 import ProtectedWrapper from './containers/ProtectedWrapper';
 import EmailVerify from './pages/authentication/EmailVerify';
