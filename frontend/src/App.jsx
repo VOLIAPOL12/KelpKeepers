@@ -13,24 +13,43 @@ import Scoreboard from './pages/Scoreboard';
 import UserProfile from './pages/UserProfile';
 import ActivityDetail from './pages/ActivityDetail';
 import CreateActivity from './pages/CreateActivity';
+import ResetPasswordPage from './pages/authentication/ResetPasswordPage';
+import { ToastContainer } from 'react-toastify';
+import ProtectedWrapper from './containers/ProtectedWrapper';
+import EmailVerify from './pages/authentication/EmailVerify';
 
   
-  function App() {
-    return (
-      <Routes>
-        <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} />
-        <Route path="/journey" element={<JourneyPage />} />
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/history" element={<DivingHistory />} />
-        <Route path="/scoreboard" element={<Scoreboard />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/activity/:id" element={<ActivityDetail />} />
-        <Route path="/create-activity" element={<CreateActivity />} />
-        
-      </Routes>
-    );
-  }
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} />
+      <Route path="/journey" element={<JourneyPage />} />
+      <Route path="/explore" element={<ExplorePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/forgot" element={<ResetPasswordPage />} />
+      <Route
+          path="/dashboard"
+          element={
+            <ProtectedWrapper>
+              <Dashboard />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/email-verify"
+          element={
+            <ProtectedWrapper>
+              <EmailVerify />
+            </ProtectedWrapper>
+          }
+        />
+      <Route path="/history" element={<DivingHistory />} />
+      <Route path="/scoreboard" element={<Scoreboard />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/activity/:id" element={<ActivityDetail />} />
+      <Route path="/create-activity" element={<CreateActivity />} />
+    </Routes>
+  )
+}
   
-  export default App;
+export default App;
