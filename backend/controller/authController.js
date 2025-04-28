@@ -49,7 +49,7 @@ export const register = async (req, res, next) => {
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
                 maxAge: 24 * 60 * 60 * 1000, // 1 day
             });
 
@@ -100,7 +100,7 @@ export const login = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,         
             secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             maxAge: 24 * 60 * 60 * 1000, // 1 day
         });
 
@@ -162,13 +162,11 @@ export const verifyEmail = async (req, res) => {
     const {userId, otp} = req.body;
 
     if(!userId || !otp) {
-        res.status(400).json({ success: false, message: 'Missing Details'});
+        return res.status(400).json({ success: false, message: 'Missing Details'});
     }
     try {
         const user = await findById(userId);
-
-        console.log(user, otp)
-
+        
         if(!user) {
             return res.status(400).json({ success: false, message: 'User Not found'});
         }
@@ -176,11 +174,9 @@ export const verifyEmail = async (req, res) => {
         if(user.verify_otp === '' || user.verify_otp !== otp) {
             return res.status(400).json({ success: false, message: 'Invalid OTP'});
         }
-
         if(user.verify_otp_expire_at < Date.now()) {
             return res.status(400).json({ success: false, message: 'OTP expired'});
         }
-
         await verifyUserAccount(userId);
         return res.status(200).json({ success: true, message: 'Email verified'});
 
@@ -243,6 +239,7 @@ export const resetPassword = async (req, res) => {
     try {
         
         const user = await findOne(email);
+        console.log(user)
         if(!user[0]) {
             return res.status(401).json({ success: false, message: "User not found" });
         }
@@ -258,7 +255,7 @@ export const resetPassword = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-        await updateUserPassword(user.userId, hashedPassword)
+        await updateUserPassword(user[0].user_id, hashedPassword)
         return res.status(200).json({ success: true, message: 'Password change Successful'});
     } catch (error) {
         res.status(500).json({ success: false, message: error.message})

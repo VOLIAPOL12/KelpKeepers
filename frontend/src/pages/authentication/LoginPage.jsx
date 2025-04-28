@@ -18,17 +18,48 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const { backendUri, setIsLoggedIn } = useContext(AppContent);
+    const { backendUri, setIsLoggedIn, getUserData, getAuthState } = useContext(AppContent);
 
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
             axios.defaults.withCredentials = true;
+        
+            // Basic Validation
+            if (state === 'Sign Up') {
+                if (!name.trim()) {
+                toast.error('Name is required');
+                return;
+                }
+            }
+        
+            if (!email.trim()) {
+                toast.error('Email is required');
+                return;
+            }
+        
+            if (!/\S+@\S+\.\S+/.test(email)) {
+                toast.error('Please enter a valid email address');
+                return;
+            }
+        
+            if (!password) {
+                toast.error('Password is required');
+                return;
+            }
+        
+            if (password.length < 8) {
+                toast.error('Password must be at least 8 characters');
+                return;
+            }
 
             if(state === "Sign Up") {
-                const { data } = await axios.post(backendUri + '/api/auth/register', {name, email, password});
+                const role = "diver";
+                const { data } = await axios.post(backendUri + '/api/auth/register', {name, email, password, role});
                 if(data.success) {
                     setIsLoggedIn(true);
+                    await getAuthState();
+                    await getUserData();
                     navigate('/dashboard');
                 } else {
                     toast.error(data.message);
@@ -37,6 +68,8 @@ function LoginPage() {
                 const { data } = await axios.post(backendUri + '/api/auth/login', {email, password});
                 if(data.success) {
                     setIsLoggedIn(true);
+                    getAuthState();
+                    getUserData();
                     navigate('/dashboard');
                 } else {
                     toast.error(data.message);
@@ -44,9 +77,11 @@ function LoginPage() {
             }
             
         } catch (error) {
-            toast.error(data.message);
+            console.error(error);
+            toast.error(error.response?.data?.message || 'Something went wrong');
         }
-    }
+    };
+      
 
     return(
         <Container maxWidth="xs">

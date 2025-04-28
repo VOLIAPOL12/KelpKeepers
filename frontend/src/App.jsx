@@ -11,6 +11,7 @@ import ResetPasswordPage from './pages/authentication/ResetPasswordPage';
 import DashboardPage from './pages/DashboardPage';
 import { ToastContainer } from 'react-toastify';
 import ProtectedWrapper from './containers/ProtectedWrapper';
+import EmailVerify from './pages/authentication/EmailVerify';
 
   function App() {
     return (
@@ -22,12 +23,20 @@ import ProtectedWrapper from './containers/ProtectedWrapper';
           <Route path="/journey" element={<JourneyPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/forgot" element={<ResetPasswordPage />} />
           <Route
             path="/dashboard"
             element={
               <ProtectedWrapper>
                 <DashboardPage />
+              </ProtectedWrapper>
+            }
+          />
+          <Route
+            path="/email-verify"
+            element={
+              <ProtectedWrapper>
+                <EmailVerify />
               </ProtectedWrapper>
             }
           />

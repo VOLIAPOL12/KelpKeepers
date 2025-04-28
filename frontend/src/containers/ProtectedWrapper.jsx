@@ -1,22 +1,40 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContent } from '../context/AppContext'; // adjust path if different
+import AuthenticatedNavBar from '../components/molecules/AuthenticatedNavBar';
+import { Box, CircularProgress } from '@mui/material';
 
 const ProtectedWrapper = ({ children }) => {
-    const { isLoggedIn } = useContext(AppContent);
+    const { isLoggedIn, loading } = useContext(AppContent);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isLoggedIn) {
-        navigate('/login');
+        if (!loading) { // <-- only after loading finishes
+            if (!isLoggedIn) {
+                navigate('/login');
+            }
         }
-    }, [isLoggedIn, navigate]);
+    }, [isLoggedIn, loading, navigate]);
 
-    if (!isLoggedIn) {
-        return null;
+    if (loading) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+                <CircularProgress/>
+            </Box>
+        )
     }
 
-    return <>{children}</>;
+    if (!isLoggedIn) {
+        return null; // return nothing if user isn't logged in
+    }
+
+    return (
+        <>
+            <AuthenticatedNavBar />
+            {children}
+        </>
+    );
 };
+
 
 export default ProtectedWrapper;
