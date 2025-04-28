@@ -7,7 +7,7 @@ const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, PGPORT } = process.env;
 
 console.log(' Loaded DB env variables:', {
     PGUSER, PGHOST, PGDATABASE, PGPASSWORD: PGPASSWORD ? '********' : 'undefined', PGPORT
-  });
+});
 
 export const pool = new pg.Pool({
     user: PGUSER,
@@ -17,5 +17,7 @@ export const pool = new pg.Pool({
     host: PGHOST,
     ssl: {
         rejectUnauthorized:false, // Required for DigitalOcean Managed PostgreSQL
-        }
-    })
+    }
+})
+
+export const query = (text, params) => pool.query(text, params);

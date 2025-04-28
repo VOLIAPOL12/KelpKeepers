@@ -8,15 +8,23 @@ import kelpRoutes from './routes/kelpRoutes.js';
 import diveSitesRoutes from './routes/diveSitesRoutes.js';
 import newSpeciesRoutes from './routes/newSpeciesRoutes.js';
 import divingActivitiesRoutes from './routes/divingActivitiesRoutes.js';
+import authRouter from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
+import userRouter from "./routes/userRoutes.js";
+
 
 dotenv.config();
+
+const allowedOrigins = ['http://localhost:5137']
 
 const PORT = process.env.PORT || 3000;
 const __dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: allowedOrigins, credentials: true}));
+app.use(cookieParser());
+
 app.use(helmet({
     contentSecurityPolicy: false,
 }));
@@ -26,6 +34,8 @@ app.use('/api/kelp', kelpRoutes);
 app.use('/api/dive-sites', diveSitesRoutes);
 app.use('/api/new-species', newSpeciesRoutes);
 app.use('/api/diving-activities', divingActivitiesRoutes);
+app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 if(process.env.NODE_ENV==="production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
