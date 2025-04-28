@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box } from '@mui/material';
-import journey from "../assets/journey.png";
+import journey from "../assets/images/final-interactive-background.jpg";
 import { hotspotData } from "../assets/information.js"; // 导入所有的 hotspot 数据
 import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import InfoDialog from "../components/molecules/InfoDialog";

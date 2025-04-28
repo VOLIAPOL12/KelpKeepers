@@ -41,7 +41,7 @@ import logo from '../assets/logo.png';
 export const hotspotData = [
   {
     id: 'kelp',
-    position: { top: '60%', right: '22%' },
+    position: { top: '45%', right: '17%' },
     title: 'THE UNDERWATER JUNGLE',
     show: false,
     dialogType: 'cards',
@@ -49,42 +49,37 @@ export const hotspotData = [
     content: [
       {
         id: 1,
-        title: "Sky-High Seaweed",
+        title: "Kelp Biology",
         image: image1,
-        description: `Imagine a marine organism so colossal that it rivals the height of a 20-story building.
+        descriptions: [
+          {
+            title: "Sky-High Seaweed",
+            description: `Imagine a marine organism so colossal that it rivals the height of a 20-story building.
         Giant kelp (Macrocystis pyrifera) can soar to lengths exceeding 100 feet (30 meters), with some specimens
         stretching up to an astonishing 175 feet (53 meters) under ideal conditions.`,
-        type: "info",
+          },
+          {
+            title: "Rapid Growth Champions",
+            description: `Hold onto your fins! Giant kelp isn't just about size; it's about speed. In the race of growth,
+        this marine marvel leaves most in its wake, shooting up at rates of up to 2 feet (60 centimeters) per day.
+        This rapid ascent allows it to reach the ocean's surface swiftly, forming dense, sun-dappled canopies that teem with life.`,
+          },
+          {
+            title: "Buoyant Bladders",
+            description: `Ever wonder how these towering algae stand upright in the ocean's depths? Enter the pneumatocysts: gas-filled
+        bladders nestled at the base of each blade. These natural floatation devices elevate the kelp toward sunlight, essential for
+        photosynthesis, and contribute to the formation of expansive underwater forests.`,
+          },
+          {
+            title: "Ecosystem collapse",
+            description: `The destruction of kelp forests disrupts marine ecosystems, leading to declines in biodiversity and negatively impacting the
+            endemic species that depend on these habitats.`,
+          },
+        ],
+        type: "slider",
       },
       {
         id: 2,
-        title: "Rapid G rowth Champions",
-        image: image2,
-        description: `Hold onto your fins! Giant kelp isn't just about size; it's about speed. In the race of growth,
-        this marine marvel leaves most in its wake, shooting up at rates of up to 2 feet (60 centimeters) per day.
-        This rapid ascent allows it to reach the ocean's surface swiftly, forming dense, sun-dappled canopies that teem with life.`,
-        type: "info",
-      },
-      {
-        id: 3,
-        title: "Buoyant Bladders",
-        image: image3,
-        description: `Ever wonder how these towering algae stand upright in the ocean's depths? Enter the pneumatocysts: gas-filled
-        bladders nestled at the base of each blade. These natural floatation devices elevate the kelp toward sunlight, essential for
-        photosynthesis, and contribute to the formation of expansive underwater forests.`,
-        type: "info",
-      },
-      {
-        id: 4,
-        title: "Human Connections",
-        image: image4,
-        description: `Beyond their ecological significance, giant kelp touches human lives in surprising ways. Compounds derived from
-        kelp are found in everyday products like toothpaste, ice cream, and even cosmetics, showcasing the versatility and importance
-        of this marine giant.`,
-        type: "info",
-      },
-      {
-        id: 5,
         title: "Great Southern Reef",
         image: image5,
         description: `Stretching over 8,000 kilometers from Kalbarri in Western Australia to the Queensland border, the GSR boasts
@@ -92,54 +87,64 @@ export const hotspotData = [
         type: "info-graph",
       },
       {
-        id: 6,
-        title: "Biodiversity Hotspot",
-        image: image6,
-        description: `Kelp forests in the GSR is a global biodiversity hotspot, home to numerous species across at least nine phyla.
-        Around 60% of all species in this region are endemic, meaning they are found nowhere else on Earth.`,
-        type: "info",
-      },
-      {
-        id: 7,
-        title: "Economic Contribution",
+        id: 3,
+        title: "Our Coastal Connection",
         image: image7,
-        description: `Kelp supports significant economic activities, with fishing and tourism industries generating at least AU$10
+        descriptions: [
+          {
+            title: "Human Connections",
+            description: `Beyond their ecological significance, giant kelp touches human lives in surprising ways. Compounds derived from
+        kelp are found in everyday products like toothpaste, ice cream, and even cosmetics, showcasing the versatility and importance
+        of this marine giant.`,
+          },
+          {
+            title: "Economic Contribution",
+            description: `Kelp supports significant economic activities, with fishing and tourism industries generating at least AU$10
         billion annually. This includes lucrative fisheries such as Australian rock lobster and abalone, which are integral to local economies.`,
-        type: "info",
+          },
+        ],
+        type: "slider",
       },
       {
-        id: 8 ,
-        title: "Loss in Tasmania",
-        image: image8,
-        description: `Tasmania has experienced a dramatic decline in giant kelp forests, with over 95% loss attributed to ocean warming and
+        id: 4,
+        title: "Ecosystems in Peril",
+        image: image6,
+        descriptions: [
+          {
+            title: "Biodiversity Hotspot",
+            description: `Kelp forests in the GSR is a global biodiversity hotspot, home to numerous species across at least nine phyla.
+        Around 60% of all species in this region are endemic, meaning they are found nowhere else on Earth.`,
+          },
+          {
+            title: "The Loss in Tasmania",
+            description: `Tasmania has experienced a dramatic decline in giant kelp forests, with over 95% loss attributed to ocean warming and
         climate change. This decline threatens the rich biodiversity and the stability of marine ecosystems in the region. `,
-        type: "info",
+          },
+        ],
+        type: "slider",
       },
     ],
     unlocked: true,
   },
   {
     id: 'kelp-dead',
-    position: { top: '40%', left: '13%' },
+    position: { top: '61%', left: '7%' },
     title: 'THE URCHIN INVASION',
     show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
       {
-        id: 9,
+        id: 5,
         title: "Formidable Fortresses",
         image: image9,
-        description: `The Purple Sea Urchin (Heliocidaris erythrogramma) is a spiny survivor of Australia’s southern coast, clinging to rocky
-        shores and shallow waters up to 35 m deep. Ranging in colour from olive to vivid purple, this striking urchin was once mistaken for multiple
-        species. It burrows into stone, hides beneath shells and sand, and gathers in tight clusters armored for survival.`,
-        type: "info",
-      },
-      {
-        id: 10,
-        title: "Process of Destruction",
-        image: image23,
         descriptions: [
+          {
+            title: "Urchin Biology",
+            description: `The Purple Sea Urchin (Heliocidaris erythrogramma) is a spiny survivor of Australia’s southern coast, clinging to rocky
+        shores and shallow waters up to 35m deep. Ranging in colour from olive to vivid purple, this striking urchin was once mistaken for multiple
+        species. It burrows into stone, hides beneath shells and sand, and gathers in tight clusters armored for survival.`,
+          },
           {
             title: "Rising sea temperatures",
             description: `Sea temperatures are rising worldwide with global warming. Tasmanian waters have warmed by 2°C over the past century, a
@@ -164,7 +169,39 @@ export const hotspotData = [
         type: "slider",
       },
       {
-        id: 11,
+        id: 6,
+        title: "Rapid Population Expansion",
+        image: image11,
+        description: `Rising ocean temperatures have facilitated their southward migration. In Tasmania, numbers have surged from 11 million to over 20
+        million in 15 years. If unchecked, 50% or remaining kelp could disappear by 2030, as seen in southern NSW and eastern Victoria.`,
+        type: "info-graph",
+      },
+      {
+        id: 7,
+        title: "Controlling the Invaders",
+        image: image14,
+        descriptions: [
+          {
+            title: "Natural Predators",
+            description: `Kelp forests in the GSR is a global biodiversity hotspot, home to numerous species across at least nine phyla.
+        Around 60% of all species in this region are endemic, meaning they are found nowhere else on Earth.`,
+          },
+          {
+            title: "Culinary Delicacy",
+            description: `Beneath their prickly armor lies a gastronomic gem: the sea urchin's gonads, known as "uni." Revered across global cuisines, uni is
+      celebrated for its rich, creamy texture and briny sweetness. In Japan, it's a sushi staple, often served atop rice to highlight its delicate flavor.
+      Mediterranean cultures savor it spread on crostini or blended into pasta dishes, adding a touch of the sea to their culinary creations​`,
+          },
+          {
+            title: "Harvesting Urchins",
+            description: `Efforts in harvesting sea urchins are small because removing them is time consuming and labor intensive. This is where you can make
+        a difference! Voluntary culling efforts and raising awareness can help restore balance to these vital ecosystems. ​`,
+          },
+        ],
+        type: "slider",
+      },
+      {
+        id: 8,
         title: "Devastation to Renewal",
         image: image28,
         simulationImages: [
@@ -236,46 +273,13 @@ export const hotspotData = [
         ],
         type: "simulation",
       },
-      {
-        id: 12,
-        title: "Rapid Population Expansion",
-        image: image11,
-        description: `Rising ocean temperatures have facilitated their southward migration. In Tasmania, numbers have surged from 11 million to over 20
-        million in 15 years. If unchecked, 50% or remaining kelp could disappear by 2030, as seen in southern NSW and eastern Victoria.`,
-        type: "info-graph",
-      },
-      {
-        id: 13,
-        title: "Natural Predators",
-        image: image12,
-        description: `​The decline of key sea urchin predators, such as sunflower sea stars due to sea star wasting disease linked to warming waters, has
-        led to unchecked sea urchin populations, resulting in the degradation of vital kelp forest ecosystems.​`,
-        type: "info",
-      },
-      {
-        id: 14,
-        title: "Culinary Delicacy",
-        image: image13,
-        description: `Beneath their prickly armor lies a gastronomic gem: the sea urchin's gonads, known as "uni." Revered across global cuisines, uni is
-      celebrated for its rich, creamy texture and briny sweetness. In Japan, it's a sushi staple, often served atop rice to highlight its delicate flavor.
-      Mediterranean cultures savor it spread on crostini or blended into pasta dishes, adding a touch of the sea to their culinary creations​`,
-        type: "info",
-      },
-      {
-        id: 15,
-        title: "Harvesting Urchins",
-        image: image14,
-        description: `Efforts in harvesting sea urchins are small because removing them is time consuming and labor intensive. This is where you can make
-        a difference! Voluntary culling efforts and raising awareness can help restore balance to these vital ecosystems. ​`,
-        type: "info",
-      },
     ],
     unlocked: false,
   },
   {
     id: 'fish',
-    position: { top: '60%', left: '22%' },
-    title: 'THE COMMUNITY AT RISK',
+    position: { top: '21%', left: '23%' },
+    title: 'THE SPECIES AT RISK',
     show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 6 },
@@ -317,7 +321,7 @@ export const hotspotData = [
   },
   { 
     id: 'sunlight',
-    position: { top: '10%', left: '45%', color: 'black' },
+    position: { top: '5%', left: '61%', color: 'black' },
     title: 'CLIMATE FIGHTING POWERHOUSE',
     show: false,
     dialogType: 'cards',
@@ -356,7 +360,7 @@ export const hotspotData = [
   },
   {
     id: 'diver',
-    position: { top: '65%', left: '46%' },
+    position: { top: '52%', left: '45%' },
     title: 'BATTLE TO REVIVE KELP',
     dialogType: 'cards',
     show: false,
@@ -388,7 +392,7 @@ export const hotspotData = [
   },
   {
     id: 'logo',
-    position: { top: '35%', left: '47%' },
+    position: { top: '25%', left: '47%' },
     image: logo,
     title: 'Our Vision',
     dialogType: 'cards',
