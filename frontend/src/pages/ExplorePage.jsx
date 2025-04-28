@@ -6,8 +6,11 @@ import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import InfoDialog from "../components/molecules/InfoDialog";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
+import SpeciesMap from '../components/SpeciesMap';
+import useSpeciesStore from '../store/speciesStore';
 
 function ExplorePage() {
+  const { fetchData } = useSpeciesStore();
   const [unlockedHotspots, setUnlockedHotspots] = useState(['kelp']);
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
@@ -19,6 +22,12 @@ function ExplorePage() {
       clicked: false
     }))
   );
+
+  useEffect(() => {
+    fetchData('kelp');          
+    fetchData('sea-urchin');    
+    fetchData('dive-sites');   
+  }, [fetchData]);
 
   useEffect(() => {
     const numClicked = clickState.filter(h => h.clicked).length;
@@ -145,13 +154,27 @@ function ExplorePage() {
             />
       ))}
       
-      {activeHotspot && (
+      {/* {activeHotspot && (
         <InfoDialog
           open={openDialog}
           onClose={handleCloseDialog}
           hotspot={activeHotspot}
         />
+      )} */}
+      {activeHotspot && (
+        <InfoDialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          hotspot={activeHotspot}
+        >
+          {activeHotspot.id === 'kelp' && (
+            <Box sx={{ mt: 2 }}>
+              <SpeciesMap species="kelp" selectedYear="All" />
+            </Box>
+          )}
+        </InfoDialog>
       )}
+
 
       <GlobalStyles styles={{
         '@keyframes pulseGlow': {

@@ -45,13 +45,37 @@ body {
     color: white;
 }
 
-.kelp-toggle-button {
+.dive-toggle-button {
     position: absolute;
-    bottom: 5%;
-    right: 5%;
+    bottom: 22%;
+    right: 3%;
     z-index: 1000;
     padding: 8px 12px;
-    background-color: #668b8b;
+    background-color: #cbdede;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.kelp-toggle-button {
+    position: absolute;
+    bottom: 15%;
+    right: 3%;
+    z-index: 1000;
+    padding: 8px 12px;
+    background-color: #cbdede;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.urchin-toggle-button {
+    position: absolute;
+    bottom: 29%;
+    right: 3%;
+    z-index: 1000;
+    padding: 8px 12px;
+    background-color: #cbdede;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -81,4 +105,7 @@ body {
     filter: hue-rotate(210deg); 
 }
 
+.divesite-marker {
+    filter: hue-rotate(20deg) brightness(1.4) saturate(2);
+}
 

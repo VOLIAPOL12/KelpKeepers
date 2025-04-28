@@ -26,6 +26,6 @@ export const fetchDiveSites = async () => {
 };
 
 export const fetchSpeciesData = async (species) => {
-    const response = await axios.get(`${API_URL}/new-species/${species}`);
+    const response = await axios.get(`${API_URL}/new-species/${encodeURIComponent(species)}`);
     return response.data;
 };
