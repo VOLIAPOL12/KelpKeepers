@@ -21,19 +21,18 @@ import image25 from '../assets/images/leafy-seadragon.png';
 import image26 from '../assets/images/sea-star.jpg';
 import image27 from '../assets/images/spotted-handfish.png';
 import image28 from '../assets/images/9.jpeg';
-import img1 from '../assets/images/1.jpeg';
-import img2 from '../assets/images/2.jpeg';
-import img3 from '../assets/images/3.jpeg';
-import img4 from '../assets/images/4.jpeg';
-import img5 from '../assets/images/5.jpeg';
-import img6 from '../assets/images/6.jpeg';
-import img7 from '../assets/images/7.jpeg';
-import img8 from '../assets/images/8.jpeg';
-import img9 from '../assets/images/9.jpeg';
-import img10 from '../assets/images/10.jpeg';
-import img11 from '../assets/images/11.jpeg';
-import img12 from '../assets/images/12.jpeg';
-import img13 from '../assets/images/13.jpeg';
+import img1 from '../assets/images/1.png';
+import img2 from '../assets/images/2.png';
+import img3 from '../assets/images/3.png';
+import img4 from '../assets/images/4.png';
+import img5 from '../assets/images/5.png';
+import img6 from '../assets/images/6.png';
+import img7 from '../assets/images/7.png';
+import img8 from '../assets/images/8.png';
+import img9 from '../assets/images/9.png';
+import img10 from '../assets/images/10.png';
+import img11 from '../assets/images/11.png';
+import img12 from '../assets/images/12.png';
 import logo from '../assets/logo.png';
 
 
@@ -51,6 +50,7 @@ export const hotspotData = [
         id: 1,
         title: "Kelp Biology",
         image: image1,
+        hoverDescription: "Dive into the towering giants of the sea, nature’s fastest-growing and most adaptable organisms.",
         descriptions: [
           {
             title: "Sky-High Seaweed",
@@ -82,6 +82,7 @@ export const hotspotData = [
         id: 2,
         title: "Great Southern Reef",
         image: image5,
+        hoverDescription: "Discover one of the most expansive temperate reef systems on the planet",
         description: `Stretching over 8,000 kilometers from Kalbarri in Western Australia to the Queensland border, the GSR boasts
         the world's longest continuous kelp forest.`,
         type: "info-graph",
@@ -90,6 +91,7 @@ export const hotspotData = [
         id: 3,
         title: "Our Coastal Connection",
         image: image7,
+        hoverDescription: "Explore the often unseen relationship between coastal communities and underwater forests.",
         descriptions: [
           {
             title: "Human Connections",
@@ -109,6 +111,7 @@ export const hotspotData = [
         id: 4,
         title: "Ecosystems in Peril",
         image: image6,
+        hoverDescription: "Discover the beauty and fragility of one of Earth’s richest ecosystems ",
         descriptions: [
           {
             title: "Biodiversity Hotspot",
@@ -138,6 +141,7 @@ export const hotspotData = [
         id: 5,
         title: "Formidable Fortresses",
         image: image9,
+        hoverDescription: "Unpack how sea urchin reshape entire underwater landscapes with impenetrable spiny strongholds.",
         descriptions: [
           {
             title: "Urchin Biology",
@@ -172,6 +176,7 @@ export const hotspotData = [
         id: 6,
         title: "Rapid Population Expansion",
         image: image11,
+        hoverDescription: "Discover the rising urchin population in Australia",
         description: `Rising ocean temperatures have facilitated their southward migration. In Tasmania, numbers have surged from 11 million to over 20
         million in 15 years. If unchecked, 50% or remaining kelp could disappear by 2030, as seen in southern NSW and eastern Victoria.`,
         type: "info-graph",
@@ -180,6 +185,7 @@ export const hotspotData = [
         id: 7,
         title: "Controlling the Invaders",
         image: image14,
+        hoverDescription: "Explore how urchin harvesting can be both a solution and a delicacy.",
         descriptions: [
           {
             title: "Natural Predators",
@@ -204,71 +210,67 @@ export const hotspotData = [
         id: 8,
         title: "Devastation to Renewal",
         image: image28,
+        hoverDescription: "A visual simulation of how urchins destroy kelp, and how restoration begins with human help.",
         simulationImages: [
           {
             image: img1,
-            Title: 'Thriving Forest',
-            Description: 'A vibrant kelp forest teeming with marine life',
+            Title: 'Lush Kelp Forest',
+            Description: 'Tall golden-brown kelp sways in clear water, colorful fish and sea stars thrive under sunlight.',
           },
           {
             image: img2,
-            Title: 'Urchin Arrival',
-            Description: 'Sea urchin numbers increase, but the forest remains healthy',
+            Title: 'Early Urchin Invasion',
+            Description: 'Small purple sea urchins gather at the kelp base, but marine life remains active.',
           },
           {
             image: img3,
-            Title: 'Early Grazing',
-            Description: 'Urchins begin grazing; kelp thins and marine life slightly declines',
+            Title: 'Stress on the Forest',
+            Description: 'More urchins spread; weakened kelp and early signs of stress are visible.',
           },
           {
             image: img4,
-            Title: 'Decline Begins',
-            Description: 'Grazing intensifies; kelp dies back, marine life diminishes',
+            Title: 'Last Pockets of Life',
+            Description: 'Only a few strong kelp stands remain amid a growing urchin bed; the forest teeters on collapse.',
           },
           {
             image: img5,
-            Title: 'Severe Damage',
-            Description: 'Kelp loss accelerates; marine life nearly vanishes',
+            Title: 'Ghost Forest Emerges',
+            Description: 'A barren, abandoned landscape, almost no kelp, just a carpet of urchins.',
           },
           {
             image: img6,
-            Title: 'Urchin Overrun',
-            Description: 'Urchins dominate the seabed; a ghostly, lifeless forest remains',
+            Title: 'Ecologist Intervention',
+            Description: 'Research diver examines the overrun seafloor, beginning efforts to assess the damage.',
           },
           {
             image: img7,
-            Title: 'Urchin Barren',
-            Description: 'The forest collapses into a desolate urchin wasteland',
+            Title: 'Community Support',
+            Description: 'Groups of divers collect sea urchins, working methodically to clear space for kelp recovery.',
           },
           {
             image: img8,
-            Title: 'First Response',
-            Description: 'Divers step in to start harvesting urchins',
+            Title: 'Early Recovery Signs',
+            Description: 'Fewer urchins, young kelp planting underway, small fish cautiously returning',
           },
           {
             image: img9,
-            Title: 'Community Action',
-            Description: 'More divers (including viewers) join the urchin removal effort',
+            Title: 'Forest Renewal',
+            Description: 'Taller kelp regrows, more marine species return, divers continue restoration work.',
           },
           {
             image: img10,
-            Title: 'Restoration Begins',
-            Description: 'Divers harvest urchins and replant kelp; marine life trickles back',
+            Title: 'Vibrant Kelp Forest ',
+            Description: 'New kelp canopies spread overhead, creating shelter for fish, crabs, and starfish once again.',
           },
           {
             image: img11,
-            Title: 'Rebirth in Motion',
-            Description: 'Kelp grows rapidly; marine life steadily returns',
+            Title: 'Life Returns in Full',
+            Description: 'Marine life flourishes among the towering kelp, with rich biodiversity rebuilding the ecosystem.',
           },
           {
             image: img12,
             Title: 'Flourishing Again',
-            Description: 'Giant kelp tower above; marine life thrives under their canopy',
-          },
-          {
-            image: img13,
-            Title: 'Restored Forest',
-            Description: 'A revived, biodiverse kelp jungle stands strong once more',
+            Description: 'Restored kelp forest matures into a thriving, self-sustaining habitat teeming with life and natural resilience.',
           },
         ],
         type: "simulation",
@@ -288,6 +290,7 @@ export const hotspotData = [
         id: 16,
         title: "Sea Star",
         image: image26,
+        hoverDescription: "Tasmanian seastars are nearing extinction as kelp forest decline disrupting its habitat.",
         description: `One of the world’s rarest seastars, once abundant in Tasmania’s coastal waters, has declined by nearly 90% over the past 20 years.
         Habitat destruction and competition from invasive seastar species have driven it to the brink of extinction.​`,
         type: "info-graph",
@@ -296,6 +299,7 @@ export const hotspotData = [
         id: 17,
         title: "Leafy Seadragon",
         image: image25,
+        hoverDescription: "Relies on kelp forests for camouflage and survival",
         description: `The  seadragon, with its leaf-like appendages, is listed as near threatened. Its survival depends on disappearing kelp, taking with
         them the seadragon’s refuge and breeding grounds, pushing the species closer to extinction.​`,
         type: "info-graph",
@@ -304,6 +308,7 @@ export const hotspotData = [
         id: 18,
         title: "Spotted Handfish",
         image: image27,
+        hoverDescription: "Loses habitat as kelp forests vanish from warming seas",
         description: `Once abundant in Tasmania’s Derwent Estuary, the first marine fish listed as critically endangered. Its sharp decline is tied to habitat
         degradation and the loss of vital kelp covered breeding sites, making it a symbol of marine crisis.​`,
         type: "info-graph",
@@ -312,6 +317,7 @@ export const hotspotData = [
         id: 19,
         title: "Abalone",
         image: image24,
+        hoverDescription: "Needs healthy kelp forests to grow and feed",
         description: `The marine jewels of Australia’s reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
         kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.​`,
         type: "info-graph",
@@ -331,6 +337,7 @@ export const hotspotData = [
         id: 20,
         title: "Restores Balance",
         image: image19,
+        hoverDescription: "Kelp forests heal damaged ecosystems and revive lost life",
         description: `These submerged forests are bustling metropolises, providing sanctuary and sustenance to a myriad of marine species. From the elusive spotted handfish to the vibrant abalone, countless creatures depend on kelp forests for survival. The decline of these habitats spells disaster for marine biodiversity, leading to cascading effects throughout the ecosystem.​`,
         type: "info",
       },
@@ -338,6 +345,7 @@ export const hotspotData = [
         id: 21,
         title: "Coast Shield",
         image: image20,
+        hoverDescription: "Kelp cushions coastlines, defending against erosion and storms",
         description: `Acting as formidable barriers, kelp forests absorb the ocean's fury, dissipating wave energy and safeguarding coastlines from erosion. In an era where climate change intensifies storm activity and accelerates sea-level rise, the protective role of kelp becomes increasingly vital.​`,
         type: "info",
       },
@@ -345,13 +353,16 @@ export const hotspotData = [
         id: 22,
         title: "Oxygen Machine",
         image: image21,
+        hoverDescription: "Kelp releases oxygen, fueling ocean life and the planet",
         description: `Through relentless photosynthesis, kelp forests are prolific oxygen factories, contributing significantly to the Earth's oxygen supply. Their unparalleled productivity not only supports marine life but also enriches the very air we breathe.​`,
         type: "info",
       },
       {
         id: 23,
         title: "Ocean Tree Power",
+        hoverDescription: "Divers cull sea urchins to revive reefs.",
         image: image22,
+        hoverDescription: "Diver action transforms dying reefs back into thriving kelp forests",
         description: `In the battle against climate change, kelp forests emerge as unsung heroes. They efficiently capture and store vast amounts of carbon dioxide, with Australian kelp forests accounting for over 30% of the nation's blue carbon sequestration. This remarkable capacity positions them as crucial allies in mitigating global warming.​`,
         type: "info",
       },
@@ -370,6 +381,7 @@ export const hotspotData = [
         id: 23,
         title: "Urchin Culling and Harvesting",
         image: image23,
+        hoverDescription: "Clearing urchins gives kelp a second chance",
         description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized roe and as agricultural fertilizer, thereby financing further restoration efforts.​​`,
         type: "info",
       },
@@ -377,6 +389,7 @@ export const hotspotData = [
         id: 24,
         title: "Innovative Restoration",
         image: image24,
+        hoverDescription: "New techniques spark kelp forest comebacks",
         description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.​`,
         type: "info",
       },
@@ -384,6 +397,7 @@ export const hotspotData = [
         id: 25,
         title: "YouTube Video",
         image: image25, 
+        hoverDescription: "Explore Mick Baron and Karen Gowlett-Holmes lead efforts to restore Tasmania’s vanishing giant kelp forests.",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/rCRncbD1X7g",
       }
@@ -392,9 +406,9 @@ export const hotspotData = [
   },
   {
     id: 'logo',
-    position: { top: '25%', left: '47%' },
+    position: { top: '25%', left: '50%' },
     image: logo,
-    title: 'Our Vision',
+    title: 'ABOUT US',
     dialogType: 'cards',
     show: false,
     layout: { xs: 12, sm: 6, md: 6 },
@@ -403,6 +417,7 @@ export const hotspotData = [
         id: 26,
         title: "Our Mission",
         image: image1,
+        hoverDescription: "Click to Open",
         description: `KelpKeepers is a call to action. We are building a platform that unites curious, ocean-loving divers with marine ecologists in a shared mission: to fight back against the sea urchin invasion and bring our disappearing kelp forests back to life.
 We are transforming concern into impact. This is more than conservation, it is a movement. And it starts with you.`,
         type: "info",
@@ -410,6 +425,7 @@ We are transforming concern into impact. This is more than conservation, it is a
       {
         id: 27,
         title: "Our Vision",
+        hoverDescription: "Click to Open",
         image: image2,
         description: `A thriving, resilient ocean in the Great Southern Reef, where restored kelp forests flourish, nurtured by a united community of everyday ocean stewards.`,
         type: "info",
