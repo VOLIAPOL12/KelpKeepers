@@ -16,6 +16,7 @@ import ResetPasswordPage from './pages/authentication/ResetPasswordPage';
 import { ToastContainer } from 'react-toastify';
 import ProtectedWrapper from './containers/ProtectedWrapper';
 import EmailVerify from './pages/authentication/EmailVerify';
+import PhotoCapturePage from './pages/PhotoCapturePage';
 
   
 function App() {
@@ -49,10 +50,8 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/activity/:id" element={<ActivityDetail />} />
         <Route path="/create-activity" element={<CreateActivity />} />
-        
+        <Route path="/camera" element={<PhotoCapturePage/>} />
       </Routes>
     </>
   )
 }
-
-export default App;
