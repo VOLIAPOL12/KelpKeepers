@@ -127,11 +127,6 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                     sm: '80vw',
                     md: '65vw'
                   },
-                  height: {
-                    xs: '90vh',
-                    sm: '85vh',
-                    md: '80vh'
-                  },
                   margin: 'auto',
                   borderRadius: 4,
                   bgcolor: 'rgba(255, 255, 255, 0.95)',
@@ -140,21 +135,6 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                 }
               }}
         >
-            <IconButton
-                aria-label="close"
-                onClick={onClose}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: 'gray.500',
-                    zIndex: 10
-                }}
-            >
-                <CloseButton />
-            </IconButton>
-
-            <DialogContent sx={{ p: 0, position: 'relative', overflow: 'hidden' }}>
             <Box sx={{ px: 3, pt: 2 }}>
                 {allHotspots.map(h => (
                     <Button
@@ -189,6 +169,22 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                   
                 ))}
             </Box>
+            <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: 'gray.500',
+                    zIndex: 10
+                }}
+            >
+                <CloseButton />
+            </IconButton>
+
+            <DialogContent sx={{ p: 0, position: 'relative', overflow: 'hidden' }}>
+            
             {!selectedCard ? (
                 // Main dialog with cards view
                 <>
