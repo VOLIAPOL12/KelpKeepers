@@ -3,7 +3,7 @@ import { Box, IconButton, Tooltip } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { GlobalStyles } from '@mui/material';
 
-function HotspotButton({ position, isUnlocked, onClick, tooltip }) {
+function HotspotButton({ position, onClick, tooltip }) {
   return (
     <Box sx={{
       position: 'absolute',
@@ -11,22 +11,22 @@ function HotspotButton({ position, isUnlocked, onClick, tooltip }) {
       transform: 'translate(-50%, -50%)',
       zIndex: 10,
     }}>
-      <Tooltip title={isUnlocked ? tooltip : "Explore the kelp first"}>
+      <Tooltip title={tooltip}>
         <IconButton
           onClick={onClick}
           sx={{
-            backgroundColor: isUnlocked ? 'rgba(255, 255, 255, 0.3)' : 'rgba(100, 100, 100, 0.3)',
+            backgroundColor: 'rgba(255, 255, 255, 0.3)',
             '&:hover': {
-              backgroundColor: isUnlocked ? 'rgba(255, 255, 255, 0.6)' : 'rgba(100, 100, 100, 0.3)',
+              backgroundColor: 'rgba(255, 255, 255, 0.6)',
             },
             transition: 'all 0.3s ease',
-            cursor: isUnlocked ? 'pointer' : 'not-allowed',
-            animation: isUnlocked ? 'pulseGlow1 2s infinite ease-in-out': '',
+            cursor: 'pointer',
+            animation: 'pulseGlow1 2s infinite ease-in-out',
           }}
         >
           <AddCircleOutlineIcon 
             sx={{ 
-              color: isUnlocked ? 'white' : 'gray',
+              color: tooltip!=="CLIMATE FIGHTING POWERHOUSE" ? 'white' : 'black',
               fontSize: '2rem',
               
             }} 

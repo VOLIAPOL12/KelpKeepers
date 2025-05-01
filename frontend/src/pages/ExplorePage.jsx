@@ -7,15 +7,14 @@ import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import InfoDialog from "../components/molecules/InfoDialog";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 function ExplorePage() {
   const [unlockedHotspots, setUnlockedHotspots] = useState(['kelp']);
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
-  const [clickState, setClickState] = useState(
-    hotspotData.map(h => ({ id: h.id, clicked: false }))
-  );
+  const navigate = useNavigate();
 
   const [backgroundImage, setBackgroundImage] = useState(journeyDesktop);
 
@@ -50,6 +49,7 @@ function ExplorePage() {
     setActiveHotspot(logoHotspot);
     setOpenDialog(true);
     setUnlockedHotspots(prev => [...prev, logoHotspot.id]);
+    navigate('/login')
   };
 
   const handleCloseDialog = () => {
@@ -74,23 +74,23 @@ function ExplorePage() {
         }}
       />
 
-      {unlockedHotspots.length === 1 && (
-        <Box sx={{
-          position: 'absolute',
-          top: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          color: 'white',
-          padding: '12px 24px',
-          borderRadius: '24px',
-          textAlign: 'center',
-          maxWidth: '90%',
-          zIndex: 23
-        }}>
-          Click the glowing + sign on the kelp to begin exploring
-        </Box>
-      )}
+      
+      <Box sx={{
+        position: 'absolute',
+        top: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        color: 'white',
+        padding: '12px 24px',
+        borderRadius: '24px',
+        textAlign: 'center',
+        maxWidth: '90%',
+        zIndex: 23
+      }}>
+        Click the glowing + sign on the kelp to begin exploring
+      </Box>
+      
       
       {hotspotData.map((hotspot) => (
         hotspot.id === "logo" ?
