@@ -50,7 +50,7 @@ export const hotspotData = [
         id: 1,
         title: "Kelp Biology",
         image: image1,
-        hoverDescription: "Dive into the towering giants of the sea, nature’s fastest-growing and most adaptable organisms.",
+        hoverDescription: "Dive into the towering giants of the sea, nature's fastest-growing and most adaptable organisms.",
         descriptions: [
           {
             title: "Sky-High Seaweed",
@@ -111,7 +111,7 @@ export const hotspotData = [
         id: 4,
         title: "Ecosystems in Peril",
         image: image6,
-        hoverDescription: "Discover the beauty and fragility of one of Earth’s richest ecosystems ",
+        hoverDescription: "Discover the beauty and fragility of one of Earth's richest ecosystems ",
         descriptions: [
           {
             title: "Biodiversity Hotspot",
@@ -145,7 +145,7 @@ export const hotspotData = [
         descriptions: [
           {
             title: "Urchin Biology",
-            description: `The Purple Sea Urchin (Heliocidaris erythrogramma) is a spiny survivor of Australia’s southern coast, clinging to rocky
+            description: `The Purple Sea Urchin (Heliocidaris erythrogramma) is a spiny survivor of Australia's southern coast, clinging to rocky
         shores and shallow waters up to 35m deep. Ranging in colour from olive to vivid purple, this striking urchin was once mistaken for multiple
         species. It burrows into stone, hides beneath shells and sand, and gathers in tight clusters armored for survival.`,
           },
@@ -193,15 +193,15 @@ export const hotspotData = [
         Around 60% of all species in this region are endemic, meaning they are found nowhere else on Earth.`,
           },
           {
-            title: "Culinary Delicacy",
+            title: `Culinary Delicacy`,
             description: `Beneath their prickly armor lies a gastronomic gem: the sea urchin's gonads, known as "uni." Revered across global cuisines, uni is
       celebrated for its rich, creamy texture and briny sweetness. In Japan, it's a sushi staple, often served atop rice to highlight its delicate flavor.
-      Mediterranean cultures savor it spread on crostini or blended into pasta dishes, adding a touch of the sea to their culinary creations​`,
+      Mediterranean cultures savor it spread on crostini or blended into pasta dishes, adding a touch of the sea to their culinary creations.`,
           },
           {
-            title: "Harvesting Urchins",
+            title: `Harvesting Urchins`,
             description: `Efforts in harvesting sea urchins are small because removing them is time consuming and labor intensive. This is where you can make
-        a difference! Voluntary culling efforts and raising awareness can help restore balance to these vital ecosystems. ​`,
+        a difference! Voluntary culling efforts and raising awareness can help restore balance to these vital ecosystems.`,
           },
         ],
         type: "slider",
@@ -291,8 +291,8 @@ export const hotspotData = [
         title: "Sea Star",
         image: image26,
         hoverDescription: "Tasmanian seastars are nearing extinction as kelp forest decline disrupting its habitat.",
-        description: `One of the world’s rarest seastars, once abundant in Tasmania’s coastal waters, has declined by nearly 90% over the past 20 years.
-        Habitat destruction and competition from invasive seastar species have driven it to the brink of extinction.​`,
+        description: `One of the world's rarest seastars, once abundant in Tasmania's coastal waters, has declined by nearly 90% over the past 20 years.
+        Habitat destruction and competition from invasive seastar species have driven it to the brink of extinction.`,
         type: "info-graph",
       },
       {
@@ -301,7 +301,7 @@ export const hotspotData = [
         image: image25,
         hoverDescription: "Relies on kelp forests for camouflage and survival",
         description: `The  seadragon, with its leaf-like appendages, is listed as near threatened. Its survival depends on disappearing kelp, taking with
-        them the seadragon’s refuge and breeding grounds, pushing the species closer to extinction.​`,
+        them the seadragon's refuge and breeding grounds, pushing the species closer to extinction.`,
         type: "info-graph",
       },
       {
@@ -309,8 +309,8 @@ export const hotspotData = [
         title: "Spotted Handfish",
         image: image27,
         hoverDescription: "Loses habitat as kelp forests vanish from warming seas",
-        description: `Once abundant in Tasmania’s Derwent Estuary, the first marine fish listed as critically endangered. Its sharp decline is tied to habitat
-        degradation and the loss of vital kelp covered breeding sites, making it a symbol of marine crisis.​`,
+        description: `Once abundant in Tasmania's Derwent Estuary, the first marine fish listed as critically endangered. Its sharp decline is tied to habitat
+        degradation and the loss of vital kelp covered breeding sites, making it a symbol of marine crisis.`,
         type: "info-graph",
       },
       {
@@ -318,8 +318,8 @@ export const hotspotData = [
         title: "Abalone",
         image: image24,
         hoverDescription: "Needs healthy kelp forests to grow and feed",
-        description: `The marine jewels of Australia’s reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
-        kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.​`,
+        description: `The marine jewels of Australia's reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
+        kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.`,
         type: "info-graph",
       },
     ],
@@ -338,7 +338,7 @@ export const hotspotData = [
         title: "Restores Balance",
         image: image19,
         hoverDescription: "Kelp forests heal damaged ecosystems and revive lost life",
-        description: `These submerged forests are bustling metropolises, providing sanctuary and sustenance to a myriad of marine species. From the elusive spotted handfish to the vibrant abalone, countless creatures depend on kelp forests for survival. The decline of these habitats spells disaster for marine biodiversity, leading to cascading effects throughout the ecosystem.​`,
+        description: `These submerged forests are bustling metropolises, providing sanctuary and sustenance to a myriad of marine species. From the elusive spotted handfish to the vibrant abalone, countless creatures depend on kelp forests for survival. The decline of these habitats spells disaster for marine biodiversity, leading to cascading effects throughout the ecosystem.`,
         type: "info",
       },
       {
@@ -346,7 +346,7 @@ export const hotspotData = [
         title: "Coast Shield",
         image: image20,
         hoverDescription: "Kelp cushions coastlines, defending against erosion and storms",
-        description: `Acting as formidable barriers, kelp forests absorb the ocean's fury, dissipating wave energy and safeguarding coastlines from erosion. In an era where climate change intensifies storm activity and accelerates sea-level rise, the protective role of kelp becomes increasingly vital.​`,
+        description: `Acting as formidable barriers, kelp forests absorb the ocean's fury, dissipating wave energy and safeguarding coastlines from erosion. In an era where climate change intensifies storm activity and accelerates sea-level rise, the protective role of kelp becomes increasingly vital.`,
         type: "info",
       },
       {
@@ -354,7 +354,7 @@ export const hotspotData = [
         title: "Oxygen Machine",
         image: image21,
         hoverDescription: "Kelp releases oxygen, fueling ocean life and the planet",
-        description: `Through relentless photosynthesis, kelp forests are prolific oxygen factories, contributing significantly to the Earth's oxygen supply. Their unparalleled productivity not only supports marine life but also enriches the very air we breathe.​`,
+        description: `Through relentless photosynthesis, kelp forests are prolific oxygen factories, contributing significantly to the Earth's oxygen supply. Their unparalleled productivity not only supports marine life but also enriches the very air we breathe.`,
         type: "info",
       },
       {
@@ -363,7 +363,7 @@ export const hotspotData = [
         hoverDescription: "Divers cull sea urchins to revive reefs.",
         image: image22,
         hoverDescription: "Diver action transforms dying reefs back into thriving kelp forests",
-        description: `In the battle against climate change, kelp forests emerge as unsung heroes. They efficiently capture and store vast amounts of carbon dioxide, with Australian kelp forests accounting for over 30% of the nation's blue carbon sequestration. This remarkable capacity positions them as crucial allies in mitigating global warming.​`,
+        description: `In the battle against climate change, kelp forests emerge as unsung heroes. They efficiently capture and store vast amounts of carbon dioxide, with Australian kelp forests accounting for over 30% of the nation's blue carbon sequestration. This remarkable capacity positions them as crucial allies in mitigating global warming.`,
         type: "info",
       },
     ],
@@ -382,7 +382,7 @@ export const hotspotData = [
         title: "Urchin Culling and Harvesting",
         image: image23,
         hoverDescription: "Clearing urchins gives kelp a second chance",
-        description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized roe and as agricultural fertilizer, thereby financing further restoration efforts.​​`,
+        description: `In Port Phillip Bay, divers are waging an underwater war, systematically culling millions of purple sea urchins that have decimated approximately 60% of the bay's rocky reefs. Similarly, along New South Wales' southern coast, the 'Restoration Through Urchin Harvest' pilot program is transforming ecological threats into economic opportunities by harvesting urchins for their prized roe and as agricultural fertilizer, thereby financing further restoration efforts.`,
         type: "info",
       },
       {
@@ -390,14 +390,14 @@ export const hotspotData = [
         title: "Innovative Restoration",
         image: image24,
         hoverDescription: "New techniques spark kelp forest comebacks",
-        description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.​`,
+        description: `Beyond culling, pioneering methods are being deployed to rejuvenate kelp ecosystems. In Tasmania, a groundbreaking $3.5 million project unites marine industries, Indigenous communities, and scientists to rear and replant giant kelp, remove invasive seaweed species, and bolster populations of urchin-eating rock lobsters.  Additionally, the development of modular robotic platforms aims to enhance kelp restoration by actively managing urchin populations through advanced underwater technology.`,
         type: "info",
       },
       {
         id: 25,
         title: "YouTube Video",
         image: image25, 
-        hoverDescription: "Explore Mick Baron and Karen Gowlett-Holmes lead efforts to restore Tasmania’s vanishing giant kelp forests.",
+        hoverDescription: "Explore Mick Baron and Karen Gowlett-Holmes lead efforts to restore Tasmania's vanishing giant kelp forests.",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/rCRncbD1X7g",
       }
