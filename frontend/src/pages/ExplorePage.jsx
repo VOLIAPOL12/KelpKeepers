@@ -34,39 +34,18 @@ function ExplorePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const numClicked = clickState.filter(h => h.clicked).length;
-    if (numClicked >= 3) {
-      setShowLogo(true);
-    }
-  }, [clickState]);
-
   const handleHotspotClick = (hotspotId) => {
-    setClickState(prev =>
-      prev.map(h =>
-        h.id === hotspotId ? { ...h, clicked: true } : h
-      )
-    );
 
     if (unlockedHotspots.includes(hotspotId)) {
       const hotspot = hotspotData.find(h => h.id === hotspotId);
       setActiveHotspot(hotspot);
       setOpenDialog(true);
       
-      if (hotspotId === 'kelp' && unlockedHotspots.length === 1) {
-        setUnlockedHotspots(hotspotData.map(h => h.id));
-      }
     }
   };
 
   const handleLogoClick = () => {
     const logoHotspot = hotspotData.find(h => h.id === 'logo');
-
-    setClickState(prev =>
-      prev.map(h =>
-        h.id === logoHotspot.id ? { ...h, clicked: true } : h
-      )
-    );
 
     setActiveHotspot(logoHotspot);
     setOpenDialog(true);
