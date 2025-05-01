@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function ActivityCard({ activity, onClick }) {
-  const shortDesc = activity.description.length > 100
+export default function ActivityCard({ key, activity, onClick }) {
+  const shortDesc = activity.description?.length > 100
     ? activity.description.slice(0, 100) + '...'
     : activity.description;
 
