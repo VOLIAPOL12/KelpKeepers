@@ -13,7 +13,7 @@ export default function CreateActivity() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 假设你有登录状态，这里先写死host_user_id
+  // 假设你有登录状态，这里先写死 host_user_id
   const hostUserId = 1;
 
   const handleSubmit = async (e) => {
@@ -45,10 +45,11 @@ export default function CreateActivity() {
 
       if (!res.ok) throw new Error('Failed to create activity.');
 
-      const data = await res.json();
+      await res.json();
       setLoading(false);
-      // 创建成功后跳转到详情页
-      navigate(`/activity/${data.event_id}`);
+
+      // ✅ 创建成功后跳转到 Dashboard 页面
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Error occurred.');
       setLoading(false);
@@ -57,6 +58,14 @@ export default function CreateActivity() {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
+      {/* 返回按钮 */}
+      <button
+        onClick={() => navigate('/dashboard')}
+        className="mb-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+      >
+        ← Back to Dashboard
+      </button>
+
       <h2 className="text-2xl font-bold mb-6">Create New Diving Activity</h2>
       {error && <p className="text-red-600 mb-4">{error}</p>}
 
