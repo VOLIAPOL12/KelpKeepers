@@ -7,15 +7,14 @@ import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import InfoDialog from "../components/molecules/InfoDialog";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 function ExplorePage() {
   const [unlockedHotspots, setUnlockedHotspots] = useState(['kelp']);
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
-  const [clickState, setClickState] = useState(
-    hotspotData.map(h => ({ id: h.id, clicked: false }))
-  );
+  const navigate = useNavigate();
 
   const [backgroundImage, setBackgroundImage] = useState(journeyDesktop);
 
@@ -34,43 +33,23 @@ function ExplorePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    const numClicked = clickState.filter(h => h.clicked).length;
-    if (numClicked >= 3) {
-      setShowLogo(true);
-    }
-  }, [clickState]);
-
   const handleHotspotClick = (hotspotId) => {
-    setClickState(prev =>
-      prev.map(h =>
-        h.id === hotspotId ? { ...h, clicked: true } : h
-      )
-    );
 
     if (unlockedHotspots.includes(hotspotId)) {
       const hotspot = hotspotData.find(h => h.id === hotspotId);
       setActiveHotspot(hotspot);
       setOpenDialog(true);
       
-      if (hotspotId === 'kelp' && unlockedHotspots.length === 1) {
-        setUnlockedHotspots(hotspotData.map(h => h.id));
-      }
     }
   };
 
   const handleLogoClick = () => {
     const logoHotspot = hotspotData.find(h => h.id === 'logo');
 
-    setClickState(prev =>
-      prev.map(h =>
-        h.id === logoHotspot.id ? { ...h, clicked: true } : h
-      )
-    );
-
     setActiveHotspot(logoHotspot);
     setOpenDialog(true);
     setUnlockedHotspots(prev => [...prev, logoHotspot.id]);
+    navigate('/login')
   };
 
   const handleCloseDialog = () => {
@@ -95,23 +74,23 @@ function ExplorePage() {
         }}
       />
 
-      {unlockedHotspots.length === 1 && (
-        <Box sx={{
-          position: 'absolute',
-          top: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          color: 'white',
-          padding: '12px 24px',
-          borderRadius: '24px',
-          textAlign: 'center',
-          maxWidth: '90%',
-          zIndex: 23
-        }}>
-          Click the glowing + sign on the kelp to begin exploring
-        </Box>
-      )}
+      
+      <Box sx={{
+        position: 'absolute',
+        top: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        color: 'white',
+        padding: '12px 24px',
+        borderRadius: '24px',
+        textAlign: 'center',
+        maxWidth: '90%',
+        zIndex: 23
+      }}>
+        Click the glowing + sign on the kelp to begin exploring
+      </Box>
+      
       
       {hotspotData.map((hotspot) => (
         hotspot.id === "logo" ?
