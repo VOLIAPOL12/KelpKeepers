@@ -10,6 +10,7 @@ import newSpeciesRoutes from './routes/newSpeciesRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
 import userRouter from "./routes/userRoutes.js";
+import kelpDetectionRouter from "./routes/kelpDetectionRouter.js";
 
 
 dotenv.config();
@@ -34,6 +35,8 @@ app.use('/api/dive-sites', diveSitesRoutes);
 app.use('/api/new-species', newSpeciesRoutes);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/kelp-detection', kelpDetectionRouter);
+
 
 if(process.env.NODE_ENV==="production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));

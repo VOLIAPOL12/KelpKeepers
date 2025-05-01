@@ -12,6 +12,7 @@ import DashboardPage from './pages/DashboardPage';
 import { ToastContainer } from 'react-toastify';
 import ProtectedWrapper from './containers/ProtectedWrapper';
 import EmailVerify from './pages/authentication/EmailVerify';
+import PhotoCapturePage from './pages/PhotoCapturePage';
 
   function App() {
     return (
@@ -40,6 +41,7 @@ import EmailVerify from './pages/authentication/EmailVerify';
               </ProtectedWrapper>
             }
           />
+          <Route path="/camera" element={<PhotoCapturePage/>} />
         </Routes>
       </div>
     );
