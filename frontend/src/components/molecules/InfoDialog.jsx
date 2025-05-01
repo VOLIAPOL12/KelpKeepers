@@ -48,14 +48,19 @@ const CustomSlider = styled(Slider)({
     },
   });
 
-function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
+function InfoDialog({ open, onClose, hotspot, allHotspots }) {
     const [showTitle, setShowTitle] = useState(true);
     const [showCards, setShowCards] = useState(false);
     const [titlePosition, setTitlePosition] = useState('center');
     const [selectedCard, setSelectedCard] = useState(null);
+    const [activeHotspot, setActiveHotspot] = useState(hotspot);
 
     // Early return if no hotspot
     if (!hotspot) return null;
+
+    useEffect(() => {
+        setActiveHotspot(hotspot);
+    }, [hotspot])
 
     useEffect(() => {
         if (open) {
@@ -117,16 +122,23 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
             slots={{ transition: GrowFromOrigin}}
             PaperProps={{
                 sx: {
-                    borderRadius: 4,
-                    maxWidth: '95vw',
-                    bgcolor: 'rgba(245, 245, 245, 0.95)',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    overflow: 'hidden',
-                    border: '4px solid #1a93ca',
-                    height: 'auto',
-                    maxHeight: '100vh',
+                  width: {
+                    xs: '95vw',
+                    sm: '80vw',
+                    md: '65vw'
+                  },
+                  height: {
+                    xs: '90vh',
+                    sm: '85vh',
+                    md: '80vh'
+                  },
+                  margin: 'auto',
+                  borderRadius: 4,
+                  bgcolor: 'rgba(255, 255, 255, 0.95)',
+                  overflow: 'hidden',
+                  border: '4px solid #1a93ca',
                 }
-            }}
+              }}
         >
             <IconButton
                 aria-label="close"
@@ -143,6 +155,40 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
             </IconButton>
 
             <DialogContent sx={{ p: 0, position: 'relative', overflow: 'hidden' }}>
+            <Box sx={{ px: 3, pt: 2 }}>
+                {allHotspots.map(h => (
+                    <Button
+                        key={h.id}
+                        onClick={() => setActiveHotspot(h)}
+                        sx={{
+                        textTransform: 'none',
+                        fontWeight: 'bold',
+                        px: 2.5,
+                        py: 1,
+                        borderRadius: '999px',
+                        mx: 0.5,
+                        fontSize: '0.85rem',
+                        transition: 'all 0.3s ease-in-out',
+                        background: h.id === activeHotspot.id 
+                            ? 'linear-gradient(135deg, #3ec6ff, #0077ff)' 
+                            : '#f0f0f0',
+                        color: h.id === activeHotspot.id ? 'white' : '#333',
+                        boxShadow: h.id === activeHotspot.id 
+                            ? '0 0 10px rgba(0, 119, 255, 0.5)' 
+                            : '0 1px 3px rgba(0,0,0,0.1)',
+                        '&:hover': {
+                            background: h.id === activeHotspot.id 
+                            ? 'linear-gradient(135deg, #3ec6ff, #0066cc)' 
+                            : '#e0e0e0',
+                            boxShadow: '0 0 8px rgba(0, 119, 255, 0.3)',
+                        }
+                        }}
+                    >
+                        {h.title}
+                    </Button>
+                  
+                ))}
+            </Box>
             {!selectedCard ? (
                 // Main dialog with cards view
                 <>
@@ -163,21 +209,21 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                 color: '#333'
                             }}
                         >
-                            {hotspot.title}
+                            {activeHotspot.title}
                         </Typography>
                     </Box>
 
                     <Fade in={showCards} timeout={800}>
-                        {hotspot.dialogType === "cards" ? (
+                        {activeHotspot.dialogType === "cards" ? (
                             <Box sx={{ px: 4, pb: 10 }}>
                                 <Grid container spacing={2}>
-                                    {hotspot.content && hotspot.content.map((card) => (
+                                    {activeHotspot.content && activeHotspot.content.map((card) => (
                                         <Grid 
                                             item 
                                             size={{
-                                                xs: hotspot.layout?.xs || 12,
-                                                sm: hotspot.layout?.sm || 6,
-                                                md: hotspot.layout?.md || 3
+                                                xs: activeHotspot.layout?.xs || 12,
+                                                sm: activeHotspot.layout?.sm || 6,
+                                                md: activeHotspot.layout?.md || 3
                                             }}
                                             key={card.id}
                                         >
@@ -187,12 +233,13 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                                 sx={{ 
                                                     cursor: 'pointer',
                                                     position: 'relative',
-                                                    borderRadius: '20px',
-                                                    height: 200,
+                                                    borderRadius: '16px',
+                                                    height: 150, // previously 200
                                                     overflow: 'hidden',
-                                                    transition: 'transform 0.3s, box-shadow 0.3s',
+                                                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                                                     '&:hover': {
                                                     transform: 'scale(1.03)',
+                                                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
                                                     },
                                                     ...getCardStyle(card.type)
                                                 }}
@@ -311,7 +358,7 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                 color: '#333'
                             }}
                         >
-                            {hotspot.title || "BATTLE TO REVIVE KELP"}
+                            {activeHotspot.title || "BATTLE TO REVIVE KELP"}
                         </Typography>
                     </Box>
 
@@ -320,7 +367,7 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                             <Grid container spacing={4}>
                                 {/* Left Column - Cards */}
                                 <Grid item xs={12} md={3}>
-                                    {hotspot.content.map((card, index) => (
+                                    {activeHotspot.content.map((card, index) => (
                                         <Card 
                                             key={card.id || index}
                                             onClick={() => handleCardClick(card)}    
@@ -329,7 +376,7 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                                 position: 'relative',
                                                 borderRadius: '20px',
                                                 height: '200px',
-                                                marginBottom: index < hotspot.content.length - 1 ? 3 : 0,
+                                                marginBottom: index < activeHotspot.content.length - 1 ? 3 : 0,
                                                 transition: 'transform 0.3s, box-shadow 0.3s',
                                                 '&:hover': {
                                                     transform: 'scale(1.03)',

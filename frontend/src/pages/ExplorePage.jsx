@@ -10,7 +10,6 @@ import { GlobalStyles } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 function ExplorePage() {
-  const [unlockedHotspots, setUnlockedHotspots] = useState(['kelp']);
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
@@ -35,12 +34,9 @@ function ExplorePage() {
 
   const handleHotspotClick = (hotspotId) => {
 
-    if (unlockedHotspots.includes(hotspotId)) {
       const hotspot = hotspotData.find(h => h.id === hotspotId);
       setActiveHotspot(hotspot);
       setOpenDialog(true);
-      
-    }
   };
 
   const handleLogoClick = () => {
@@ -48,7 +44,6 @@ function ExplorePage() {
 
     setActiveHotspot(logoHotspot);
     setOpenDialog(true);
-    setUnlockedHotspots(prev => [...prev, logoHotspot.id]);
     navigate('/login')
   };
 
@@ -127,9 +122,7 @@ function ExplorePage() {
             </Box>
             :
             <HotspotButton
-                key={hotspot.id}
                 position={hotspot.position}
-                isUnlocked={unlockedHotspots.includes(hotspot.id)}
                 onClick={() => handleHotspotClick(hotspot.id)}
                 tooltip={hotspot.title}
             />
@@ -140,6 +133,7 @@ function ExplorePage() {
           open={openDialog}
           onClose={handleCloseDialog}
           hotspot={activeHotspot}
+          allHotspots={hotspotData}
         />
       )}
 
