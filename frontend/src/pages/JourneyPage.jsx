@@ -174,7 +174,8 @@ function JourneyPage() {
                                 fontSize: { xs: '20px', md: '30px'}
                             }}
                         >
-                            Hidden beneath the waves, Southern Australia's giant kelp forests are more than just marine ecosystems. They are the lifeblood of coastal communities, supporting local fisheries, tourism, and recreation industries worth over $10 billion.
+                            Hidden beneath the waves, Southern Australia's giant kelp forests are more than just marine ecosystems. They are the lifeblood of coastal
+                            communities, supporting local fisheries, tourism, and recreation industries worth over $10 billion.
                         </FadeTypography>
         
                         <FadeTypography 
