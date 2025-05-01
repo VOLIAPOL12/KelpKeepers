@@ -64,6 +64,12 @@ const Dashboard = () => {
           >
             Create Activity
           </button>
+          <button
+            onClick={() => navigate('/camera')}
+            className="bg-indigo-500 hover:bg-indigo-300 text-white font-semibold px-5 py-2 rounded-full shadow-md transition-all duration-200 focus:ring-2 focus:ring-indigo-300"
+          >
+            Camera
+          </button>
         </div>
         <div
           onClick={() => navigate('/profile')}
