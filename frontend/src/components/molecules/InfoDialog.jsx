@@ -184,66 +184,111 @@ function InfoDialog({ open, onClose, hotspot, originPosition, onCardClick }) {
                                             
 
                                             <Card 
-                                                onClick={() => handleCardClick(card)}    
-                                                sx={{ 
-                                                cursor: 'pointer',
-                                                position: 'relative',
-                                                borderRadius: '20px',
-                                                height: 200,
-                                                transition: 'transform 0.3s, box-shadow 0.3s',
-                                                '&:hover': {
-                                                    transform: 'scale(1.03)',
-                                                },
-                                                ...getCardStyle(card.type)
-                                                }}
-                                            >
-                                                {/* Image as background layer */}
-                                                <CardMedia
-                                                component="img"
-                                                image={card.image}
-                                                alt={card.title}
-                                                sx={{
-                                                    height: '100%',
-                                                    width: '100%',
-                                                    objectFit: 'cover',
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    left: 0,
-                                                    zIndex: 0,
-                                                    borderRadius: 1
-                                                }}
-                                                />
+  onClick={() => handleCardClick(card)}    
+  sx={{ 
+    cursor: 'pointer',
+    position: 'relative',
+    borderRadius: '20px',
+    height: 200,
+    overflow: 'hidden',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    '&:hover': {
+      transform: 'scale(1.03)',
+    },
+    ...getCardStyle(card.type)
+  }}
+>
+  {/* Image as background */}
+  <CardMedia
+    component="img"
+    image={card.image}
+    alt={card.title}
+    sx={{
+      height: '100%',
+      width: '100%',
+      objectFit: 'cover',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      zIndex: 0,
+      borderRadius: 1
+    }}
+  />
 
-                                                {/* Overlay content */}
-                                                <Box
-                                                sx={{
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    left: 0,
-                                                    height: '100%',
-                                                    width: '100%',
-                                                    zIndex: 1,
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    backdropFilter: 'brightness(0.6)',
-                                                    borderRadius: '20px',
-                                                    px: 1
-                                                }}
-                                                >
-                                                <Typography 
-                                                    variant="subtitle1" 
-                                                    align="center"
-                                                    sx={{ 
-                                                    fontWeight: 'bold',
-                                                    color: '#fff',
-                                                    textShadow: '0 1px 3px rgba(0,0,0,0.7)'
-                                                    }}
-                                                >
-                                                    {card.title}
-                                                </Typography>
-                                                </Box>
-                                            </Card>
+  {/* Normal content */}
+  <Box
+    sx={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      width: '100%',
+      zIndex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backdropFilter: 'brightness(0.6)',
+      borderRadius: '20px',
+      px: 1,
+      transition: 'opacity 0.3s',
+      opacity: 1,
+      '&:hover': {
+        opacity: 0, // Fade out on hover
+      }
+    }}
+  >
+    <Typography 
+      variant="subtitle1" 
+      align="center"
+      sx={{ 
+        fontWeight: 'bold',
+        color: '#fff',
+        textShadow: '0 1px 3px rgba(0,0,0,0.7)',
+        px: 2
+      }}
+    >
+      {card.title}
+    </Typography>
+  </Box>
+
+  {/* Hover content */}
+  <Box
+    sx={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      width: '100%',
+      zIndex: 2,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backdropFilter: 'brightness(0.6)',
+      borderRadius: '20px',
+      px: 1,
+      transition: 'opacity 0.3s',
+      opacity: 0,
+      '&:hover': {
+        backgroundColor: "#000",
+        opacity: 1, // Fade in on hover
+      }
+    }}
+  >
+    <Typography 
+      variant="body1" 
+      align="center"
+      sx={{ 
+        fontWeight: 'bold',
+        color: '#fff',
+        textShadow: '0 1px 3px rgba(0,0,0,0.7)',
+        px: 2
+      }}
+    >
+      {card.hoverDescription}
+    </Typography>
+  </Box>
+</Card>
+
                                         </Grid>
                                     ))}
                                 </Grid>

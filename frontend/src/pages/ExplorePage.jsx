@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box } from '@mui/material';
-import journey from "../assets/journey.png";
-import { hotspotData } from "../assets/information.js"; // 导入所有的 hotspot 数据
+import journeyDesktop from "../assets/images/final-interactive-background.jpg";
+import journeyMobile from "../assets/images/final-interactive-background-mobile.png";
+import { hotspotData } from "../assets/information.js"; 
 import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import InfoDialog from "../components/molecules/InfoDialog";
 import logo from "../assets/logo.png";
@@ -12,13 +13,26 @@ function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
-
   const [clickState, setClickState] = useState(
-    hotspotData.map(h => ({
-      id: h.id,
-      clicked: false
-    }))
+    hotspotData.map(h => ({ id: h.id, clicked: false }))
   );
+
+  const [backgroundImage, setBackgroundImage] = useState(journeyDesktop);
+
+  useEffect(() => {
+    function handleResize() {
+      const isPortrait = window.innerHeight > window.innerWidth;
+      if (isPortrait) {
+        setBackgroundImage(journeyMobile);
+      } else {
+        setBackgroundImage(journeyDesktop);
+      }
+    }
+
+    handleResize(); // set initially on load
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const numClicked = clickState.filter(h => h.clicked).length;
@@ -27,7 +41,6 @@ function ExplorePage() {
     }
   }, [clickState]);
 
-  // 点击 Hotspot 时的处理
   const handleHotspotClick = (hotspotId) => {
     setClickState(prev =>
       prev.map(h =>
@@ -46,9 +59,7 @@ function ExplorePage() {
     }
   };
 
-  // 点击 Logo 时的处理
   const handleLogoClick = () => {
-    // 获取 logo 数据并显示对应的内容
     const logoHotspot = hotspotData.find(h => h.id === 'logo');
 
     setClickState(prev =>
@@ -59,8 +70,6 @@ function ExplorePage() {
 
     setActiveHotspot(logoHotspot);
     setOpenDialog(true);
-    
-    // 解锁logo的内容（如果需要）
     setUnlockedHotspots(prev => [...prev, logoHotspot.id]);
   };
 
@@ -73,15 +82,16 @@ function ExplorePage() {
       position: 'relative', 
       width: '100%', 
       overflow: 'hidden',
-      aspectRatio: '16/9',
+      height: '100vh', // Fill full screen
     }}>
       <Box 
         component="img"
-        src={journey}
+        src={backgroundImage}
         alt="Underwater kelp forest scene"
         sx={{
           width: '100%',
           height: '100%',
+          objectFit: 'cover',
         }}
       />
 
@@ -106,26 +116,27 @@ function ExplorePage() {
       {hotspotData.map((hotspot) => (
         hotspot.id === "logo" ?
             <Box
+                key={hotspot.id}
                 sx={{
-                position: 'absolute',
-                ...hotspot.position,
-                color: '#fff',
-                px: 3,
-                py: 2,
-                borderRadius: 2,
-                width: {
-                    xs: '25%',
-                    sm: '24%',
-                    md: '17%',
-                    lg: '15%',
-                },
-                zIndex: 20,
-                cursor: 'pointer',
-                transform: 'translate(-50%, -50%)',
+                  position: 'absolute',
+                  ...hotspot.position,
+                  color: '#fff',
+                  px: 3,
+                  py: 2,
+                  borderRadius: 2,
+                  width: {
+                      xs: '25%',
+                      sm: '24%',
+                      md: '17%',
+                      lg: '15%',
+                  },
+                  zIndex: 20,
+                  cursor: 'pointer',
+                  transform: 'translate(-50%, -50%)',
                 }}
-                onClick={handleLogoClick}  // 点击 logo 时触发 handleLogoClick
+                onClick={handleLogoClick}
             >
-                <img
+              <img
                 src={logo}
                 alt="Milestone Logo"
                 style={{
@@ -133,7 +144,7 @@ function ExplorePage() {
                     filter: 'drop-shadow(0 0 10px gold) drop-shadow(0 0 20px goldenrod)',
                     animation: 'pulseGlow 2s infinite ease-in-out'
                 }}
-                />
+              />
             </Box>
             :
             <HotspotButton
