@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getScoreboard } from '../mocks/api';
 
-export default function ScoreboardPage() {
+export default function Scoreboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
