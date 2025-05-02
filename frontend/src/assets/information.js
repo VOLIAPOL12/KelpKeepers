@@ -35,7 +35,12 @@ import img11 from '../assets/images/11.png';
 import img12 from '../assets/images/12.png';
 import logo from '../assets/logo.png';
 
-
+import infoIcon from '../assets/images/navIcons/info.png';
+import powerhouseIcon from '../assets/images/navIcons/powerhouse.png';
+import seaUrchinIcon from '../assets/images/navIcons/sea-urchin.png';
+import diverIcon from '../assets/images/navIcons/sea.png';
+import seaHorseIcon from '../assets/images/navIcons/seahorse.png';
+import kelpIcon from '../assets/images/navIcons/seaweed.png';
 
 export const hotspotData = [
   {
@@ -43,6 +48,7 @@ export const hotspotData = [
     position: { top: '45%', right: '17%' },
     title: 'THE UNDERWATER JUNGLE',
     show: false,
+    icon: kelpIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -134,6 +140,7 @@ export const hotspotData = [
     position: { top: '61%', left: '7%' },
     title: 'THE URCHIN INVASION',
     show: false,
+    icon: seaUrchinIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -283,6 +290,7 @@ export const hotspotData = [
     position: { top: '21%', left: '23%' },
     title: 'THE SPECIES AT RISK',
     show: false,
+    icon: seaHorseIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 6 },
     content: [
@@ -330,6 +338,7 @@ export const hotspotData = [
     position: { top: '5%', left: '61%', color: 'black' },
     title: 'CLIMATE FIGHTING POWERHOUSE',
     show: false,
+    icon: powerhouseIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -374,6 +383,7 @@ export const hotspotData = [
     position: { top: '52%', left: '45%' },
     title: 'BATTLE TO REVIVE KELP',
     dialogType: 'cards',
+    icon: diverIcon,
     show: false,
     layout: { xs: 12, sm: 6, md: 4 },
     content: [
@@ -408,6 +418,7 @@ export const hotspotData = [
     id: 'logo',
     position: { top: '25%', left: '50%' },
     image: logo,
+    icon: infoIcon,
     title: 'ABOUT US',
     dialogType: 'cards',
     show: false,
