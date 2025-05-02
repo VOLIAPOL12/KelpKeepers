@@ -66,6 +66,12 @@ const Dashboard = () => {
           >
             Create Activity
           </button>
+          <button
+            onClick={() => navigate('/camera')}
+            className="btn bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300"
+          >
+            Camera
+          </button>
         </div>
         <div
           onClick={() => navigate('/profile')}

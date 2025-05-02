@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { Button, Box, Typography, CardMedia, CircularProgress } from '@mui/material';
+import { AppContent } from '../context/AppContext';
 
 function PhotoCapturePage() {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [resultJson, setResultJson] = useState(false)
+
+  const { backendUri } = useContext(AppContent);
   
 
   const handleAnalyze = async () => {
@@ -16,7 +19,7 @@ function PhotoCapturePage() {
     formData.append('image', blob, 'kelp-photo.jpg');
   
     try {
-      const res = await axios.post('http://localhost:5000/api/kelp-detection/identification', formData);
+      const res = await axios.post(backendUri + '/api/kelp-detection/identification', formData);
       const info = res.data.information;
       setAnalysisResult(info); // optional: keep for reference
 
