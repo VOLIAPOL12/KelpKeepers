@@ -8,7 +8,6 @@ import LoginPage from './pages/authentication/LoginPage';
 import UnauthenticatedPageWrapper from './containers/UnauthenticatedPageWrapper';
 import Dashboard from './pages/DashBoard';
 import DivingHistory from './pages/DivingHistory.jsx';
-import Scoreboard from './pages/Scoreboard';
 import UserProfile from './pages/UserProfile';
 import ActivityDetail from './pages/ActivityDetail';
 import CreateActivity from './pages/CreateActivity';
@@ -17,6 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import ProtectedWrapper from './containers/ProtectedWrapper';
 import EmailVerify from './pages/authentication/EmailVerify';
 import PhotoCapturePage from './pages/PhotoCapturePage';
+import Scoreboard from './pages/ScoreBoard.jsx';
 
   
 function App() {
