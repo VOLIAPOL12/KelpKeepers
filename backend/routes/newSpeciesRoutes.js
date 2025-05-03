@@ -23,7 +23,7 @@ router.get('/:species', async (req, res) => {
 
     try {
         console.log("Querying database for species:", species);
-        const result = await pool.query(`SELECT * FROM "${tables[species]}" LIMIT 100;`);
+        const result = await pool.query(`SELECT * FROM "${tables[species]}" ;`);
         console.log("Query successful, rows returned:", result.rows.length);
         res.json(result.rows);
     } catch (error) {
