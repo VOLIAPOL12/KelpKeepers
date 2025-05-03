@@ -45,8 +45,18 @@ import kelpIcon from '../assets/images/navIcons/seaweed.png';
 export const hotspotData = [
   {
     id: 'kelp',
-    position: { top: '45%', right: '17%' },
+    position: { 
+      top: {
+        xs: '45%',
+        md: '45%'
+      },
+      left: {
+        xs: '85%',
+        md: '78%'
+      }
+    },
     title: 'THE UNDERWATER JUNGLE',
+    label: "Kelp",
     show: false,
     icon: kelpIcon,
     dialogType: 'cards',
@@ -137,8 +147,18 @@ export const hotspotData = [
   },
   {
     id: 'kelp-dead',
-    position: { top: '61%', left: '7%' },
+    position: {
+      top: {
+        xs: '76%',
+        md: '61%'
+      },
+      left: {
+        xs: '15%',
+        md: '7%'
+      }
+    },
     title: 'THE URCHIN INVASION',
+    label: "Urchins",
     show: false,
     icon: seaUrchinIcon,
     dialogType: 'cards',
@@ -289,6 +309,7 @@ export const hotspotData = [
     id: 'fish',
     position: { top: '21%', left: '23%' },
     title: 'THE SPECIES AT RISK',
+    label: "Endangered Species",
     show: false,
     icon: seaHorseIcon,
     dialogType: 'cards',
@@ -335,8 +356,9 @@ export const hotspotData = [
   },
   { 
     id: 'sunlight',
-    position: { top: '5%', left: '61%', color: 'black' },
+    position: { top: { xs: '20%', md: '5%'}, left: { xs:'80%', md:'61%'}, color: 'black' },
     title: 'CLIMATE FIGHTING POWERHOUSE',
+    label: "Climate Change Impacts",
     show: false,
     icon: powerhouseIcon,
     dialogType: 'cards',
@@ -382,6 +404,7 @@ export const hotspotData = [
     id: 'diver',
     position: { top: '52%', left: '45%' },
     title: 'BATTLE TO REVIVE KELP',
+    label: 'Kelp Restoration Divers',
     dialogType: 'cards',
     icon: diverIcon,
     show: false,
@@ -416,10 +439,11 @@ export const hotspotData = [
   },
   {
     id: 'logo',
-    position: { top: '25%', left: '50%' },
+    position: { top: {xs:'30%', md:'25%'}, left: '50%' },
     image: logo,
     icon: infoIcon,
     title: 'ABOUT US',
+    label: 'How you can Help',
     dialogType: 'cards',
     show: false,
     layout: { xs: 12, sm: 6, md: 6 },
