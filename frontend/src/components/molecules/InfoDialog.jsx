@@ -135,40 +135,6 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                 }
               }}
         >
-            <Box sx={{ px: 3, pt: 2 }}>
-                {allHotspots.map(h => (
-                    <Button
-                        key={h.id}
-                        onClick={() => setActiveHotspot(h)}
-                        sx={{
-                        textTransform: 'none',
-                        fontWeight: 'bold',
-                        px: 2.5,
-                        py: 1,
-                        borderRadius: '999px',
-                        mx: 0.5,
-                        fontSize: '0.85rem',
-                        transition: 'all 0.3s ease-in-out',
-                        background: h.id === activeHotspot.id 
-                            ? 'linear-gradient(135deg, #3ec6ff, #0077ff)' 
-                            : '#f0f0f0',
-                        color: h.id === activeHotspot.id ? 'white' : '#333',
-                        boxShadow: h.id === activeHotspot.id 
-                            ? '0 0 10px rgba(0, 119, 255, 0.5)' 
-                            : '0 1px 3px rgba(0,0,0,0.1)',
-                        '&:hover': {
-                            background: h.id === activeHotspot.id 
-                            ? 'linear-gradient(135deg, #3ec6ff, #0066cc)' 
-                            : '#e0e0e0',
-                            boxShadow: '0 0 8px rgba(0, 119, 255, 0.3)',
-                        }
-                        }}
-                    >
-                        {h.title}
-                    </Button>
-                  
-                ))}
-            </Box>
             <IconButton
                 aria-label="close"
                 onClick={onClose}
@@ -184,7 +150,52 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
             </IconButton>
 
             <DialogContent sx={{ p: 0, position: 'relative', overflow: 'hidden' }}>
-            
+            <Box sx={{ px: 3, pt: 2, display: 'flex', flexWrap: 'wrap' }}>
+  {allHotspots.map(h => (
+    <Button
+      key={h.id}
+      onClick={() => setActiveHotspot(h)}
+      sx={{
+        textTransform: 'none',
+        fontWeight: 'bold',
+        px: 2,
+        py: 1.2,
+        borderRadius: '999px',
+        mx: 0.5,
+        fontSize: '0.85rem',
+        transition: 'all 0.3s ease-in-out',
+        background: h.id === activeHotspot.id 
+          ? 'linear-gradient(135deg, #3ec6ff, #0077ff)' 
+          : '#f0f0f0',
+        color: h.id === activeHotspot.id ? 'white' : '#333',
+        boxShadow: h.id === activeHotspot.id 
+          ? '0 0 10px rgba(0, 119, 255, 0.5)' 
+          : '0 1px 3px rgba(0,0,0,0.1)',
+        '&:hover': {
+          background: h.id === activeHotspot.id 
+            ? 'linear-gradient(135deg, #3ec6ff, #0066cc)' 
+            : '#e0e0e0',
+          boxShadow: '0 0 8px rgba(0, 119, 255, 0.3)',
+        },
+        minWidth: '50px',
+        height: '50px',
+        padding: '6px',
+      }}
+    >
+      <Box
+        component="img"
+        src={h.icon}
+        alt={h.title}
+        sx={{
+          width: 24,
+          height: 24,
+          filter: h.id === activeHotspot.id ? 'invert(1)' : 'none',
+        }}
+      />
+    </Button>
+  ))}
+</Box>
+
             {!selectedCard ? (
                 // Main dialog with cards view
                 <>

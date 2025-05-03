@@ -1,15 +1,22 @@
-import { Avatar, Container, Grid, Paper, TextField, Typography, Link, Box, Button } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import {
+    Avatar,
+    Container,
+    Grid,
+    Paper,
+    Typography,
+    Link,
+    Box,
+    Button
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useContext, useState } from "react";
 import { AppContent } from "../../context/AppContext";
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
 import { Person, Lock, Email } from '@mui/icons-material';
 import axios from "axios";
 import CustomInput from "../../components/atoms/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-
-
 
 function LoginPage() {
     const [state, setState] = useState('Login');
@@ -24,39 +31,36 @@ function LoginPage() {
         try {
             e.preventDefault();
             axios.defaults.withCredentials = true;
-        
-            // Basic Validation
-            if (state === 'Sign Up') {
-                if (!name.trim()) {
+
+            if (state === 'Sign Up' && !name.trim()) {
                 toast.error('Name is required');
                 return;
-                }
             }
-        
+
             if (!email.trim()) {
                 toast.error('Email is required');
                 return;
             }
-        
+
             if (!/\S+@\S+\.\S+/.test(email)) {
                 toast.error('Please enter a valid email address');
                 return;
             }
-        
+
             if (!password) {
                 toast.error('Password is required');
                 return;
             }
-        
+
             if (password.length < 8) {
                 toast.error('Password must be at least 8 characters');
                 return;
             }
 
-            if(state === "Sign Up") {
+            if (state === "Sign Up") {
                 const role = "diver";
-                const { data } = await axios.post(backendUri + '/api/auth/register', {name, email, password, role});
-                if(data.success) {
+                const { data } = await axios.post(backendUri + '/api/auth/register', { name, email, password, role });
+                if (data.success) {
                     setIsLoggedIn(true);
                     await getAuthState();
                     await getUserData();
@@ -65,8 +69,8 @@ function LoginPage() {
                     toast.error(data.message);
                 }
             } else {
-                const { data } = await axios.post(backendUri + '/api/auth/login', {email, password});
-                if(data.success) {
+                const { data } = await axios.post(backendUri + '/api/auth/login', { email, password });
+                if (data.success) {
                     setIsLoggedIn(true);
                     getAuthState();
                     getUserData();
@@ -75,76 +79,139 @@ function LoginPage() {
                     toast.error(data.message);
                 }
             }
-            
+
         } catch (error) {
             console.error(error);
             toast.error(error.response?.data?.message || 'Something went wrong');
         }
     };
-      
 
-    return(
-        <Container maxWidth="xs">
-            <Paper elevation={10} sx={{marginTop: 8, padding: 2}}>
-                <Avatar sx={{ mx: 'auto', bgColor: 'secondary.main', textAlign: "center",}}>
+    return (
+        <Container
+            maxWidth="false"
+            disableGutters
+            sx={{
+                minHeight: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                background: 'linear-gradient(135deg, #c3ecf5, #e1eec3)',
+                p: 2
+            }}
+        >
+            <Paper
+                elevation={10}
+                sx={{
+                    maxWidth: 400,
+                    width: '100%',
+                    px: 4,
+                    py: 6,
+                    borderRadius: 4,
+                    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                    backdropFilter: 'blur(10px)',
+                    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.2)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    textAlign: 'center',
+                }}
+            >
+                <Avatar sx={{ mx: 'auto', bgcolor: 'primary.main', mb: 2 }}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component='h1' variant='h5' sx={{textAlign: "center"}}>
-                    {state === 'Sign Up' ? 'Create Account' : 'Login'}
+                <Typography component='h1' variant='h5' sx={{ fontWeight: 600 }}>
+                    {state === 'Sign Up' ? 'Create Account' : 'Welcome Back'}
                 </Typography>
-                <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt : 1 }}>
+
+                <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
                     {state === 'Sign Up' && (
                         <CustomInput
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Full Name"
-                            icon={<Person style={{ color: '#ccc' }} />}
+                            icon={<Person sx={{ color: 'text.secondary' }} />}
                         />
                     )}
                     <CustomInput
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
-                        icon={<Email style={{ color: '#ccc' }} />}
+                        icon={<Email sx={{ color: 'text.secondary' }} />}
                     />
                     <CustomInput
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                         type="password"
-                        icon={<Lock style={{ color: '#ccc' }} />}
+                        icon={<Lock sx={{ color: 'text.secondary' }} />}
                     />
-                    <Button type="submit" variant="contained" fullWidth sx={{ mt : 1 }}>
+
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        size="large"
+                        sx={{
+                            mt: 3,
+                            py: 1.5,
+                            borderRadius: 3,
+                            fontWeight: 'bold',
+                            textTransform: 'none',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0px 6px 20px rgba(0,0,0,0.2)',
+                            },
+                        }}
+                    >
                         {state}
                     </Button>
                 </Box>
 
-                <Grid container justifyContent='space-between' sx={{ my : 1 }}>
+                <Grid container justifyContent="flex-end" sx={{ mt: 2 }}>
                     <Grid item>
-                        <Link component={RouterLink} to="/forgot">
+                        <Link component={RouterLink} to="/forgot" underline="hover" color="primary">
                             Forgot Password?
                         </Link>
                     </Grid>
                 </Grid>
 
-                { state === 'Sign Up' ? (
-                    <p className="text-muted">
-                        Already have an account?{' '}
-                        <span className="text-primary" role="button" style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => setState('Login')}>
-                            Login here
-                        </span>
-                    </p>
-                ) : (
-                    <p className="text-muted">
-                        Don't have an account?{' '}
-                        <span className="text-primary" role="button" style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => setState('Sign Up')}>
-                            Sign up
-                        </span>
-                    </p>
-                )}
+                <Typography variant="body2" sx={{ mt: 4, color: 'text.secondary' }}>
+                    {state === 'Sign Up' ? (
+                        <>
+                            Already have an account?{' '}
+                            <Box
+                                component="span"
+                                sx={{
+                                    color: 'primary.main',
+                                    cursor: 'pointer',
+                                    textDecoration: 'underline',
+                                    fontWeight: 500,
+                                }}
+                                onClick={() => setState('Login')}
+                            >
+                                Login here
+                            </Box>
+                        </>
+                    ) : (
+                        <>
+                            Don't have an account?{' '}
+                            <Box
+                                component="span"
+                                sx={{
+                                    color: 'primary.main',
+                                    cursor: 'pointer',
+                                    textDecoration: 'underline',
+                                    fontWeight: 500,
+                                }}
+                                onClick={() => setState('Sign Up')}
+                            >
+                                Sign up
+                            </Box>
+                        </>
+                    )}
+                </Typography>
             </Paper>
         </Container>
-    )
+    );
 }
 
-export default LoginPage
+export default LoginPage;

@@ -4,7 +4,7 @@ import ActivityCard from '../components/ActivityCard';
 import { useNavigate } from 'react-router-dom';
 
 const DivingHistory = () => {
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState(['']);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
