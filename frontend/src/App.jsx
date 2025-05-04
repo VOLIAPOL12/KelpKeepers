@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} />
         <Route path="/journey" element={<JourneyPage />} />
-        <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/explore" element={<UnauthenticatedPageWrapper><ExplorePage /></UnauthenticatedPageWrapper>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot" element={<ResetPasswordPage />} />
           <Route
