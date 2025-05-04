@@ -50,7 +50,6 @@ function ExplorePage() {
 
     setActiveHotspot(logoHotspot);
     setOpenDialog(true);
-    navigate('/login')
   };
 
   const handleCloseDialog = () => {
@@ -78,7 +77,7 @@ function ExplorePage() {
       
       <Box sx={{
         position: 'absolute',
-        top: '20px',
+        top: '70px',
         left: '50%',
         transform: 'translateX(-50%)',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -89,7 +88,7 @@ function ExplorePage() {
         maxWidth: '90%',
         zIndex: 23
       }}>
-        Click the glowing + sign on the kelp to begin exploring
+        Click a button to show information
       </Box>
       
       

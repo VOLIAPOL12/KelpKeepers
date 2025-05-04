@@ -67,7 +67,7 @@ function HeroSection({
             sx={{ 
               bgcolor: theme.palette.primary.main,
               color: 'white',
-              fontSize: { sm: '0.7rem', md: '1.5rem' },
+              fontSize: { sm: '0.6rem', md: '1rem' },
               borderRadius: 28,
               display: 'block',
               px: 4,
@@ -76,7 +76,7 @@ function HeroSection({
               }
             }}
           >
-            Start the journey
+            Click here to understand what is happening with the Kelp Forests in Australia
           </Button>
           <Typography variant='boy1' sx={{marginTop: '20px', display: 'block', color: 'white'}}>
             been here before? <br/>

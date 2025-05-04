@@ -354,7 +354,7 @@ export const hotspotData = [
   },
   { 
     id: 'sunlight',
-    position: { top: { xs: '20%', md: '5%'}, left: { xs:'80%', md:'61%'}, color: 'black' },
+    position: { top: { xs: '20%', md: '15%'}, left: { xs:'80%', md:'70%'}, color: 'black' },
     description: `Kelp forests may be underwater, but they fight climate change from below the surface. Acting as natural carbon sinks, wave buffers, and oxygen producers, these marine giants are silent but powerful allies in our planetary defense.
     This hotspot reveals how kelp mitigates environmental threats — from absorbing carbon dioxide to protecting coastlines from erosion — and showcases why they must be preserved and restored in the era of global warming.`,
     title: 'CLIMATE FIGHTING POWERHOUSE',

@@ -6,8 +6,14 @@ import {
     Typography,
     Link,
     Box,
-    Button
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    IconButton
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import React, { useContext, useState } from "react";
 import { AppContent } from "../../context/AppContext";
@@ -23,6 +29,9 @@ function LoginPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [agreed, setAgreed] = useState(false);
+    const [showTerms, setShowTerms] = useState(false);
+
     const navigate = useNavigate();
 
     const { backendUri, setIsLoggedIn, getUserData, getAuthState } = useContext(AppContent);
@@ -31,6 +40,12 @@ function LoginPage() {
         try {
             e.preventDefault();
             axios.defaults.withCredentials = true;
+
+            if (state === "Sign Up" && !agreed) {
+                toast.error('You must agree to the terms and conditions');
+                return;
+            }
+            
 
             if (state === 'Sign Up' && !name.trim()) {
                 toast.error('Name is required');
@@ -143,6 +158,31 @@ function LoginPage() {
                         type="password"
                         icon={<Lock sx={{ color: 'text.secondary' }} />}
                     />
+                    {state === 'Sign Up' && (
+                        <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
+                            <input
+                                type="checkbox"
+                                checked={agreed}
+                                onChange={(e) => setAgreed(e.target.checked)}
+                                id="terms-checkbox"
+                                style={{ marginRight: 8 }}
+                            />
+                            <Typography variant="body2" component="label" htmlFor="terms-checkbox">
+                                I agree to the{' '}
+                                <Box
+                                    component="span"
+                                    onClick={() => setShowTerms(true)}
+                                    sx={{
+                                        color: 'primary.main',
+                                        textDecoration: 'underline',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    Terms and Conditions
+                                </Box>
+                            </Typography>
+                        </Box>
+                    )}
 
                     <Button
                         type="submit"
@@ -210,6 +250,35 @@ function LoginPage() {
                     )}
                 </Typography>
             </Paper>
+
+            <Dialog open={showTerms} onClose={() => setShowTerms(false)} maxWidth="sm" fullWidth>
+                <DialogTitle>
+                    Terms and Conditions
+                    <IconButton
+                        aria-label="close"
+                        onClick={() => setShowTerms(false)}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent dividers>
+                    <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
+                        KelpKeepers is dedicated to raising awareness about the significance of kelp forests in Australia and promoting community involvement in their restoration. While we provide information and facilitate connections among divers interested in sea urchin removal to aid kelp recovery, participants must ensure they comply with all relevant local, state, and federal laws, including obtaining necessary permits and adhering to safety regulations.
+
+                        By engaging with our platform, users acknowledge their responsibility to act within legal frameworks and understand that KelpKeepers does not assume liability for individual actions undertaken through events organized via our website.
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setShowTerms(false)}>Close</Button>
+                </DialogActions>
+            </Dialog>
+
         </Container>
     );
 }
