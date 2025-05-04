@@ -6,6 +6,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [upcomingActivities, setUpcomingActivities] = useState([]);
   const [pastActivities, setPastActivities] = useState([]);
+  const [showNotice, setShowNotice] = useState(true);
 
   useEffect(() => {
     async function fetchActivities() {
@@ -41,8 +42,41 @@ const Dashboard = () => {
     navigate(`/activity/${id}`);
   };
 
+  const NoticeModal = ({ onClose }) => {
+    return (
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200 p-6 animate-slide-up">
+        <div className="max-w-4xl mx-auto text-gray-700 text-sm leading-relaxed">
+          <p className="mb-2 font-semibold">⚠️ Note:</p>
+          <ul className="list-disc pl-5 mb-3">
+            <li>Please make sure you are in good physical condition before diving.</li>
+            <li>Please ensure that the equipment is in good condition and follow professional instructions.</li>
+            <li>Pay attention to tidal changes and follow safe operating procedures.</li>
+          </ul>
+          <p className="mb-2">
+          Any information collected by this website will be strictly subject to the privacy policy, please see our
+            <a href="#" className="underline text-blue-600">Terms of Use</a> and
+            <a href="#" className="underline text-blue-600 ml-1">Privacy Policy</a>。
+          </p>
+          <button
+            onClick={onClose}
+            className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow-sm transition-all"
+          >
+            I have read
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-green-100 font-sans px-4 py-8">
+      {/* Top Text */}
+      <div className="text-center mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
+          You can find diving activities here!
+        </h1>
+      </div>
+
       {/* Top Bar */}
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
         <div className="flex flex-wrap gap-3">
@@ -71,17 +105,7 @@ const Dashboard = () => {
             Camera
           </button>
         </div>
-        <div
-          onClick={() => navigate('/profile')}
-          className="cursor-pointer flex items-center gap-2 hover:opacity-90 transition"
-        >
-          <img
-            src="/avatar.png"
-            alt="Profile"
-            className="w-10 h-10 rounded-full border border-gray-300 shadow-sm object-cover"
-          />
-          <span className="text-sm text-gray-700 font-medium hidden sm:inline">Profile</span>
-        </div>
+        
       </div>
 
       {/* Main Content */}
@@ -124,6 +148,9 @@ const Dashboard = () => {
           </div>
         </section>
       </div>
+
+      {/* Bottom Slide-in Modal */}
+      {showNotice && <NoticeModal onClose={() => setShowNotice(false)} />}
     </div>
   );
 };
