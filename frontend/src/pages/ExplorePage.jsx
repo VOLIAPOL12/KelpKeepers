@@ -4,16 +4,29 @@ import journeyDesktop from "../assets/images/final-interactive-background.jpg";
 import journeyMobile from "../assets/images/final-interactive-background-mobile.png";
 import { hotspotData } from "../assets/information.js"; 
 import HotspotButton from "../components/molecules/HotspotButton.jsx";
-import InfoDialog from "../components/molecules/InfoDialog";
+import InfoDialog from "../components/molecules/InfoDialog.jsx";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import HotspotTooltip from "../components/molecules/HotspotTooltip.jsx";
 
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
-  const [showLogo, setShowLogo] = useState(false);
   const navigate = useNavigate();
+
+  const [selectedHotspot, setSelectedHotspot] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleHotspotClick = (hotspot, event) => {
+    if (selectedHotspot?.id === hotspot.id) {
+      setSelectedHotspot(null);
+      setAnchorEl(null);
+    } else {
+      setSelectedHotspot(hotspot);
+      setAnchorEl(event.currentTarget);
+    }
+  };
 
   const [backgroundImage, setBackgroundImage] = useState(journeyDesktop);
 
@@ -31,13 +44,6 @@ function ExplorePage() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  const handleHotspotClick = (hotspotId) => {
-
-      const hotspot = hotspotData.find(h => h.id === hotspotId);
-      setActiveHotspot(hotspot);
-      setOpenDialog(true);
-  };
 
   const handleLogoClick = () => {
     const logoHotspot = hotspotData.find(h => h.id === 'logo');
@@ -122,18 +128,33 @@ function ExplorePage() {
             </Box>
             :
             <HotspotButton
-                position={hotspot.position}
-                onClick={() => handleHotspotClick(hotspot.id)}
-                tooltip={hotspot.title}
+              position={hotspot.position}
+              onClick={(e) => handleHotspotClick(hotspot, e)}
+              label={hotspot.label}
             />
       ))}
       
+      <HotspotTooltip
+        anchorEl={anchorEl}
+        title={selectedHotspot?.label}
+        description={selectedHotspot?.description} // this should be ~2 paragraphs
+        onReadMore={() => {
+          setActiveHotspot(selectedHotspot);
+          setOpenDialog(true);
+          setSelectedHotspot(null);
+          setAnchorEl(null);
+        }}
+        onClose={() => {
+          setAnchorEl(null);
+          setSelectedHotspot(null);
+        }}
+      />
+
       {activeHotspot && (
         <InfoDialog
           open={openDialog}
           onClose={handleCloseDialog}
           hotspot={activeHotspot}
-          allHotspots={hotspotData}
         />
       )}
 

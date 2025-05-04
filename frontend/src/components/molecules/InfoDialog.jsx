@@ -127,11 +127,6 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                     sm: '80vw',
                     md: '65vw'
                   },
-                  height: {
-                    xs: '90vh',
-                    sm: '85vh',
-                    md: '80vh'
-                  },
                   margin: 'auto',
                   borderRadius: 4,
                   bgcolor: 'rgba(255, 255, 255, 0.95)',
@@ -155,51 +150,6 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
             </IconButton>
 
             <DialogContent sx={{ p: 0, position: 'relative', overflow: 'hidden' }}>
-            <Box sx={{ px: 3, pt: 2, display: 'flex', flexWrap: 'wrap' }}>
-  {allHotspots.map(h => (
-    <Button
-      key={h.id}
-      onClick={() => setActiveHotspot(h)}
-      sx={{
-        textTransform: 'none',
-        fontWeight: 'bold',
-        px: 2,
-        py: 1.2,
-        borderRadius: '999px',
-        mx: 0.5,
-        fontSize: '0.85rem',
-        transition: 'all 0.3s ease-in-out',
-        background: h.id === activeHotspot.id 
-          ? 'linear-gradient(135deg, #3ec6ff, #0077ff)' 
-          : '#f0f0f0',
-        color: h.id === activeHotspot.id ? 'white' : '#333',
-        boxShadow: h.id === activeHotspot.id 
-          ? '0 0 10px rgba(0, 119, 255, 0.5)' 
-          : '0 1px 3px rgba(0,0,0,0.1)',
-        '&:hover': {
-          background: h.id === activeHotspot.id 
-            ? 'linear-gradient(135deg, #3ec6ff, #0066cc)' 
-            : '#e0e0e0',
-          boxShadow: '0 0 8px rgba(0, 119, 255, 0.3)',
-        },
-        minWidth: '50px',
-        height: '50px',
-        padding: '6px',
-      }}
-    >
-      <Box
-        component="img"
-        src={h.icon}
-        alt={h.title}
-        sx={{
-          width: 24,
-          height: 24,
-          filter: h.id === activeHotspot.id ? 'invert(1)' : 'none',
-        }}
-      />
-    </Button>
-  ))}
-</Box>
 
             {!selectedCard ? (
                 // Main dialog with cards view
@@ -226,7 +176,6 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                     </Box>
 
                     <Fade in={showCards} timeout={800}>
-                        {activeHotspot.dialogType === "cards" ? (
                             <Box sx={{ px: 4, pb: 10 }}>
                                 <Grid container spacing={2}>
                                     {activeHotspot.content && activeHotspot.content.map((card) => (
@@ -350,134 +299,7 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
                                         </Grid>
                                     ))}
                                 </Grid>
-                            </Box>
-                        ): (
-                            <>
-                    <Box sx={{ 
-                        textAlign: 'center',
-                        py: titlePosition === 'center' ? 10 : 2,
-                        transition: 'padding 0.5s ease-in-out',
-                        backgroundColor: 'transparent'
-                    }}>
-                        <Typography 
-                            variant="h2" 
-                            component="h1"
-                            sx={{ 
-                                fontFamily: "'Reggae One', cursive",
-                                fontWeight: 'bold',
-                                fontSize: titlePosition === 'center' ? '3.5rem' : '2rem',
-                                transition: 'font-size 0.5s ease-in-out',
-                                color: '#333'
-                            }}
-                        >
-                            {activeHotspot.title || "BATTLE TO REVIVE KELP"}
-                        </Typography>
-                    </Box>
-
-                    <Fade in={showCards} timeout={800}>
-                        <Box sx={{ px: 4, pb: 10 }}>
-                            <Grid container spacing={4}>
-                                {/* Left Column - Cards */}
-                                <Grid item xs={12} md={3}>
-                                    {activeHotspot.content.map((card, index) => (
-                                        <Card 
-                                            key={card.id || index}
-                                            onClick={() => handleCardClick(card)}    
-                                            sx={{ 
-                                                cursor: 'pointer',
-                                                position: 'relative',
-                                                borderRadius: '20px',
-                                                height: '200px',
-                                                marginBottom: index < activeHotspot.content.length - 1 ? 3 : 0,
-                                                transition: 'transform 0.3s, box-shadow 0.3s',
-                                                '&:hover': {
-                                                    transform: 'scale(1.03)',
-                                                },
-                                                ...getCardStyle(card.type)
-                                            }}
-                                        >
-                                            <CardMedia
-                                                component="img"
-                                                image={card.image}
-                                                alt={card.title}
-                                                sx={{
-                                                    height: '100%',
-                                                    width: '100%',
-                                                    objectFit: 'cover',
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    left: 0,
-                                                    zIndex: 0,
-                                                    borderRadius: '20px'
-                                                }}
-                                            />
-
-                                            <Box
-                                                sx={{
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    left: 0,
-                                                    height: '100%',
-                                                    width: '100%',
-                                                    zIndex: 1,
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    backdropFilter: 'brightness(0.6)',
-                                                    borderRadius: '20px',
-                                                    px: 1
-                                                }}
-                                            >
-                                                <Typography 
-                                                    variant="subtitle1" 
-                                                    align="center"
-                                                    sx={{ 
-                                                        fontWeight: 'bold',
-                                                        color: '#fff',
-                                                        textShadow: '0 1px 3px rgba(0,0,0,0.7)'
-                                                    }}
-                                                >
-                                                    {card.title}
-                                                </Typography>
-                                            </Box>
-                                        </Card>
-                                    ))}
-                                </Grid>
-
-                                {/* Right Column - YouTube Video */}
-                                <Grid item xs={12} md={9} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-                                    <Box
-                                        sx={{
-                                            position: 'relative',
-                                            width: '100%',
-                                            height: 0,
-                                            paddingBottom: '56.25%', // 16:9 aspect ratio
-                                            overflow: 'hidden',
-                                            borderRadius: '8px'
-                                        }}
-                                    >
-                                        <iframe 
-                                            style={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                left: 0,
-                                                width: '100%',
-                                                height: '100%',
-                                                border: 0
-                                            }}
-                                            src="https://www.youtube.com/embed/rCRncbD1X7g?si=1iqezVk2sV-XEi6S" 
-                                            title="YouTube video player" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                            referrerPolicy="strict-origin-when-cross-origin" 
-                                            allowFullScreen
-                                        />
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Fade>
-                </>
-                        )}
+                            </Box> 
                     </Fade>
                 </>
                 ) : (
