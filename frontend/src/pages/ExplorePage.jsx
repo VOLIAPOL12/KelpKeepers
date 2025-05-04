@@ -4,7 +4,7 @@ import journeyDesktop from "../assets/images/final-interactive-background.jpg";
 import journeyMobile from "../assets/images/final-interactive-background-mobile.png";
 import { hotspotData } from "../assets/information.js"; 
 import HotspotButton from "../components/molecules/HotspotButton.jsx";
-import InfoDialog from "../components/molecules/InfoDialog";
+import InfoDialog from "../components/molecules/InfoDialog.jsx";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,6 @@ import HotspotTooltip from "../components/molecules/HotspotTooltip.jsx";
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
-  const [showLogo, setShowLogo] = useState(false);
   const navigate = useNavigate();
 
   const [selectedHotspot, setSelectedHotspot] = useState(null);
@@ -138,7 +137,7 @@ function ExplorePage() {
       <HotspotTooltip
         anchorEl={anchorEl}
         title={selectedHotspot?.label}
-        description={selectedHotspot?.shortDescription} // this should be ~2 paragraphs
+        description={selectedHotspot?.description} // this should be ~2 paragraphs
         onReadMore={() => {
           setActiveHotspot(selectedHotspot);
           setOpenDialog(true);
@@ -156,7 +155,6 @@ function ExplorePage() {
           open={openDialog}
           onClose={handleCloseDialog}
           hotspot={activeHotspot}
-          allHotspots={hotspotData}
         />
       )}
 
