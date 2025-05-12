@@ -9,10 +9,18 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "@google/genai": "^0.12.0",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.0.0",
     "express": "^4.18.2",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^7.0.0",
     "pg": "^8.14.1",
     "pg-pool": "^3.8.0"
   },
