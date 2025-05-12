@@ -24,7 +24,7 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<UnauthenticatedPageWrapper><HomePage /></UnauthenticatedPageWrapper>} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/explore" element={<UnauthenticatedPageWrapper><ExplorePage /></UnauthenticatedPageWrapper>} />
         <Route path="/login" element={<LoginPage />} />

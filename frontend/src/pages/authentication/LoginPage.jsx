@@ -15,9 +15,9 @@ import {
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContent } from "../../context/AppContext";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { Person, Lock, Email } from '@mui/icons-material';
 import axios from "axios";
 import CustomInput from "../../components/atoms/CustomInput";
@@ -25,12 +25,22 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 function LoginPage() {
+    const location = useLocation();
+    const isLogin = location.state?.login ?? false;
     const [state, setState] = useState('Login');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [agreed, setAgreed] = useState(false);
     const [showTerms, setShowTerms] = useState(false);
+
+    useEffect(() => {
+        if (isLogin) {
+            setState('Login');
+        } else {
+            setState('Sign Up');
+        }
+      }, [isLogin]);
 
     const navigate = useNavigate();
 
