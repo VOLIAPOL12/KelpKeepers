@@ -1,177 +1,206 @@
 import React, { useState } from 'react';
 import {
   Dialog,
-  DialogContent,
-  IconButton,
-  Typography,
   Box,
-  Grid,
-  Button,
-  Collapse,
-  useMediaQuery,
-  useTheme,
+
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import MenuIcon from '@mui/icons-material/Menu';
 
 import SectionContentRenderer from '../molecules/SectionContentRenderer'; // make sure this exists and renders each section
 
 function InfoDialogV2({ open, onClose, hotspot }) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [selectedSection, setSelectedSection] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   if (!hotspot || !hotspot.content) return null;
-  console.log(hotspot);
 
   const section = hotspot.content[selectedSection];
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: {
-          height: '85vh',
-          borderRadius: 3,
-          overflow: 'hidden',
-          minWidth: '80%'
-        },
-      }}
-    >
-      {/* Header */}
-      <Box
-        sx={{
-          px: 2,
-          py: 1.5,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #ddd',
-        }}
-      >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {isMobile && (
-            <IconButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              <MenuIcon />
-            </IconButton>
-          )}
-          <Typography variant="h6" fontWeight="bold">
-            {hotspot.title}
-          </Typography>
-        </Box>
-        <IconButton onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      </Box>
-
-      {/* Mobile Navigation Menu */}
-      {isMobile && (
-        <Collapse in={mobileMenuOpen}>
-          <Box sx={{ px: 2, pt: 1, borderBottom: '1px solid #ddd', bgcolor: '#f5f5f5' }}>
-            {hotspot.content.map((s, i) => (
-              <Button
-                key={s.id || i}
-                fullWidth
-                onClick={() => {
-                  setSelectedSection(i);
-                  setMobileMenuOpen(false);
-                }}
-                sx={{
-                  textAlign: 'left',
-                  justifyContent: 'flex-start',
-                  mb: 1,
-                  textTransform: 'none',
-                }}
-              >
-                {s.title}
-              </Button>
-            ))}
-          </Box>
-        </Collapse>
-      )}
-
-      {/* Main Layout */}
-      <DialogContent sx={{ p: 0, width: '100%' }}>
-        <Grid
-          container
-          spacing={0}
+    <Dialog open={open} fullWidth maxWidth="md">
+        <Box
           sx={{
-            width: '100%',
-            height: '100%',
-            margin: 0,
-            flexWrap: 'nowrap', // force single row
+            p: 2,
+            borderBottom: '1px solid #ccc',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            backgroundColor: '#f9f9f9',
           }}
         >
-          {/* Sidebar */}
-          <Grid
-            item
-            xs={0}
-            md={3}
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              flexDirection: 'column',
-              borderRight: '1px solid #ddd',
-              bgcolor: '#fafafa',
-              width: '50%',
-              p: 2,
-              boxSizing: 'border-box',
-            }}
-          >
-            {hotspot.content.map((sectionItem, index) => (
-              <Button
-                key={sectionItem.id || index}
-                fullWidth
-                variant={selectedSection === index ? 'contained' : 'text'}
-                onClick={() => setSelectedSection(index)}
-                sx={{
-                  mb: 1,
-                  justifyContent: 'flex-start',
-                  textTransform: 'none',
-                }}
-              >
-                {sectionItem.title}
-              </Button>
-            ))}
-          </Grid>
+          {hotspot.title}
+        </Box>
 
-          {/* Main Content */}
-          <Grid
-            item
-            xs={12}
-            md={9}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '6%',
+            left: 16,
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+          }}
+        >
+          <Box
+            component="button"
             sx={{
-              p: 2,
-              overflowY: 'auto',
+              backgroundColor: '#ffffffaa',
+              border: 'none',
+              borderRadius: '50%',
+              width: 40,
+              height: 40,
+              cursor: 'pointer',
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+            }}
+            onClick={() => console.log('Previous hotspot')}
+          >
+            ‹
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '6%',
+            right: 16,
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+          }}
+        >
+          <Box
+            component="button"
+            sx={{
+              backgroundColor: '#ffffffaa',
+              border: 'none',
+              borderRadius: '50%',
+              width: 40,
+              height: 40,
+              cursor: 'pointer',
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+            }}
+            onClick={() => console.log('Next hotspot')}
+          >
+            ›
+          </Box>
+        </Box>
+
+      {/* Header */}
+      <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} height="100%">
+
+
+    
+    {/* Mobile: dropdown, Desktop: vertical menu */}
+    <Box
+      sx={{
+        width: { xs: '100%', md: 250 },
+        display: 'flex',
+        flexDirection: { xs: 'row', md: 'column' },
+        overflowX: { xs: 'auto', md: 'visible' },
+        borderRight: { md: '1px solid #ccc' },
+      }}
+    >
+      {hotspot.content.map((item, index) => (
+        <Box
+          key={item.label}
+          onClick={() => setSelectedSection(index)}
+          sx={{
+            position: 'relative',
+            flexShrink: 0,
+            height: { xs: 80, md: 130 },
+            width: { xs: 130, md: '100%' },
+            backgroundImage: `url(${item.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            borderRadius: 3,
+            cursor: 'pointer',
+            mx: { xs: 0.5, md: 0 },
+            my: { xs: 0, md: 1.5 },
+            border: index === selectedSection ? '3px solid #1a93ca' : '2px solid transparent',
+            boxShadow: index === selectedSection ? 5 : 1,
+            overflow: 'hidden',
+            transition: 'all 0.3s ease',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              inset: 0,
+              backgroundColor: index === selectedSection
+                ? 'rgba(0, 0, 0, 0.4)'
+                : 'rgba(0, 0, 0, 0.6)',
+              transition: 'background-color 0.3s ease',
+              zIndex: 0,
+            },
+            '&:hover::after': {
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              position: 'relative',
+              zIndex: 1,
               height: '100%',
-              boxSizing: 'border-box',
+              width: '100%',
+              color: 'white',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold',
+              fontSize: '0.9rem',
+              textAlign: 'center',
+              px: 1,
             }}
           >
-            <Box
-              sx={{
-                width: '100%',
-                overflowY: 'auto',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                p: 4,
-                color: '#fff',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-                textShadow: '0 1px 3px rgba(0,0,0,0.7)',
-              }}
-            >
-              <Box sx={{ width: '100%' }}>
-                <SectionContentRenderer section={section} />
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </DialogContent>
+            {item.title}
+          </Box>
+        </Box>
+      
+      
+      ))}
+    </Box>
+
+    {/* Content area */}
+    <Box flex={1} p={3} overflow="auto">
+    <Box
+      sx={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        backgroundImage: `url(${section.image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: 3,
+        boxSizing: 'border-box',
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          color: 'white',
+          borderRadius: 3,
+          padding: 4,
+          maxWidth: 600,
+          textAlign: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            fontWeight: 'bold',
+            fontSize: '1.4rem',
+            mb: 2,
+          }}
+        >
+          {section.title}
+        </Box>
+        <Box sx={{ fontSize: '1rem', lineHeight: 1.6 }}>
+          {section.description}
+        </Box>
+      </Box>
+    </Box>
+
+    </Box>
+  </Box>
 
     </Dialog>
   );
