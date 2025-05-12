@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from '@mui/material';
+import { Box, Button, Tooltip, Typography } from '@mui/material';
 import journeyDesktop from "../assets/images/final-interactive-background.jpg";
 import journeyMobile from "../assets/images/final-interactive-background-mobile.png";
 import { hotspotData } from "../assets/information.js"; 
@@ -13,19 +13,10 @@ import HotspotTooltip from "../components/molecules/HotspotTooltip.jsx";
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
-  const navigate = useNavigate();
 
-  const [selectedHotspot, setSelectedHotspot] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleHotspotClick = (hotspot, event) => {
-    if (selectedHotspot?.id === hotspot.id) {
-      setSelectedHotspot(null);
-      setAnchorEl(null);
-    } else {
-      setSelectedHotspot(hotspot);
-      setAnchorEl(event.currentTarget);
-    }
+  const handleHotspotClick = (hotspot) => {
+    setActiveHotspot(hotspot);
+    setOpenDialog(true);
   };
 
   const [backgroundImage, setBackgroundImage] = useState(journeyDesktop);
@@ -76,6 +67,8 @@ function ExplorePage() {
 
       
       <Box sx={{
+
+        display: {md: 'block', xs: 'none'},
         position: 'absolute',
         top: '70px',
         left: '50%',
@@ -88,7 +81,23 @@ function ExplorePage() {
         maxWidth: '90%',
         zIndex: 23
       }}>
-        Click a button to show information
+        Hover a tab to see more
+      </Box>
+      <Box sx={{
+      display: {md: 'none', xs: 'block'},
+      position: 'absolute',
+      top: '70px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      color: 'white',
+      padding: '12px 24px',
+      borderRadius: '24px',
+      textAlign: 'center',
+      maxWidth: '90%',
+      zIndex: 23
+      }}>
+        Tap a tab to see more
       </Box>
       
       
@@ -126,28 +135,70 @@ function ExplorePage() {
               />
             </Box>
             :
-            <HotspotButton
-              position={hotspot.position}
-              onClick={(e) => handleHotspotClick(hotspot, e)}
-              label={hotspot.label}
-            />
+            <Tooltip
+              arrow
+              title={
+                <Box sx={{textAlign: 'left'}}>
+                  <Typography variant="body2" fontWeight="bold">
+                    {hotspot.title}
+                  </Typography>
+                  <Typography variant="caption" sx={{display: 'block', mb: 2}}>
+                    {hotspot.description}
+                  </Typography>
+                  <Button onClick={(e) => handleHotspotClick(hotspot, e)} sx={{bgcolor: 'black', color: 'white'}}>
+                    Learn More
+                  </Button>
+                </Box>
+              }
+              enterTouchDelay={1}
+              slotProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: 'white',
+                    color: 'black',
+                    border: '1px solid #ccc',
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    px: 2,
+                    py: 1,
+                    maxWidth: 300,
+                  },
+                },
+                popper: {
+                  modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, -14],
+                      },
+                    },
+                  ],
+                },
+              }}
+            >
+              <Box
+                variant="contained"
+                sx={{
+                  position: 'absolute',
+                  ...hotspot.position,
+                  transform: 'translate(-50%, -50%)',
+                  backgroundColor: '#fff',
+                  fontSize: { xs: '8px', md: '20px'},
+                  color: '#000',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  fontFamily: "'Reggae One', cursive",
+                  border: 4,
+                  px: 4,
+                  py: 2,
+                }}
+              >
+                {hotspot.label}
+              </Box>
+            </Tooltip>
       ))}
-      
-      <HotspotTooltip
-        anchorEl={anchorEl}
-        title={selectedHotspot?.label}
-        description={selectedHotspot?.description} // this should be ~2 paragraphs
-        onReadMore={() => {
-          setActiveHotspot(selectedHotspot);
-          setOpenDialog(true);
-          setSelectedHotspot(null);
-          setAnchorEl(null);
-        }}
-        onClose={() => {
-          setAnchorEl(null);
-          setSelectedHotspot(null);
-        }}
-      />
+
+      {/* Creating the information Dialog */}
 
       {activeHotspot && (
         <InfoDialog
