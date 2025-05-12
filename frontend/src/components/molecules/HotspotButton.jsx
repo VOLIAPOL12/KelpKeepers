@@ -1,36 +1,30 @@
-import React from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Button } from "@mui/material";
 
-function HotspotButton({ position, isUnlocked, onClick, tooltip }) {
+function HotspotButton({ position, label, onClick }) {
   return (
-    <Box sx={{
-      position: 'absolute',
-      ...position,
-      transform: 'translate(50%, -50%)',
-      zIndex: 10,
-    }}>
-      <Tooltip title={isUnlocked ? tooltip : "Explore the kelp first"}>
-        <IconButton
-          onClick={onClick}
-          sx={{
-            backgroundColor: isUnlocked ? 'rgba(255, 255, 255, 0.3)' : 'rgba(100, 100, 100, 0.3)',
-            '&:hover': {
-              backgroundColor: isUnlocked ? 'rgba(255, 255, 255, 0.6)' : 'rgba(100, 100, 100, 0.3)',
-            },
-            transition: 'all 0.3s ease',
-            cursor: isUnlocked ? 'pointer' : 'not-allowed',
-          }}
-        >
-          <AddCircleOutlineIcon 
-            sx={{ 
-              color: isUnlocked ? 'white' : 'gray',
-              fontSize: '2rem',
-            }} 
-          />
-        </IconButton>
-      </Tooltip>
-    </Box>
+    <Button
+      variant="contained"
+      onClick={onClick}
+      sx={{
+        position: 'absolute',
+        ...position,
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#fff',
+        fontSize: { xs: '8px', md: '20px'},
+        color: '#000',
+        borderRadius: '5px',
+        fontWeight: 'bold',
+        fontFamily: "'Reggae One', cursive",
+        border: 4,
+        px: 4,
+        py: 2,
+        '&:hover': {
+          backgroundColor: 'rgba(0, 123, 255, 1)'
+        }
+      }}
+    >
+      {label}
+    </Button>
   );
 }
 

@@ -95,7 +95,7 @@ const AbaloneMap = () => {
                 <h1>Abalone Information</h1>
                 
                 <p>
-                The marine jewels of Australia’s reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
+                The marine jewels of Australia's reefs, are under severe threat, with 37% of species globally facing extinction. The widespread loss of
                 kelp, their main food source, has caused mass mortalities, with red abalone populations declining by up to 80% in some regions.
                 </p>
             </div>

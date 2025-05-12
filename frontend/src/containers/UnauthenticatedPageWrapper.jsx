@@ -5,7 +5,8 @@ function UnauthenticatedPageWrapper({children}) {
   return (
     <>
         <main className="flex-grow">
-            {children}
+          <Navbar />
+          {children}
         </main>
     </>
   )
