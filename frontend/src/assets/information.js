@@ -35,20 +35,25 @@ import img11 from '../assets/images/11.png';
 import img12 from '../assets/images/12.png';
 import logo from '../assets/logo.png';
 
-import infoIcon from '../assets/images/navIcons/info.png';
-import powerhouseIcon from '../assets/images/navIcons/powerhouse.png';
-import seaUrchinIcon from '../assets/images/navIcons/sea-urchin.png';
-import diverIcon from '../assets/images/navIcons/sea.png';
-import seaHorseIcon from '../assets/images/navIcons/seahorse.png';
-import kelpIcon from '../assets/images/navIcons/seaweed.png';
 
 export const hotspotData = [
   {
     id: 'kelp',
-    position: { top: '45%', right: '17%' },
+    position: { 
+      top: {
+        xs: '45%',
+        md: '45%'
+      },
+      left: {
+        xs: '85%',
+        md: '78%'
+      }
+    },
+    description: `Beneath the waves lies an oceanic forest like no other — a realm of towering kelp that forms the backbone of entire marine ecosystems. These underwater jungles not only rival terrestrial forests in scale but also outpace them in growth, nurturing countless species beneath their canopies.
+    From their rapid growth to their vital role in local economies and biodiversity, this hotspot explores the biology, cultural value, and ecological urgency surrounding giant kelp. Dive into the secrets of one of Earth's most overlooked powerhouses.`,
     title: 'THE UNDERWATER JUNGLE',
+    label: "Kelp",
     show: false,
-    icon: kelpIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -88,6 +93,7 @@ export const hotspotData = [
         id: 2,
         title: "Great Southern Reef",
         image: image5,
+        description: `Stretching across 8,000 kilometers of coastline, the Great Southern Reef is one of the longest continuous temperate reef systems in the world. This sprawling network of kelp forests is a biodiversity haven and an essential climate buffer.`,
         hoverDescription: "Discover one of the most expansive temperate reef systems on the planet",
         description: `Stretching over 8,000 kilometers from Kalbarri in Western Australia to the Queensland border, the GSR boasts
         the world's longest continuous kelp forest.`,
@@ -137,10 +143,21 @@ export const hotspotData = [
   },
   {
     id: 'kelp-dead',
-    position: { top: '61%', left: '7%' },
+    position: {
+      top: {
+        xs: '76%',
+        md: '61%'
+      },
+      left: {
+        xs: '15%',
+        md: '7%'
+      }
+    },
+    description: `Once held in check by natural predators, sea urchins have surged in number, transforming lush kelp forests into barren seascapes. This hotspot uncovers the root causes — from warming oceans to predator loss — behind one of the most dramatic underwater takeovers on record.
+    But it's not just a tale of destruction. Explore the science of population explosions, emerging culinary solutions, and grassroots restoration efforts that aim to halt the march of the urchin and heal the wounds left behind.`,
     title: 'THE URCHIN INVASION',
+    label: "Urchins",
     show: false,
-    icon: seaUrchinIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -288,9 +305,11 @@ export const hotspotData = [
   {
     id: 'fish',
     position: { top: '21%', left: '23%' },
+    description: `Kelp forests are more than just plants — they're shelter, camouflage, and breeding grounds. As these forests vanish, many of the marine creatures that depend on them face extinction. This hotspot brings you face to face with some of Australia's most iconic and endangered marine species.
+    From the spotted handfish to the leafy seadragon, these animals represent the fragile threads in a much larger ecological web. Their survival is a litmus test for the health of the entire ocean ecosystem.`,
     title: 'THE SPECIES AT RISK',
+    label: "Endangered Species",
     show: false,
-    icon: seaHorseIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 6 },
     content: [
@@ -335,10 +354,12 @@ export const hotspotData = [
   },
   { 
     id: 'sunlight',
-    position: { top: '5%', left: '61%', color: 'black' },
+    position: { top: { xs: '20%', md: '15%'}, left: { xs:'80%', md:'70%'}, color: 'black' },
+    description: `Kelp forests may be underwater, but they fight climate change from below the surface. Acting as natural carbon sinks, wave buffers, and oxygen producers, these marine giants are silent but powerful allies in our planetary defense.
+    This hotspot reveals how kelp mitigates environmental threats — from absorbing carbon dioxide to protecting coastlines from erosion — and showcases why they must be preserved and restored in the era of global warming.`,
     title: 'CLIMATE FIGHTING POWERHOUSE',
+    label: "Climate Change Impacts",
     show: false,
-    icon: powerhouseIcon,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
     content: [
@@ -381,9 +402,11 @@ export const hotspotData = [
   {
     id: 'diver',
     position: { top: '52%', left: '45%' },
+    description: `Meet the people diving into action. From volunteer citizen scientists to professional divers, a new army is rising to fight back against the urchin invasion and restore balance beneath the waves.
+    This hotspot captures the human side of ocean recovery — showcasing not just ecological techniques but also the stories, tools, and vision behind modern kelp restoration. Every dive brings hope to a reef struggling for breath.`,
     title: 'BATTLE TO REVIVE KELP',
+    label: 'Kelp Restoration Divers',
     dialogType: 'cards',
-    icon: diverIcon,
     show: false,
     layout: { xs: 12, sm: 6, md: 4 },
     content: [
@@ -416,10 +439,12 @@ export const hotspotData = [
   },
   {
     id: 'logo',
-    position: { top: '25%', left: '50%' },
+    position: { top: {xs:'30%', md:'25%'}, left: '50%' },
+    description: `KelpKeepers is more than a website — it’s a movement. We unite ocean lovers, marine scientists, and everyday champions in a shared mission: to protect and restore the Great Southern Reef and its precious kelp forests.
+    Whether you're here to learn, act, or share the story, this hotspot invites you to join the fight. Because saving the ocean isn't someone else's job — it's ours, and it starts with a single click.`,
     image: logo,
-    icon: infoIcon,
     title: 'ABOUT US',
+    label: 'How you can Help',
     dialogType: 'cards',
     show: false,
     layout: { xs: 12, sm: 6, md: 6 },

@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Box, Typography, CardMedia, LinearProgress, Card } from '@mui/material';
 import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const ProcessOfDestruction = ({ cardDetails }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -132,17 +134,32 @@ const ProcessOfDestruction = ({ cardDetails }) => {
             >
               <Card
                 sx={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.55)',
-                  width: '60%',
-                  margin: 'auto',
-                  p: 10,
+                  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                  color: 'white',
+                  width: {
+                    xs: '90%',
+                    sm: '80%',
+                    md: '60%',
+                  },
+                  mx: 'auto',
+                  p: {
+                    xs: 3,
+                    sm: 5,
+                    md: 6,
+                  },
+                  borderRadius: 3,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                  textAlign: 'center',
+                  backdropFilter: 'blur(6px)',
                 }}
               >
                 <Typography
                   variant="h5"
+                  component="h3"
                   sx={{
                     fontWeight: 'bold',
                     mb: 2,
+                    textShadow: '0 1px 4px rgba(0,0,0,0.6)',
                   }}
                 >
                   {card.title}
@@ -150,14 +167,19 @@ const ProcessOfDestruction = ({ cardDetails }) => {
                 <Typography
                   variant="body1"
                   sx={{
-                    margin: 'auto',
-                    lineHeight: 1.6, 
-                    maxWidth: '85%',
+                    lineHeight: 1.8,
+                    fontSize: {
+                      xs: '0.95rem',
+                      sm: '1rem',
+                      md: '1.1rem'
+                    },
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)',
                   }}
                 >
                   {card.description}
                 </Typography>
               </Card>
+
             </Box>
           ))}
         </Slider>

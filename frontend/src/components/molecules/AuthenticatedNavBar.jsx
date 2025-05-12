@@ -74,7 +74,7 @@ const AuthenticatedNavBar = () => {
                 src={navLogo}
                 alt="Logo"
                 sx={{ height: 30, cursor: 'pointer' }}
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/')}
                 />
 
                 {/* Avatar */}
