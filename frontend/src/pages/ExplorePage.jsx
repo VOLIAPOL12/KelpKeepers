@@ -13,9 +13,10 @@ import InfoDialogV2 from "../components/organisms/InfoDialogV2.jsx";
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState(null);
+  const { setCurrentHotspot } = useHotspotStore();
 
   const handleHotspotClick = (hotspot) => {
-    setActiveHotspot(hotspot);
+    setCurrentHotspot(hotspot);
     setOpenDialog(true);
   };
 
@@ -39,7 +40,7 @@ function ExplorePage() {
   const handleLogoClick = () => {
     const logoHotspot = hotspotData.find(h => h.id === 'logo');
 
-    setActiveHotspot(logoHotspot);
+    setCurrentHotspot(logoHotspot);
     setOpenDialog(true);
   };
 
