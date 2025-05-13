@@ -6,9 +6,16 @@ import {
 } from '@mui/material';
 
 import SectionContentRenderer from '../molecules/SectionContentRenderer'; // make sure this exists and renders each section
+import interactionStore from '../../store/interactionStore';
 
-function InfoDialogV2({ open, onClose, hotspot }) {
+function InfoDialogV2({ open, onClose }) {
   const [selectedSection, setSelectedSection] = useState(0);
+  const { currentHotspot: hotspot, clearHotspot } = interactionStore();
+
+  const handleClose = () => {
+    clearHotspot();
+    onClose(); // still call any prop-based logic if needed
+  };
 
   if (!hotspot || !hotspot.content) return null;
 
@@ -77,7 +84,7 @@ function InfoDialogV2({ open, onClose, hotspot }) {
       {/* Close Button */}
       <Box
         component="button"
-        onClick={onClose}
+        onClick={handleClose}
         sx={{
           position: 'absolute',
           right: '19px',

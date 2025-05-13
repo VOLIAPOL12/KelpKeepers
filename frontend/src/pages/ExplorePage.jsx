@@ -6,14 +6,13 @@ import { hotspotData } from "../assets/information.js";
 import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
-import { useNavigate } from "react-router-dom";
-import HotspotTooltip from "../components/molecules/HotspotTooltip.jsx";
+
 import InfoDialogV2 from "../components/organisms/InfoDialogV2.jsx";
+import interactionStore from "../store/interactionStore.js";
 
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
-  const [activeHotspot, setActiveHotspot] = useState(null);
-  const { setCurrentHotspot } = useHotspotStore();
+  const { currentHotspot, setCurrentHotspot } = interactionStore();
 
   const handleHotspotClick = (hotspot) => {
     setCurrentHotspot(hotspot);
@@ -201,11 +200,10 @@ function ExplorePage() {
 
       {/* Creating the information Dialog */}
 
-      {activeHotspot && (
+      {currentHotspot && (
         <InfoDialogV2
           open={openDialog}
           onClose={handleCloseDialog}
-          hotspot={activeHotspot}
         />
       )}
 
