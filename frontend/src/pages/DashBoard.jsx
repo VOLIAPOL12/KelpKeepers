@@ -104,6 +104,13 @@ const Dashboard = () => {
           >
             Camera
           </button>
+          <button
+            onClick={() => navigate('/rating')}
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-5 py-2 rounded-full shadow-md transition-all duration-200 focus:ring-2 focus:ring-yellow-300"
+          >
+            Rate Activity
+          </button>
+
         </div>
         
       </div>
