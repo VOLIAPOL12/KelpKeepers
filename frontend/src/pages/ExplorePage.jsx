@@ -3,7 +3,6 @@ import { Box, Button, Tooltip, Typography } from '@mui/material';
 import journeyDesktop from "../assets/images/final-interactive-background.jpg";
 import journeyMobile from "../assets/images/final-interactive-background-mobile.png";
 import { hotspotData } from "../assets/information.js"; 
-import HotspotButton from "../components/molecules/HotspotButton.jsx";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
 
@@ -12,7 +11,7 @@ import interactionStore from "../store/interactionStore.js";
 
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
-  const { currentHotspot, setCurrentHotspot } = interactionStore();
+  const { currentHotspot, setCurrentHotspot, setHotspotList, hotspotList } = interactionStore();
 
   const handleHotspotClick = (hotspot) => {
     setCurrentHotspot(hotspot);
@@ -30,8 +29,8 @@ function ExplorePage() {
         setBackgroundImage(journeyDesktop);
       }
     }
-
-    handleResize(); // set initially on load
+    setHotspotList(hotspotData);
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -101,7 +100,7 @@ function ExplorePage() {
       </Box>
       
       
-      {hotspotData.map((hotspot) => (
+      {hotspotList.map((hotspot) => (
         hotspot.id === "logo" ?
             <Box
                 key={hotspot.id}

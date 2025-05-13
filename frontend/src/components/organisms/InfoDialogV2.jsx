@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import {
   Dialog,
   Box,
-
 } from '@mui/material';
 
-import SectionContentRenderer from '../molecules/SectionContentRenderer'; // make sure this exists and renders each section
+import SectionContentRenderer from '../organisms/SectionContentRenderer'
 import interactionStore from '../../store/interactionStore';
 
 function InfoDialogV2({ open, onClose }) {
   const [selectedSection, setSelectedSection] = useState(0);
+
+  // State management for hotspot selection
   const { currentHotspot: hotspot, clearHotspot } = interactionStore();
 
   const handleClose = () => {
     clearHotspot();
-    onClose(); // still call any prop-based logic if needed
+    onClose();
   };
 
   if (!hotspot || !hotspot.content) return null;
@@ -170,8 +171,6 @@ function InfoDialogV2({ open, onClose }) {
                 {item.title}
               </Box>
             </Box>
-          
-          
           ))}
         </Box>
 
@@ -192,34 +191,10 @@ function InfoDialogV2({ open, onClose }) {
               boxSizing: 'border-box',
             }}
           >
-            <Box
-              sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                color: 'white',
-                borderRadius: 3,
-                padding: 4,
-                maxWidth: 600,
-                textAlign: 'center',
-              }}
-            >
-              <Box
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: '1.4rem',
-                  mb: 2,
-                }}
-              >
-                {section.title}
-              </Box>
-              <Box sx={{ fontSize: '1rem', lineHeight: 1.6 }}>
-                {section.description}
-              </Box>
-            </Box>
+            <SectionContentRenderer section={section}/>
           </Box>
-
         </Box>
       </Box>
-
     </Dialog>
   );
 }
