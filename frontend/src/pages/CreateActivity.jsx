@@ -1,140 +1,186 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  Box,
+  Typography,
+  Container,
+  useTheme,
+  TextField,
+  Button,
+  Stepper,
+  Step,
+  StepLabel,
+} from '@mui/material';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import useDivingSiteStore from '../store/useDivingSiteStore';
+import axios from 'axios';
+import { AppContent } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateActivity() {
+const steps = ['Dive Details', 'Select Location'];
+
+const CreateActivity = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const [page, setPage] = useState(1);
+  const [selectedSite, setSelectedSite] = useState(null);
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
-  const [date, setDate] = useState('');
-  const [slotsAvailable, setSlotsAvailable] = useState(1);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { diveSites, loadDiveSites, loading } = useDivingSiteStore();
+  const { userData } = useContext(AppContent);
 
-  const hostUserId = 1;
+  const [formData, setFormData] = useState({
+    host_user_id: '',
+    title: '',
+    description: '',
+    date: '',
+    slots: '',
+    location: null,
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+  useEffect(() => {
+    if (page === 2 && diveSites.length === 0) loadDiveSites();
+  }, [page, loadDiveSites, diveSites.length]);
 
-    if (!title || !description || !location || !date || slotsAvailable < 1) {
-      setError('Please fill all fields correctly.');
-      setLoading(false);
-      return;
-    }
+  const handleChange = (field) => (e) => {
+    setFormData({ ...formData, [field]: e.target.value });
+  };
 
-    const newActivity = {
-      title,
-      description,
-      location,
-      date,
-      slots_available: slotsAvailable,
-      host_user_id: hostUserId,
-    };
+  const handleLocationSelect = (site) => {
+    setSelectedSite(site);
+    setFormData({ ...formData, location: site });
+  };
 
+  const nextPage = () => setPage((prev) => prev + 1);
+  const prevPage = () => setPage((prev) => prev - 1);
+
+  const handleSubmit = async () => {
     try {
-      const res = await fetch('/api/diving-activities', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newActivity),
-      });
+      const payload = {
+        host_user_id: userData.user_id,
+        title: formData.title,
+        description: formData.description,
+        date: formData.date,
+        slots_available: parseInt(formData.slots, 10),
+        divesite_id: selectedSite.id,
+      };
 
-      if (!res.ok) throw new Error('Failed to create activity.');
-
-      await res.json();
-      setLoading(false);
+      const response = await axios.post('/api/diving-activities', payload);
       navigate('/dashboard');
-    } catch (err) {
-      setError(err.message || 'Error occurred.');
-      setLoading(false);
+    } catch (error) {
+      console.error('Submission error:', error);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f0fdfa] via-[#ecfeff] to-[#f7fdfc] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-xl bg-white border border-teal-100 rounded-3xl shadow-xl p-8">
-        {/* Back Button */}
-        <button
-          onClick={() => navigate('/dashboard')}
-          className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition font-medium text-sm shadow-sm"
-        >
-          ← Back to Dashboard
-        </button>
+    <Box sx={{ bgcolor: '#f5f9ff', minHeight: '100vh', py: 6 }}>
+      <Container maxWidth="md">
+        <Typography variant="h4" fontWeight="bold" gutterBottom>
+          Create Dive Activity
+        </Typography>
 
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">Create New Diving Activity</h2>
+        <Stepper activeStep={page - 1} alternativeLabel sx={{ mb: 4 }}>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
 
-        {error && (
-          <p className="text-red-600 mb-4 text-center font-medium">{error}</p>
+        {page === 1 && (
+          <Box component="form" noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <TextField
+              label="Dive Title"
+              value={formData.title}
+              onChange={handleChange('title')}
+              fullWidth
+              required
+            />
+            <TextField
+              label="Description"
+              value={formData.description}
+              onChange={handleChange('description')}
+              fullWidth
+              multiline
+              rows={3}
+              required
+            />
+            <TextField
+              label="Date"
+              type="date"
+              value={formData.date}
+              onChange={handleChange('date')}
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              required
+            />
+            <TextField
+              label="Number of Slots"
+              type="number"
+              value={formData.slots}
+              onChange={handleChange('slots')}
+              fullWidth
+              required
+              inputProps={{ min: 1 }}
+            />
+            <Box display="flex" justifyContent="flex-end">
+              <Button variant="contained" onClick={nextPage}>Next</Button>
+            </Box>
+          </Box>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-300 transition"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
+        {page === 2 && (
+          <Box>
+            {loading ? (
+              <Typography>Loading map...</Typography>
+            ) : (
+              <Box sx={{ height: { xs: 400, md: 500 }, width: '100%' }}>
+                <MapContainer
+                  center={[-38, 145]}
+                  zoom={6}
+                  style={{ height: '100%', width: '100%' }}
+                >
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  {diveSites.map((site) => (
+                    <Marker
+                      key={site.id}
+                      position={[site.decimalLatitude, site.decimalLongitude]}
+                      eventHandlers={{
+                        click: () => handleLocationSelect(site),
+                      }}
+                    >
+                      <Popup>{site["Diver site"]}</Popup>
+                    </Marker>
+                  ))}
+                </MapContainer>
+              </Box>
+            )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <textarea
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-300 transition resize-none"
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </div>
+            {selectedSite && (
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="subtitle1">
+                  Selected Site: <strong>{selectedSite["Diver site"]}</strong>
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Lat: {selectedSite.decimalLatitude}, Lng: {selectedSite.decimalLongitude}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-300 transition"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
-            <input
-              type="date"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-300 transition"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Slots Available</label>
-            <input
-              type="number"
-              min="1"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-300 transition"
-              value={slotsAvailable}
-              onChange={(e) => setSlotsAvailable(Number(e.target.value))}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-xl shadow-md transition-all disabled:opacity-50"
-            disabled={loading}
-          >
-            {loading ? 'Creating...' : 'Create Activity'}
-          </button>
-        </form>
-      </div>
-    </div>
+        {page > 1 && (
+          <Box mt={4} display="flex" justifyContent="space-between">
+            <Button onClick={prevPage}>Back</Button>
+            {page < steps.length ? (
+              <Button variant="contained" onClick={nextPage}>Next</Button>
+            ) : (
+              <Button variant="contained" onClick={handleSubmit}>Submit</Button>
+            )}
+          </Box>
+        )}
+      </Container>
+    </Box>
   );
-}
+};
+
+export default CreateActivity;

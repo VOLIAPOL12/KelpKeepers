@@ -32,12 +32,12 @@ router.get('/:id', async (req, res) => {
 
 // 新建一个 dive event
 router.post('/', async (req, res) => {
-  const { title, description, location, date, slots_available, host_user_id } = req.body;
+  const { title, description, divesite_id, date, slots_available, host_user_id } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO diveevent (title, description, location, date, slots_available, host_user_id) 
+      `INSERT INTO diveevent (title, description, divesite_id, date, slots_available, host_user_id) 
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [title, description, location, date, slots_available, host_user_id]
+      [title, description, divesite_id, date, slots_available, host_user_id]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
