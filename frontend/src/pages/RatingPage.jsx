@@ -1,83 +1,80 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const RatingPage = () => {
-  const { activityId } = useParams(); // 从URL中获取活动ID（如有）
-  
-  // 静态的 mock 数据
-  const mockRatings = [
-    { score: 5 },
-    { score: 4 },
-    { score: 5 },
-    { score: 3 },
-    { score: 4 },
-    { score: 2 }
-  ];
+  const { activityId } = useParams();
+  const navigate = useNavigate();
+  const user_id = 1; // 假设用户已登录，使用固定ID或从auth中获取
 
-  const mockFeedbacks = [
-    {
-      text: "The activity was very interesting and I learned a lot!",
-      user: {
-        nickname: "Sicko mode",
-        avatar: "https://i.pravatar.cc/100?img=3"
-      }
-    },
-    {
-      text: "Well organized, but a bit long.",
-      user: {
-        nickname: "Jax",
-        avatar: "https://i.pravatar.cc/100?img=5"
-      }
-    },
-    {
-      text: "I hope there will be more interactive sessions next time!",
-      user: {
-        nickname: "Master Yi",
-        avatar: "https://i.pravatar.cc/100?img=8"
-      }
-    }
-  ];
-
-  const [ratings, setRatings] = useState(mockRatings);
+  const [ratings, setRatings] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [counts, setCounts] = useState({});
   const [userRating, setUserRating] = useState(0);
   const [feedback, setFeedback] = useState('');
-  const [allFeedbacks, setAllFeedbacks] = useState(mockFeedbacks);
 
   useEffect(() => {
-    updateStats(mockRatings);
-  }, []);
+    fetch(`/api/ratings/${activityId}`)
+      .then(res => res.json())
+      .then(data => {
+        setRatings(data);
+        updateStats(data);
+      })
+      .catch(err => console.error('Failed to load ratings', err));
+  }, [activityId]);
 
   const updateStats = (ratingsList) => {
     const total = ratingsList.length;
-    const sum = ratingsList.reduce((acc, cur) => acc + cur.score, 0);
+    const sum = ratingsList.reduce((acc, cur) => acc + cur.rating, 0);
     const avg = total ? (sum / total).toFixed(1) : 0;
 
     const countMap = {};
     for (let i = 1; i <= 5; i++) countMap[i] = 0;
-    ratingsList.forEach(r => countMap[r.score]++);
+    ratingsList.forEach(r => countMap[r.rating]++);
 
     setAverageRating(avg);
     setCounts(countMap);
   };
 
   const submitRating = () => {
-    const newRating = { score: userRating };
-    const newFeedback = {
-      text: feedback,
-      user: { nickname: 'User123', avatar: '/avatar.png' }
+    const newRating = {
+      user_id,
+      event_id: activityId,
+      rating: userRating,
+      comment: feedback
     };
 
-    setRatings(prev => [...prev, newRating]);
-    setAllFeedbacks(prev => [...prev, newFeedback]);
-    updateStats([...ratings, newRating]);
-    setFeedback('');
-    setUserRating(0);
+    fetch('/api/ratings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newRating)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to submit rating');
+        return res.json();
+      })
+      .then(() => {
+        // 刷新评分列表
+        return fetch(`/api/ratings/${activityId}`)
+          .then(res => res.json())
+          .then(data => {
+            setRatings(data);
+            updateStats(data);
+            setFeedback('');
+            setUserRating(0);
+          });
+      })
+      .catch(err => console.error(err));
   };
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
+      <button
+        onClick={() => navigate(`/activity/${activityId}`)}
+        className="mb-4 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+      >
+        ← Back to Activity
+      </button>
+
       <h1 className="text-2xl font-bold mb-6">Activity Rating</h1>
 
       <div className="mb-6">
@@ -92,16 +89,16 @@ const RatingPage = () => {
       <div className="mb-6">
         <h2 className="font-semibold mb-2">Your Rating</h2>
         <div className="flex gap-2 mb-3">
-  {[1, 2, 3, 4, 5].map(i => (
-    <button
-      key={i}
-      className={`w-8 h-8 text-white rounded-full ${userRating >= i ? 'bg-yellow-500' : 'bg-gray-300'}`}
-      onClick={() => setUserRating(i)}
-    >
-      {userRating >= i ? '⭐' : '☆'} {/* 使用星星代替数字 */}
-    </button>
-  ))}
-</div>
+          {[1, 2, 3, 4, 5].map(i => (
+            <button
+              key={i}
+              className={`w-8 h-8 text-white rounded-full ${userRating >= i ? 'bg-yellow-500' : 'bg-gray-300'}`}
+              onClick={() => setUserRating(i)}
+            >
+              {userRating >= i ? '⭐' : '☆'}
+            </button>
+          ))}
+        </div>
         <textarea
           className="w-full p-2 border rounded mb-3"
           rows="3"
@@ -119,13 +116,14 @@ const RatingPage = () => {
 
       <div>
         <h2 className="text-xl font-semibold mb-3">Feedback from Other Users</h2>
-        {allFeedbacks.length ? (
-          allFeedbacks.map((fb, idx) => (
+        {ratings.length ? (
+          ratings.map((r, idx) => (
             <div key={idx} className="border-b py-3 flex gap-3 items-start">
-              <img src={fb.user.avatar} alt="avatar" className="w-10 h-10 rounded-full" />
+              <img src={r.avatar || '/default-avatar.png'} alt="avatar" className="w-10 h-10 rounded-full" />
               <div>
-                <p className="font-medium">{fb.user.nickname}</p>
-                <p className="text-gray-700">{fb.text}</p>
+                <p className="font-medium">{r.nickname}</p>
+                <p className="text-yellow-500">{"⭐".repeat(r.rating)}</p>
+                <p className="text-gray-700">{r.comment}</p>
               </div>
             </div>
           ))
