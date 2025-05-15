@@ -104,6 +104,8 @@ const Dashboard = () => {
           >
             Camera
           </button>
+          
+
         </div>
         
       </div>
