@@ -17,6 +17,7 @@ import ProtectedWrapper from './containers/ProtectedWrapper';
 import EmailVerify from './pages/authentication/EmailVerify';
 import PhotoCapturePage from './pages/PhotoCapturePage';
 import Scoreboard from './pages/ScoreBoard.jsx';
+import RatingPage from './pages/RatingPage.jsx';
 
   
 function App() {
@@ -51,6 +52,9 @@ function App() {
         <Route path="/activity/:id" element={<ActivityDetail />} />
         <Route path="/create-activity" element={<CreateActivity />} />
         <Route path="/camera" element={<PhotoCapturePage/>} />
+        <Route path="/rating" element={<RatingPage />} />
+        <Route path="/rating/:activityId" element={<RatingPage />} />
+
       </Routes>
     </>
   )
