@@ -1,4 +1,4 @@
-import { addEventParticipant } from "../models/diveEventModel";
+import { addEventParticipant } from "../models/eventParticipantModel";
 
 export const joinDiveEvent = async (req, res) => {
     const { user_id, event_id } = req.body;
@@ -6,7 +6,7 @@ export const joinDiveEvent = async (req, res) => {
     if (!user_id || !event_id) {
         return res.status(400).json({ success: false, message: 'Missing user_id or event_id' });
     }
-
+    
     try {
         const participant = await addEventParticipant({ user_id, event_id });
         res.json({
