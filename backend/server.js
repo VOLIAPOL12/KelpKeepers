@@ -12,6 +12,7 @@ import kelpRoutes from './routes/kelpRoutes.js';
 import diveSitesRoutes from './routes/diveSitesRoutes.js';
 import newSpeciesRoutes from './routes/newSpeciesRoutes.js';
 import divingActivitiesRoutes from './routes/divingActivitiesRoutes.js';
+import eventParticipantRoutes from './routes/eventParticipantRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import userRouter from "./routes/userRoutes.js";
 import kelpDetectionRouter from "./routes/kelpDetectionRouter.js";
@@ -41,12 +42,13 @@ app.use(morgan("dev"));
 // API 路由
 app.use('/api/kelp', kelpRoutes);
 app.use('/api/dive-sites', diveSitesRoutes);
+app.use('/api/event-participant', eventParticipantRoutes);
 app.use('/api/new-species', newSpeciesRoutes);
 app.use('/api/diving-activities', divingActivitiesRoutes);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/kelp-detection', kelpDetectionRouter);
-app.use('/api/ratings', ratingsRouter); // ⭐️ 注册评分路由
+app.use('/api/ratings', ratingsRouter);
 
 // 前端部署支持
 if (process.env.NODE_ENV === "production") {
