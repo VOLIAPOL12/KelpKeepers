@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 // 路由导入
 import kelpRoutes from './routes/kelpRoutes.js';
 import diveSitesRoutes from './routes/diveSitesRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 import newSpeciesRoutes from './routes/newSpeciesRoutes.js';
 import divingActivitiesRoutes from './routes/divingActivitiesRoutes.js';
 import eventParticipantRoutes from './routes/eventParticipantRoutes.js';
@@ -49,6 +50,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/kelp-detection', kelpDetectionRouter);
 app.use('/api/ratings', ratingsRouter);
+app.use('/api/dashboard-data', dashboardRoutes);
 
 // 前端部署支持
 if (process.env.NODE_ENV === "production") {

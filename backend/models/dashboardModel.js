@@ -1,8 +1,6 @@
 import { query } from '../db.js';  
 
-export const findDashboardData = async (req, res) => {
-    const userId = req.user.id; // adjust if using JWT or sessions
-
+export const findDashboardData = async (userId) => {
     try {
         const result = await query(`
             SELECT 
@@ -20,9 +18,9 @@ export const findDashboardData = async (req, res) => {
             LIMIT 1
         `, [userId]);
 
-        res.json({ upcomingDiveEvent: result.rows[0] || null });
+        return result;
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to load dashboard data' });
+        console.error('Error adding event participant:', err.message);
+        throw err;
     }
 };

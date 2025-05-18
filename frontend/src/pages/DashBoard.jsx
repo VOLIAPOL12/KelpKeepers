@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -9,8 +9,20 @@ import {
   useTheme,
 } from '@mui/material';
 import DashboardCard from '../components/molecules/DashboardCard';
+import useDashboardDataStore from '../store/useDashbaordDataStore';
 
 const DashboardGrid = () => {
+
+  const {dashboardData, weather, loadDashboardData } = useDashboardDataStore();
+
+  useEffect(() => {
+    loadDashboardData();
+  }, [])
+
+  useEffect(() => {
+    console.log(dashboardData);
+    console.log(weather);
+  }, [dashboardData, weather])
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
