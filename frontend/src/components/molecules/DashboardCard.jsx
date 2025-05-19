@@ -15,7 +15,7 @@ const DashboardCard = ({ title, children, bgcolor }) => {
             height: '100%',
             }}
         >
-            <Typography variant="h6" fontWeight={600} gutterBottom>
+            <Typography variant="h5" fontWeight={600} gutterBottom>
             {title}
             </Typography>
             {children}

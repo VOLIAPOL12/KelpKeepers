@@ -1,46 +1,97 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Box,
   Grid,
-  Paper,
   Typography,
   Container,
-  useMediaQuery,
+  CircularProgress,
   useTheme,
 } from '@mui/material';
 import DashboardCard from '../components/molecules/DashboardCard';
 import useDashboardDataStore from '../store/useDashbaordDataStore';
+import useWeatherStore from '../store/useWeatherStore';
+import useLoadingStore from '../store/useLoadingStore';
+import DiveLocationLink from '../components/atoms/DiveLocationLink';
+import { AppContent } from '../context/AppContext';
+
+function formatDiveDateTime(isoString) {
+  const date = new Date(isoString);
+
+  return date.toLocaleString('en-AU', {
+    weekday: 'short',    // "Sun"
+    day: 'numeric',      // "18"
+    month: 'short',      // "May"
+    hour: 'numeric',     // "3"
+    minute: '2-digit',   // "03"
+    hour12: true,        // "AM/PM"
+    timeZone: 'Australia/Sydney',
+  });
+}
 
 const DashboardGrid = () => {
+  const { userData } = useContext(AppContent);
+  const {dashboardData, loadDashboardData } = useDashboardDataStore();
+  const {forecast, marine, loadForecast, loadMarine} = useWeatherStore();
+  const { setLoading } = useLoadingStore();
 
-  const {dashboardData, weather, loadDashboardData } = useDashboardDataStore();
 
   useEffect(() => {
-    loadDashboardData();
-  }, [])
-
+    setLoading(true);
+    loadDashboardData().finally(() => {
+      setLoading(false);
+    });
+  }, []);
+  
   useEffect(() => {
-    console.log(dashboardData);
-    console.log(weather);
-  }, [dashboardData, weather])
+    const dive = dashboardData?.upcomingDive?.[0];
+    if (dive) {
+      loadForecast(dive.decimalLatitude, dive.decimalLongitude, dive);
+      loadMarine(dive.decimalLatitude, dive.decimalLongitude, dive);
+    }
+  }, [dashboardData]);
+  const isLoading = !dashboardData || !forecast || !marine;
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  
   return (
-    <Box sx={{ bgcolor: '#f5f9ff', minHeight: '100vh', py: 6 }}>
-      <Container maxWidth="xl">
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
-          Kelp Restoration Hub
-        </Typography>
+    <Box sx={{ bgcolor: '#f5f9ff', minHeight: '100vh', py: 10 }}>
+      <Container maxWidth="100%">
+
 
         <Grid container spacing={3}>
-          <Grid item size={{xs:12, sm:6, md:4}}>
-            <DashboardCard title="Next Dive">
-              <Typography>Today's weather</Typography>
-              <Typography variant="caption">Eddystone Point</Typography>
-            </DashboardCard>
+          <Grid item size={{xs:12, sm:12, md:12}}>
+            <DashboardCard title={"Hello " + userData.name + ". Your next event:"}>
+              {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                  <CircularProgress />
+                </Box>
+              ) : (
+              <Grid container spacing={5}>
+                <Grid item size={{xs: 12, sm: 6, md: 6}}>
+                  <Typography variant="h3">Next Dive Event:</Typography>
+                  <Typography variant="h5"><strong>{dashboardData.upcomingDive[0].title}</strong></Typography>
+                  <Typography variant="subtitle1">
+                    <strong>Location</strong>:
+                    <DiveLocationLink
+                      name={dashboardData.upcomingDive[0].site_name}
+                      latitude={dashboardData.upcomingDive[0].decimalLatitude}
+                      longitude={dashboardData.upcomingDive[0].decimalLongitude}
+                    />
+                    </Typography>
+                  <Typography variant="subtitle1">
+                    <strong>Dive Time</strong>: {formatDiveDateTime(dashboardData.upcomingDive[0].date)}
+                  </Typography>
+                </Grid>
+                <Grid item sx={{textAlign: {xs: 'left', md: 'right'}}} size={{xs: 12, sm: 6, md: 6}}>
+                  <Typography variant="h3">Forecast</Typography>
+                  <Typography variant="subtitle1">{forecast.temperatureMax.value + " " + forecast.temperatureMin.value}</Typography>
+                  <Typography variant="subtitle1">UV Index: {forecast.uvIndexMax} Weather: {forecast.weatherCode}</Typography>
+                  <Typography variant="subtitle1">Ocean Current Direction: {marine.oceanCurrentDirection.value + ' ' + marine.oceanCurrentDirection.unit}</Typography>
+                  <Typography variant="subtitle1"></Typography>
+                </Grid>
+              </Grid>
+              )}
+            </DashboardCard> 
           </Grid>
 
           <Grid item size={{xs:12, sm:6, md:4}}>

@@ -25,33 +25,84 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={<HomePage />} />
         <Route path="/journey" element={<JourneyPage />} />
-        <Route path="/explore" element={<UnauthenticatedPageWrapper><ExplorePage /></UnauthenticatedPageWrapper>} />
+        <Route
+          path="/explore"
+          element={
+            <UnauthenticatedPageWrapper>
+              <ExplorePage />
+            </UnauthenticatedPageWrapper>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot" element={<ResetPasswordPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedWrapper>
-                <Dashboard />
-              </ProtectedWrapper>
-            }
-          />
-          <Route
-            path="/email-verify"
-            element={
-              <ProtectedWrapper>
-                <EmailVerify />
-              </ProtectedWrapper>
-            }
-          />
-        <Route path="/history" element={<DivingHistory />} />
-        <Route path="/scoreboard" element={<Scoreboard />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/activity/:id" element={<ActivityDetail />} />
-        <Route path="/create-activity" element={<CreateActivity />} />
-        <Route path="/camera" element={<PhotoCapturePage/>} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedWrapper>
+              <Dashboard />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/email-verify"
+          element={
+            <ProtectedWrapper>
+              <EmailVerify />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <ProtectedWrapper>
+              <DivingHistory />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/scoreboard"
+          element={
+            <ProtectedWrapper>
+              <Scoreboard />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedWrapper>
+              <UserProfile />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/activity/:id"
+          element={
+            <ProtectedWrapper>
+              <ActivityDetail />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/create-activity"
+          element={
+            <ProtectedWrapper>
+              <CreateActivity />
+            </ProtectedWrapper>
+          }
+        />
+        <Route
+          path="/camera"
+          element={
+            <ProtectedWrapper>
+              <PhotoCapturePage/>
+            </ProtectedWrapper>
+          }
+        />
         <Route path="/rating" element={<RatingPage />} />
         <Route path="/rating/:activityId" element={<RatingPage />} />
 
