@@ -137,14 +137,29 @@ function ExplorePage() {
             <Tooltip
               arrow
               title={
-                <Box sx={{textAlign: 'left'}}>
+                <Box sx={{ textAlign: 'left' }}>
+                  {/* ✅ Animated GIF above title */}
+                  {hotspot.gif && (
+                    <Box display="flex" justifyContent="center" mb={1}>
+                      <img src={hotspot.gif} alt="Animated icon" style={{ width: 150, height: 150 }} />
+                    </Box>
+                  )}
+
+                  {/* Title */}
                   <Typography variant="body2" fontWeight="bold">
                     {hotspot.title}
                   </Typography>
-                  <Typography variant="caption" sx={{display: 'block', mb: 2}}>
+
+                  {/* Description */}
+                  <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>
                     {hotspot.description}
                   </Typography>
-                  <Button onClick={(e) => handleHotspotClick(hotspot, e)} sx={{bgcolor: 'black', color: 'white'}}>
+
+                  {/* Button */}
+                  <Button
+                    onClick={(e) => handleHotspotClick(hotspot, e)}
+                    sx={{ bgcolor: 'black', color: 'white' }}
+                  >
                     Learn More
                   </Button>
                 </Box>
@@ -174,7 +189,7 @@ function ExplorePage() {
                   ],
                 },
               }}
-            >
+            > 
               <Box
                 variant="contained"
                 sx={{
