@@ -47,7 +47,8 @@ const CreateActivity = () => {
 
   const handleLocationSelect = (site) => {
     setSelectedSite(site);
-    setFormData({ ...formData, location: site });
+    console.log(site);
+    setFormData({ ...formData, location: site.id });
   };
 
   const nextPage = () => setPage((prev) => prev + 1);
@@ -61,7 +62,7 @@ const CreateActivity = () => {
         description: formData.description,
         date: formData.date,
         slots_available: parseInt(formData.slots, 10),
-        divesite_id: selectedSite.id,
+        divesite_id: formData.location,
       };
 
       const response = await axios.post('/api/diving-activities', payload);

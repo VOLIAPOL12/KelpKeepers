@@ -30,8 +30,9 @@ const ProtectedWrapper = ({ children }) => {
 
     return (
         <>
-            <AuthenticatedNavBar />
-            {children}
+            <AuthenticatedNavBar>
+                {children}
+            </AuthenticatedNavBar>
         </>
     );
 };
