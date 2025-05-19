@@ -25,7 +25,6 @@ const SectionContentRenderer = ({ section }) => {
               maxWidth: '100%',
               maxHeight: 400,
               objectFit: 'cover',
-              mb: 3,
               borderRadius: 2,
             }}
           />

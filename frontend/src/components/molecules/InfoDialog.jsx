@@ -17,12 +17,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { styled } from '@mui/system'; 
 import ProcessOfDestruction from '../ProcessOfDestruction';  
-import SeastarMap from '../SeastarMap';
-import SeadragonMap from '../SeadragonMap';
-import HandfishMap from '../HandfishMap';
-import AbaloneMap from '../AbaloneMap';
-import SeaUrchinMap from '../SeaUrchinMap';
-import KelpMap from '../KelpMap';
+// import SeastarMap from '../SeastarMap';
+// import SeadragonMap from '../SeadragonMap';
+// import HandfishMap from '../HandfishMap';
+// import AbaloneMap from '../AbaloneMap';
+// import SeaUrchinMap from '../SeaUrchinMap';
+// import KelpMap from '../KelpMap';
+import SpeciesMap from '../SpeciesMap';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseButton from '../atoms/CloseButton';
@@ -463,12 +464,14 @@ function InfoDialog({ open, onClose, hotspot, allHotspots }) {
  
                                      
                                      <Box sx={{ height: '100%', width: '100%' }}>
-                                     {selectedCard.title === "Sea Star" && <SeastarMap />}
+                                     {/* {selectedCard.title === "Sea Star" && <SeastarMap />}
                                      {selectedCard.title === "Leafy Seadragon" && <SeadragonMap />}
                                      {selectedCard.title === "Spotted Handfish" && <HandfishMap />}
                                      {selectedCard.title === "Abalone" && <AbaloneMap />}
                                      {selectedCard.title === "Rapid Population Expansion" && <SeaUrchinMap />}
-                                     {selectedCard.title === "Great Southern Reef" && <KelpMap />}
+                                     {selectedCard.title === "Great Southern Reef" && <KelpMap />} */}
+                                     {selectedCard.title === "Dive Sites" && <SpeciesMap species="Dive Sites" />}
+                                     <SpeciesMap species={selectedCard.title} />
                                      </Box>
                                  </Box>
                                 )}
