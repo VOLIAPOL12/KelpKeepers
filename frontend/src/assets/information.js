@@ -34,7 +34,11 @@ import img10 from '../assets/images/10.png';
 import img11 from '../assets/images/11.png';
 import img12 from '../assets/images/12.png';
 import logo from '../assets/logo.png';
-
+import divergif from '../assets/images/diver.gif';
+import kelpgif from '../assets/images/kelp.gif';
+import urchingif from '../assets/images/urchin.gif';
+import stargif from '../assets/images/starfish.gif';
+import climategif from '../assets/images/climate.gif';
 
 export const hotspotData = [
   {
@@ -49,9 +53,10 @@ export const hotspotData = [
         md: '78%'
       }
     },
-    description: `Beneath the waves lies an oceanic forest like no other — a realm of towering kelp that forms the backbone of entire marine ecosystems.`,
+    description: `Beneath the waves lies a unique oceanic forest of towering kelp, the backbone of marine ecosystems.`,
     title: 'THE UNDERWATER JUNGLE',
     label: "Kelp",
+    gif: kelpgif,
     show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
@@ -152,9 +157,10 @@ export const hotspotData = [
         md: '7%'
       }
     },
-    description: `Once held in check by natural predators, sea urchins have surged in number, transforming lush kelp forests into barren seascapes.`,
+    description: `With natural predators in decline, sea urchins have multiplied, turning lush kelp forests into barren seascapes.`,
     title: 'THE URCHIN INVASION',
     label: "Urchins",
+    gif: urchingif, 
     show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
@@ -303,9 +309,10 @@ export const hotspotData = [
   {
     id: 'fish',
     position: { top: '21%', left: '23%' },
-    description: `Kelp forests are more than just plants — they're shelter, camouflage, and breeding grounds. As these forests vanish, many of the marine creatures that depend on them face extinction.`,
+    description: `Kelp forests offer shelter, camouflage, and breeding grounds. Their loss threatens countless marine species with extinction.`,
     title: 'THE SPECIES AT RISK',
     label: "Endangered Species",
+    gif: stargif, 
     show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 6 },
@@ -351,10 +358,15 @@ export const hotspotData = [
   },
   { 
     id: 'sunlight',
-    position: { top: { xs: '20%', md: '15%'}, left: { xs:'80%', md:'70%'}, color: 'black' },
+    position: { 
+      top: { xs: '20%', md: '15%' }, 
+      left: { xs: '80%', md: '70%' }, 
+      color: 'black' 
+    },
     description: `Kelp forests may be underwater, but they fight climate change from below the surface.`,
     title: 'CLIMATE FIGHTING POWERHOUSE',
     label: "Climate Change Impacts",
+    gif: climategif, // ✅ Added GIF reference
     show: false,
     dialogType: 'cards',
     layout: { xs: 12, sm: 6, md: 3 },
@@ -398,12 +410,13 @@ export const hotspotData = [
   {
     id: 'diver',
     position: { top: '52%', left: '45%' },
-    description: `Meet the people diving into action. From volunteer citizen scientists to professional divers, a new army is rising to fight back against the urchin invasion and restore balance beneath the waves.`,
+    description: `Citizen scientists and pro divers are battling the urchin invasion to restore underwater balance.`,
     title: 'BATTLE TO REVIVE KELP',
     label: 'Kelp Restoration Divers',
     dialogType: 'cards',
     show: false,
     layout: { xs: 12, sm: 6, md: 4 },
+    gif: divergif, 
     content: [
       {
         id: 23,
