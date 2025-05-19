@@ -18,6 +18,7 @@ import authRouter from './routes/authRoutes.js';
 import userRouter from "./routes/userRoutes.js";
 import kelpDetectionRouter from "./routes/kelpDetectionRouter.js";
 import ratingsRouter from './routes/ratingRoutes.js'; // ⭐️ 这是你新增的评分接口
+import diveResultRoutes from './routes/diveResultRoutes.js';
 
 // 初始化 dotenv
 dotenv.config();
@@ -51,10 +52,11 @@ app.use('/api/user', userRouter);
 app.use('/api/kelp-detection', kelpDetectionRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/dashboard-data', dashboardRoutes);
+app.use('/api/dive-result', diveResultRoutes)
 
 // 前端部署支持
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
