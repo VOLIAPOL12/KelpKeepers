@@ -4,6 +4,8 @@ import {
   Grid,
   Typography,
   Container,
+  Card,
+  CardContent,
   CircularProgress,
   useTheme,
 } from '@mui/material';
@@ -12,7 +14,12 @@ import useDashboardDataStore from '../store/useDashbaordDataStore';
 import useWeatherStore from '../store/useWeatherStore';
 import useLoadingStore from '../store/useLoadingStore';
 import DiveLocationLink from '../components/atoms/DiveLocationLink';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import NatureIcon from '@mui/icons-material/Nature';
+import SpaIcon from '@mui/icons-material/Spa';
+import BugReportIcon from '@mui/icons-material/BugReport';
 import { AppContent } from '../context/AppContext';
+import DiveSummaryChart from '../components/molecules/DiveSummaryChart';
 
 function formatDiveDateTime(isoString) {
   const date = new Date(isoString);
@@ -57,8 +64,7 @@ const DashboardGrid = () => {
     <Box sx={{ bgcolor: '#f5f9ff', minHeight: '100vh', py: 10 }}>
       <Container maxWidth="100%">
 
-
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           <Grid item size={{xs:12, sm:12, md:12}}>
             <DashboardCard title={"Hello " + userData.name + ". Your next event:"}>
               {isLoading ? (
@@ -94,39 +100,91 @@ const DashboardGrid = () => {
             </DashboardCard> 
           </Grid>
 
-          <Grid item size={{xs:12, sm:6, md:4}}>
-            <DashboardCard title="My Dives" bgcolor="#e0f7fa">
-              <Typography>Total: 12 dives</Typography>
-              <Typography variant="caption">Last: 14 May 2025</Typography>
-            </DashboardCard>
+          <Grid item size={{xs:12, sm:6, md:3}}>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                  <CircularProgress />
+                </Box>
+              ) : (
+            <Card>
+              <CardContent>
+                <Box display="flex" alignItems="center">
+                  <AccessTimeIcon color="primary" sx={{ fontSize: 32, mr: 1 }} />
+                  <Typography variant="h6">Dive Minutes</Typography>
+                </Box>
+                <Typography variant="h4">{dashboardData.total_minutes_dove}</Typography>
+                <Typography color="textSecondary">This month</Typography>
+              </CardContent>
+            </Card>
+              )}
           </Grid>
 
-          <Grid item size={{xs:12, sm:6, md:4}}>
-            <DashboardCard title="Leaderboard" bgcolor="#ede7f6">
-              <Typography>#5 - You</Typography>
-              <Typography>#1 - Alice</Typography>
-              <Typography>#2 - Bob</Typography>
-            </DashboardCard>
+          <Grid item size={{xs:12, sm:6, md:3}}>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                  <CircularProgress />
+                </Box>
+              ) : (
+            <Card>
+              <CardContent>
+                <Box display="flex" alignItems="center">
+                  <NatureIcon color="success" sx={{ fontSize: 32, mr: 1 }} />
+                  <Typography variant="h6">Kelp Found</Typography>
+                </Box>
+                <Typography variant="h4">{dashboardData.total_kelp_found}</Typography>
+                <Typography color="textSecondary">This month</Typography>
+              </CardContent>
+            </Card>
+              )}
           </Grid>
 
-          <Grid item size={{xs:12, sm:6, md:4}}>
-            <DashboardCard title="Create Activity" bgcolor="#fbe9e7">
-              <Typography>Plan your next dive mission</Typography>
-            </DashboardCard>
+          <Grid item size={{xs:12, sm:6, md:3}}>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                  <CircularProgress />
+                </Box>
+              ) : (
+            <Card>
+              <CardContent>
+                <Box display="flex" alignItems="center">
+                  <SpaIcon color="info" sx={{ fontSize: 32, mr: 1 }} />
+                  <Typography variant="h6">Kelp Planted</Typography>
+                </Box>
+                <Typography variant="h4">{dashboardData.total_kelp_planted}</Typography>
+                <Typography color="textSecondary">This month</Typography>
+              </CardContent>
+            </Card>
+              )}
           </Grid>
 
-          <Grid item size={{xs:12, sm:6, md:4}}>
-            <DashboardCard title="Recent Activity" bgcolor="#e8f5e9">
-              <Typography>Joined: Kelp Sweep 12 May</Typography>
-              <Typography>Created: Sea Dive 8 May</Typography>
-            </DashboardCard>
+          <Grid item size={{xs:12, sm:6, md:3}}>
+            {isLoading ? (
+                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                  <CircularProgress />
+                </Box>
+              ) : (
+            <Card>
+              <CardContent>
+                <Box display="flex" alignItems="center">
+                  <BugReportIcon color="error" sx={{ fontSize: 32, mr: 1 }} />
+                  <Typography variant="h6">Urchins Removed</Typography>
+                </Box>
+                <Typography variant="h4">{dashboardData.total_urchins_removed}</Typography>
+                <Typography color="textSecondary">This month</Typography>
+              </CardContent>
+            </Card>
+              )}
           </Grid>
-
-          <Grid item size={{xs:12, sm:6, md:4}}>
-            <DashboardCard title="My Impact" bgcolor="#fff8e1">
-              <Typography>124 sea urchins removed</Typography>
-              <Typography>6 kelp patches restored</Typography>
-            </DashboardCard>
+          <Grid item size={{xs:12, sm:12, md:12}}>
+            {isLoading ? (
+              <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                <CircularProgress />
+              </Box>
+            ) : (
+              <DashboardCard>
+                <DiveSummaryChart data={dashboardData.global_data} />
+              </DashboardCard>
+            )}
           </Grid>
         </Grid>
       </Container>
