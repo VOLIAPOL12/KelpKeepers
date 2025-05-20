@@ -53,6 +53,7 @@ app.use('/api/kelp-detection', kelpDetectionRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/dashboard-data', dashboardRoutes);
 app.use('/api/dive-result', diveResultRoutes)
+app.use('/api/user/status', diveResultRoutes)
 
 // 前端部署支持
 if (process.env.NODE_ENV === "production") {

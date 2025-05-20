@@ -26,6 +26,7 @@ import navLogo from '../../assets/nav-logo.png'
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import logo from '../../assets/logo.png';
+import LobbyIcon from '@mui/icons-material/FormatListBulleted';
 
 const drawerWidth = 300;
 
@@ -42,7 +43,8 @@ const AuthenticatedNavBar = ({ children })  => {
         { label: 'History', icon: <HistoryIcon />, path: '/history' },
         { label: 'Scoreboard', icon: <LeaderboardIcon />, path: '/scoreboard' },
         { label: 'Create Activity', icon: <AddIcon />, path: '/create-activity' },
-        { label: 'Camera', icon: <CameraAltIcon />, path: '/camera' }
+        { label: 'Camera', icon: <CameraAltIcon />, path: '/camera' },
+        { label: 'Dive Lobby', icon: <LobbyIcon />, path: '/lobby' }
     ];
 
     const [anchorEl, setAnchorEl] = useState(null);
