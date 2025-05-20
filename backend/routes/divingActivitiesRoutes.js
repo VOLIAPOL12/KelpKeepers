@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
 
     // 1. Insert the dive event
     const eventResult = await client.query(
-      `INSERT INTO diveevent (title, description, divesite_id, date, slots_available, host_user_id)
+      `INSERT INTO "diveevent" (title, description, divesite_id, date, max_slots, host_user_id)
        VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING *`,
       [title, description, divesite_id, date, slots_available, host_user_id]
