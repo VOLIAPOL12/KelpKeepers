@@ -17,8 +17,8 @@ export const getUserData = async (req, res) => {
                 user_id: user.user_id,
                 name: user.name,
                 isAccountVerified: user.is_email_verified,
-                user_status: user.user_status, // 确保这里有user_status字段
-                joined_event_id: user.joined_event_id  // 确保这里有joined_event_id字段
+                user_status: user.user_status, // 确保这里有 user_status 字段
+                joined_event_id: user.joined_event_id  // 确保这里有 joined_event_id 字段
             }
         });
     } catch (error) {
@@ -36,19 +36,36 @@ export const updateUserStatusController = async (req, res) => {
             return res.status(401).json({ success: false, message: "User not found" });
         }
 
-        // 检查用户是否已加入其他活动（即 user_status 为 true）
-        if (user.status === true) {
-            return res.status(400).json({ success: false, message: "You have already joined an activity." });
+        // 如果用户状态为 true 且请求的 status 为 false（表示退出活动）
+        if (user.user_status === true && status === false) {
+            // 更新为未参与状态，清除 joined_event_id
+            const updatedUser = await updateUserStatus(userId, false, null);
+            return res.json({
+                success: true,
+                message: 'User successfully left the activity',
+                userData: updatedUser
+            });
         }
 
-        // 更新用户状态
-        const updatedUser = await updateUserStatus(userId, status);
+        // 如果用户状态为 false 且请求的 status 也是 false（表示没有更改）
+        if (user.user_status === false && status === false) {
+            return res.status(400).json({ success: false, message: "You are not currently joined to any activity." });
+        }
 
-        res.json({
-            success: true,
-            message: 'User status updated successfully',
-            userData: updatedUser
-        });
+        // 如果用户没有加入活动，尝试加入活动
+        if (status === true) {
+            // 更新用户状态为 true，设置活动 ID
+            const updatedUser = await updateUserStatus(userId, true, req.body.joined_event_id);
+            return res.json({
+                success: true,
+                message: 'User successfully joined the activity',
+                userData: updatedUser
+            });
+        }
+
+        // 默认情况（如果没有匹配的情况，返回错误）
+        return res.status(400).json({ success: false, message: "Invalid status update request" });
+
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

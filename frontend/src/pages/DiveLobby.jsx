@@ -17,8 +17,6 @@ const DiveLobby = () => {
   const fetchUserStatus = async () => {
     try {
       const res = await axios.get(`${backendUri}/api/user/data`);
-      console.log('Fetched user data:', res.data); // 打印返回的数据结构
-      console.log('Fetched user status:', res.data.userData?.user_status); // 打印用户状态
       setUserStatus(res.data.userData?.user_status || false);
       setJoinedActivityId(res.data.userData?.joined_event_id || null);
     } catch (err) {
@@ -56,9 +54,7 @@ const DiveLobby = () => {
   }, [isLoggedIn]);
 
   const handleJoinActivity = async (activityId) => {
-    
     try {
-      // 只有在用户未加入活动时才允许加入
       if (userStatus) {
         toast.error('You have already joined an activity');
         return;
@@ -69,7 +65,6 @@ const DiveLobby = () => {
         event_id: activityId
       });
 
-      // 更新用户状态为已参与
       await axios.put(`${backendUri}/api/user/status`, {
         user_id: userData.user_id,
         user_status: true,
@@ -82,6 +77,33 @@ const DiveLobby = () => {
     } catch (err) {
       toast.error('Failed to join activity');
       console.error(err);
+    }
+  };
+
+  const handleWithdrawActivity = async () => {
+    try {
+      if (!userStatus || joinedActivityId === null) {
+        toast.error('You have not joined any activity');
+        return;
+      }
+
+      await axios.post(`${backendUri}/api/withdraw-participant`, {
+        user_id: userData.user_id,
+        event_id: joinedActivityId
+      });
+
+      await axios.put(`${backendUri}/api/user/status`, {
+        user_id: userData.user_id,
+        user_status: false,
+        joined_event_id: null
+      });
+
+      toast.success('Successfully withdrew from the activity!');
+      await fetchUserStatus();  // 刷新用户状态
+      await fetchActivities();  // 刷新活动信息
+    } catch (err) {
+      toast.error('Failed to withdraw from activity');
+      console.error('Withdraw error:', err);
     }
   };
 
@@ -115,8 +137,8 @@ const DiveLobby = () => {
                 <TableCell align="center">
                   {userStatus ? (
                     joinedActivityId === activity.event_id ? (
-                      <Button variant="contained" color="success" disabled>
-                        Joined
+                      <Button variant="contained" color="error" onClick={handleWithdrawActivity}>
+                        Withdraw
                       </Button>
                     ) : (
                       <Button variant="contained" disabled>

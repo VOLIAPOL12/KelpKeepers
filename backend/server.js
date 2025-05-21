@@ -57,6 +57,7 @@ app.use('/api/dashboard-data', dashboardRoutes);
 app.use('/api/dive-result', diveResultRoutes);
 app.use('/api/dive-history', diveHistoryRoutes);
 app.use('/api/dive-data', diveDataRoutes);
+app.use('/api/withdraw-participant', eventParticipantRoutes);
 
 // 前端部署支持
 if (process.env.NODE_ENV === "production") {

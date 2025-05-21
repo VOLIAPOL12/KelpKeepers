@@ -17,14 +17,19 @@ export const addEventParticipant = async ({ userId, event_id }) => {
 };
 
 // 更新活动的 slots_now
-export const updateActivitySlots = async (event_id) => {
+export const updateActivitySlots = async (event_id, change) => {
     try {
-        // 使用 query 函数来执行 SQL 查询
+        // 确保 change 是合法的（只能是 1 或 -1）
+        if (change !== 1 && change !== -1) {
+            throw new Error("Invalid change value. It should be either 1 or -1.");
+        }
+
+        // 使用 query 函数来执行 SQL 查询，增加或减少 slots_now
         await query(
             `UPDATE diveevent
-            SET slots_now = slots_now + 1
-            WHERE event_id = $1`,
-            [event_id]
+            SET slots_now = slots_now + $1
+            WHERE event_id = $2`,
+            [change, event_id] // change 是 1 或 -1
         );
     } catch (err) {
         console.error('Error updating activity slots:', err);
