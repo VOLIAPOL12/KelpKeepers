@@ -15,6 +15,7 @@ import 'leaflet/dist/leaflet.css';
 import useDivingSiteStore from '../store/useDivingSiteStore';
 import axios from 'axios';
 import { AppContent } from '../context/AppContext';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const steps = ['Dive Details', 'Select Location'];
@@ -27,6 +28,13 @@ const CreateActivity = () => {
 
   const { diveSites, loadDiveSites, loading } = useDivingSiteStore();
   const { userData } = useContext(AppContent);
+
+  useEffect(() => {
+    if (!userData?.isPadiVerified) {
+      toast.error("Please verify your PADI before you create an activity!")
+      navigate('/dashboard');
+    }
+  }, [userData, navigate]);
 
   const [formData, setFormData] = useState({
     host_user_id: '',
