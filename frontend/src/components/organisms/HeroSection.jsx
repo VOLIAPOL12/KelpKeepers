@@ -1,20 +1,27 @@
 import React from 'react';
-import { Button, Container, Fade, Grid, Typography } from '@mui/material';
+import { Button, Container, Fade, Grid, Typography, Tooltip, Box } from '@mui/material';
 import FadeTypography from '../atoms/FadeTypography';
 import VideoBackground from '../molecules/VideoBackground';
 import { useNavigate } from 'react-router-dom';
 
+// Importing GIFs
+import communityGif from "../../assets/images/community.gif";
+import dashboardGif from "../../assets/images/dashboard.gif";
+import statsGif from "../../assets/images/statistics.gif";
+import dataGif from "../../assets/images/data.gif"; 
+
+
 function HeroSection({ 
-        showTitle, 
-        showSubtitle, 
-        showButton, 
-        darkOverlay, 
-        onStartJourney,
-    }) {
+    showTitle, 
+    showSubtitle, 
+    showButton, 
+    darkOverlay, 
+    onStartJourney,
+}) {
   const navigate = useNavigate();
   const directToLoginOrRegistrationPage = (login) => {
-    navigate('/login', { state: { login: login } })
-  }
+    navigate('/login', { state: { login: login } });
+  };
 
   return (
     <>
@@ -50,8 +57,8 @@ function HeroSection({
         <Grid container spacing={2}>
           <Fade in={showSubtitle} timeout={1000}>
             <Grid item xs={12} md={6} sx={{
-              borderRight: { xs: 'none', md: '2px solid white' }, // hide on small screens
-              pr: { md: 4 }, // add right padding to separate content from line
+              borderRight: { xs: 'none', md: '2px solid white' },
+              pr: { md: 4 },
             }}>
               <FadeTypography 
                 show={showSubtitle}
@@ -71,9 +78,7 @@ function HeroSection({
                 New explorer? Dive into our interactive module to discover the wonders of kelp forests in Australia and learn how sea urchins are threatening these precious marine habitats.
               </FadeTypography>
 
-              <FadeTypography show={showButton} timeout={1000} component="div" sx={{
-                textAlign: 'center'
-              }}>
+              <FadeTypography show={showButton} timeout={1000} component="div" sx={{ textAlign: 'center' }}>
                 <Button 
                   variant="contained" 
                   size="large"
@@ -94,15 +99,14 @@ function HeroSection({
                 >
                   Begin Interactive Module
                 </Button>
-                <Typography variant='boy1' sx={{marginTop: '20px', display: 'block', color: 'white'}}>
-                  been here before? Skip to the <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={() => onStartJourney(true)}>Main Module</span>
+                <Typography variant="body1" sx={{ marginTop: '20px', display: 'block', color: 'white' }}>
+                  been here before? Skip to the <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => onStartJourney(true)}>Main Module</span>
                 </Typography>
               </FadeTypography>
             </Grid>
           </Fade>
-          <Grid item xs={12} md={6} sx={{
-            
-          }}>
+
+          <Grid item xs={12} md={6}>
             <FadeTypography 
               show={showSubtitle}
               timeout={1000}
@@ -122,37 +126,98 @@ function HeroSection({
             </FadeTypography>
 
             <FadeTypography show={showButton} timeout={1000} component="div">
-              <Button 
-                variant="contained" 
-                size="large"
-                onClick={() => directToLoginOrRegistrationPage(false)}
-                sx={{ 
-                  bgcolor: 'white',
-                  color: 'black',
-                  fontSize: { sm: '0.6rem', md: '1rem' },
-                  borderRadius: 28,
-                  display: 'block',
-                  margin: 'auto',
-                  px: 4,
-                  '&:hover': {
-                    bgcolor: 'black',
-                    color: 'white'
-                  }
+              <Tooltip
+                title={
+                  <Box sx={{ padding: 2, maxWidth: 400 }}>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom color="black">
+                      Benefits of Joining:
+                    </Typography>
+
+                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', mb: 2 }}>
+                      <img src={communityGif} alt="movement" width={48} height={48} />
+                      <Typography fontSize="1rem" color="black">
+                        <strong>Be Part of a Movement</strong><br />
+                        Connect with passionate divers restoring marine life. Take part in exclusive urchin removal events and help kelp forests thrive.
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', mb: 2 }}>
+                      <img src={dashboardGif} alt="dashboard" width={48} height={48} />
+                      <Typography fontSize="1rem" color="black">
+                        <strong>Your Personal Hub</strong><br />
+                        Track your restoration journey and host your own eco-events.
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', mb: 2 }}>
+                      <img src={statsGif} alt="impact" width={48} height={48} />
+                      <Typography fontSize="1rem" color="black">
+                        <strong>Measure Your Impact</strong><br />
+                        See how your contributions stack up against others in the community.
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+                      <img src={dataGif} alt="research" width={48} height={48} />
+                      <Typography fontSize="1rem" color="black">
+                        <strong>Fuel the Future</strong><br />
+                        Share your findings and support vital ecological research.
+                      </Typography>
+                    </Box>
+                  </Box>
+                }
+                arrow
+                placement="top"
+                enterDelay={200}
+                leaveDelay={200}
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      backgroundColor: 'rgba(255, 255, 255, 0.65)', // translucent white
+                      color: 'black',
+                      backdropFilter: 'blur(10px)', // frosted effect
+                      WebkitBackdropFilter: 'blur(10px)', // for Safari support
+                      borderRadius: 3,
+                      boxShadow: 6,
+                      padding: 2,
+                      fontSize: '1rem',
+                      textAlign: 'left',
+                      maxWidth: '420px',
+                      width: '100%',
+                    },
+                  },
                 }}
               >
-                Become a KelpKeeper
-              </Button>
-              <Typography variant='boy1' sx={{marginTop: '20px', display: 'block', color: 'white'}}>
-                Already a KelpKeeper? <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={() => directToLoginOrRegistrationPage(true)}>Login</span> to your dashboard
+                <Button 
+                  variant="contained" 
+                  size="large"
+                  onClick={() => directToLoginOrRegistrationPage(false)}
+                  sx={{ 
+                    bgcolor: 'white',
+                    color: 'black',
+                    fontSize: { sm: '0.6rem', md: '1rem' },
+                    borderRadius: 28,
+                    display: 'block',
+                    margin: 'auto',
+                    px: 4,
+                    '&:hover': {
+                      bgcolor: 'black',
+                      color: 'white'
+                    }
+                  }}
+                >
+                  Become a KelpKeeper
+                </Button>
+              </Tooltip>
+              <Typography variant="body1" sx={{ marginTop: '20px', display: 'block', color: 'white' }}>
+                Already a KelpKeeper? <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => directToLoginOrRegistrationPage(true)}>Login</span> to your dashboard
               </Typography>
             </FadeTypography>
           </Grid>
         </Grid>
-
-        
       </Container>
     </>
-  )
+  );
 }
 
-export default HeroSection
+export default HeroSection;
