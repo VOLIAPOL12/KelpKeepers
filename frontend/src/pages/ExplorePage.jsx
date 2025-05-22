@@ -3,19 +3,18 @@ import { Box, Button, Tooltip, Typography } from '@mui/material';
 import journeyDesktop from "../assets/images/final-interactive-background.jpg";
 import journeyMobile from "../assets/images/final-interactive-background-mobile.png";
 import { hotspotData } from "../assets/information.js"; 
-import HotspotButton from "../components/molecules/HotspotButton.jsx";
-import InfoDialog from "../components/molecules/InfoDialog.jsx";
 import logo from "../assets/logo.png";
 import { GlobalStyles } from '@mui/material';
-import { useNavigate } from "react-router-dom";
-import HotspotTooltip from "../components/molecules/HotspotTooltip.jsx";
+
+import InfoDialogV2 from "../components/organisms/InfoDialogV2.jsx";
+import interactionStore from "../store/interactionStore.js";
 
 function ExplorePage() {
   const [openDialog, setOpenDialog] = useState(false);
-  const [activeHotspot, setActiveHotspot] = useState(null);
+  const { currentHotspot, setCurrentHotspot, setHotspotList, hotspotList } = interactionStore();
 
   const handleHotspotClick = (hotspot) => {
-    setActiveHotspot(hotspot);
+    setCurrentHotspot(hotspot);
     setOpenDialog(true);
   };
 
@@ -30,8 +29,8 @@ function ExplorePage() {
         setBackgroundImage(journeyDesktop);
       }
     }
-
-    handleResize(); // set initially on load
+    setHotspotList(hotspotData);
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -39,7 +38,7 @@ function ExplorePage() {
   const handleLogoClick = () => {
     const logoHotspot = hotspotData.find(h => h.id === 'logo');
 
-    setActiveHotspot(logoHotspot);
+    setCurrentHotspot(logoHotspot);
     setOpenDialog(true);
   };
 
@@ -101,7 +100,7 @@ function ExplorePage() {
       </Box>
       
       
-      {hotspotData.map((hotspot) => (
+      {hotspotList.map((hotspot) => (
         hotspot.id === "logo" ?
             <Box
                 key={hotspot.id}
@@ -138,14 +137,29 @@ function ExplorePage() {
             <Tooltip
               arrow
               title={
-                <Box sx={{textAlign: 'left'}}>
+                <Box sx={{ textAlign: 'left' }}>
+                  {/* ✅ Animated GIF above title */}
+                  {hotspot.gif && (
+                    <Box display="flex" justifyContent="center" mb={1}>
+                      <img src={hotspot.gif} alt="Animated icon" style={{ width: 150, height: 150 }} />
+                    </Box>
+                  )}
+
+                  {/* Title */}
                   <Typography variant="body2" fontWeight="bold">
                     {hotspot.title}
                   </Typography>
-                  <Typography variant="caption" sx={{display: 'block', mb: 2}}>
+
+                  {/* Description */}
+                  <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>
                     {hotspot.description}
                   </Typography>
-                  <Button onClick={(e) => handleHotspotClick(hotspot, e)} sx={{bgcolor: 'black', color: 'white'}}>
+
+                  {/* Button */}
+                  <Button
+                    onClick={(e) => handleHotspotClick(hotspot, e)}
+                    sx={{ bgcolor: 'black', color: 'white' }}
+                  >
                     Learn More
                   </Button>
                 </Box>
@@ -175,7 +189,7 @@ function ExplorePage() {
                   ],
                 },
               }}
-            >
+            > 
               <Box
                 variant="contained"
                 sx={{
@@ -200,11 +214,10 @@ function ExplorePage() {
 
       {/* Creating the information Dialog */}
 
-      {activeHotspot && (
-        <InfoDialog
+      {currentHotspot && (
+        <InfoDialogV2
           open={openDialog}
           onClose={handleCloseDialog}
-          hotspot={activeHotspot}
         />
       )}
 

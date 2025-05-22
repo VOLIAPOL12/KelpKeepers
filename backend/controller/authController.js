@@ -1,5 +1,5 @@
 import { createResetToken, validateEmail, validatePassword } from '../utils/authUtils.js';
-import {findOne, addUser, updateVerifyOtp, findById, verifyUserAccount, updateUserPassword, updateResetOtp} from '../models/userModel.js';
+import {findOne, addUser, updateVerifyOtp, findById, verifyUserAccount, updateUserPassword, updateResetOtp, updateUserById} from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import transporter from '../config/nodemailer.js';
@@ -261,3 +261,38 @@ export const resetPassword = async (req, res) => {
         res.status(500).json({ success: false, message: error.message})
     }
 }
+
+export const updateUserProfile = async (req, res) => {
+    try {
+        const { userId, name, password, padi_certification } = req.body;
+    
+        const user = await findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    
+        const updateFields = {};
+    
+        if (name && name.trim() !== '') {
+            updateFields.name = name.trim();
+        }
+    
+        if (padi_certification && padi_certification.trim() !== '') {
+            updateFields.padi_certification = padi_certification.trim();
+        }
+    
+        if (password && password.trim() !== '') {
+            const hashed = await bcrypt.hash(password.trim(), 10);
+            updateFields.password_hash = hashed;
+        }
+    
+        if (Object.keys(updateFields).length === 0) {
+            return res.status(400).json({ success: false, message: 'No valid fields provided for update.' });
+        }
+    
+        await updateUserById(userId, updateFields);
+    
+        res.json({ success: true, message: 'Profile updated successfully' });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+  };
+  

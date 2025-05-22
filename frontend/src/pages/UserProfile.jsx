@@ -1,137 +1,223 @@
-import React, { useEffect, useState } from 'react';
-import { getUserProfile, updateUserProfile } from '../mocks/api'; // 假设你有更新接口
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  CircularProgress,
+  Stack,
+  Chip
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { AppContent } from '../context/AppContext';
 
-export default function UserProfilePage() {
-  const [profile, setProfile] = useState(null);
+const UserProfilePage = () => {
+  const { userData, updateUserProfile } = useContext(AppContent);
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({ username: '', email: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    padi_certification: ''
+  });
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getUserProfile().then((data) => {
-      setProfile(data);
-      setFormData({ username: data.username, email: data.email });
+    if (userData) {
+      setFormData({
+        name: userData.name || '',
+        email: userData.email || '',
+        password: '',
+        padi_certification: userData.padi_certification || ''
+      });
       setLoading(false);
-    });
-  }, []);
+    }
+  }, [userData]);
 
-  if (loading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+  const handleVerifyEmail = async () => {
+    try {
+      const { data } = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + '/api/auth/send-verify-otp',
+        {},
+        { withCredentials: true }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        navigate('/email-verify');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    // 调用API更新用户资料，这里用假函数模拟
-    updateUserProfile(formData).then((updatedProfile) => {
-      setProfile(updatedProfile);
+  const handleSave = async () => {
+    if (formData.password.trim()) {
+      const password = formData.password.trim();
+      const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+  
+      if (!strongPasswordRegex.test(password)) {
+        toast.error('Password must be at least 8 characters and include uppercase, lowercase, and a special character.');
+        return;
+      }
+    }
+  
+    const payload = {
+      name: formData.name,
+      padi_certification: formData.padi_certification
+    };
+  
+    if (formData.password.trim()) {
+      payload.password = formData.password.trim();
+    }
+  
+    const padiChanged =
+      formData.padi_certification.trim() !== '' &&
+      formData.padi_certification !== (userData.padi_certification || '');
+  
+    const success = await updateUserProfile(payload);
+  
+    if (success) {
       setEditMode(false);
-    });
+      if (padiChanged) {
+        toast.info('Thanks! We’ll verify your PADI certification within 3 business days.');
+      }
+    }
   };
+  
+  
 
   const handleCancel = () => {
-    setFormData({ username: profile.username, email: profile.email });
+    setFormData({
+      name: userData.name,
+      email: userData.email,
+      password: '',
+      padi_certification: userData.padi_certification || ''
+    });
     setEditMode(false);
   };
 
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <Container maxWidth="sm" sx={{ py: 6 }}>
       {!editMode ? (
-        <>
-          {/* 查看模式 */}
-          <div className="flex justify-center mb-6">
-            <img
-              src={profile.avatar || '/avatar.png'}
-              alt="User Avatar"
-              className="w-28 h-28 rounded-full border-4 border-blue-500 object-cover"
+        <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+          <Avatar sx={{ width: 100, height: 100 }}>
+            {userData.name?.[0]?.toUpperCase() || 'U'}
+          </Avatar>
+          <Typography variant="h4">{userData.name}</Typography>
+          <Typography color="text.secondary">{userData.email}</Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Joined: {new Date(userData.createdAt).toLocaleDateString()}
+          </Typography>
+
+          <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+            <Chip
+              label={userData.isEmailVerified ? 'Email Verified' : 'Email Not Verified'}
+              color={userData.isEmailVerified ? 'success' : 'warning'}
             />
-          </div>
+            {!userData.isEmailVerified && (
+              <Button variant="outlined" onClick={handleVerifyEmail}>
+                Verify Email
+              </Button>
+            )}
+          </Stack>
 
-          <h2 className="text-3xl font-semibold text-center mb-4 text-gray-900">
-            {profile.username}
-          </h2>
+          <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+            <Chip
+              label={userData.isPadiVerified ? 'PADI Verified' : 'PADI Not Verified'}
+              color={userData.isPadiVerified ? 'success' : 'warning'}
+            />
+          </Stack>
 
-          <div className="space-y-4 text-gray-700">
-            <div>
-              <h3 className="font-medium text-gray-500">Email</h3>
-              <p className="text-lg">{profile.email}</p>
-            </div>
-
-            <div>
-              <h3 className="font-medium text-gray-500">Joined</h3>
-              <p className="text-lg">{profile.joined}</p>
-            </div>
-          </div>
-
-          <div className="mt-8 flex justify-center">
-            <button
-              className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-              onClick={() => setEditMode(true)}
-            >
-              Edit Profile
-            </button>
-          </div>
-        </>
+          <Button
+            variant="contained"
+            sx={{ mt: 4 }}
+            onClick={() => setEditMode(true)}
+          >
+            Edit Profile
+          </Button>
+        </Box>
       ) : (
         <>
-          {/* 编辑模式 */}
-          <h2 className="text-2xl font-semibold mb-6 text-center">Edit Profile</h2>
-          <form
+          <Typography variant="h5" align="center" gutterBottom>
+            Edit Profile
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            autoComplete="off"
             onSubmit={(e) => {
               e.preventDefault();
               handleSave();
             }}
-            className="space-y-4"
           >
-            <div>
-              <label className="block mb-1 font-medium text-gray-700" htmlFor="username">
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={formData.username}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block mb-1 font-medium text-gray-700" htmlFor="email">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="flex justify-end space-x-4 pt-4">
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="px-4 py-2 border rounded hover:bg-gray-100"
-              >
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Email"
+              name="email"
+              value={formData.email}
+              disabled
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="New Password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              placeholder="Leave blank to keep current password"
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="PADI Certification"
+              name="padi_certification"
+              value={formData.padi_certification}
+              onChange={handleInputChange}
+              placeholder="Enter your PADI cert or ID"
+            />
+            <Stack direction="row" spacing={2} justifyContent="flex-end" sx={{ mt: 3 }}>
+              <Button variant="outlined" onClick={handleCancel}>
                 Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-              >
+              </Button>
+              <Button variant="contained" type="submit">
                 Save
-              </button>
-            </div>
-          </form>
+              </Button>
+            </Stack>
+          </Box>
         </>
       )}
-    </div>
+    </Container>
   );
-}
+};
+
+export default UserProfilePage;

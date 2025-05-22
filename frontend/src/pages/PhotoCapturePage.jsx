@@ -62,7 +62,7 @@ function PhotoCapturePage() {
   }
 
   return (
-    <Box sx={{ p: 3, maxWidth: 500, margin: 'auto', textAlign: 'center' }}>
+    <Box sx={{ py: 10, maxWidth: 500, margin: 'auto', textAlign: 'center' }}>
 
       <Typography variant="h5" gutterBottom>
         Take a Photo of Kelp

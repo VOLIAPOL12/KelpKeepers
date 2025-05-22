@@ -32,18 +32,40 @@ router.get('/:id', async (req, res) => {
 
 // 新建一个 dive event
 router.post('/', async (req, res) => {
-  const { title, description, location, date, slots_available, host_user_id } = req.body;
+  const { title, description, divesite_id, date, slots_available, host_user_id } = req.body;
+
+  const client = await pool.connect();
   try {
-    const result = await pool.query(
-      `INSERT INTO diveevent (title, description, location, date, slots_available, host_user_id) 
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [title, description, location, date, slots_available, host_user_id]
+    await client.query('BEGIN');
+
+    // 1. Insert the dive event
+    const eventResult = await client.query(
+      `INSERT INTO "diveevent" (title, description, divesite_id, date, max_slots, host_user_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING *`,
+      [title, description, divesite_id, date, slots_available, host_user_id]
     );
-    res.status(201).json(result.rows[0]);
+
+    const newEvent = eventResult.rows[0];
+    const eventId = newEvent.event_id;
+
+    // 2. Add the host as a participant
+    await client.query(
+      `INSERT INTO eventparticipant (user_id, event_id, joined_at)
+       VALUES ($1, $2, NOW())`,
+      [host_user_id, eventId]
+    );
+
+    await client.query('COMMIT');
+    res.status(201).json(newEvent);
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error(error);
     res.status(500).json({ error: 'Server error while creating dive event' });
+  } finally {
+    client.release();
   }
 });
+
 
 export default router;
