@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const RatingPage = () => {
   const { activityId } = useParams();
+  const { state } = useLocation();
   const navigate = useNavigate();
-  const user_id = 1; // 假设用户已登录，使用固定ID或从auth中获取
+  const title = state?.title || "Dive Activity"; // fallback title
+  const result_id = state?.result_id || null
 
   const [ratings, setRatings] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
@@ -35,39 +38,28 @@ const RatingPage = () => {
     setCounts(countMap);
   };
 
-  const submitRating = () => {
+  const submitRating = async () => {
     const newRating = {
-      user_id,
       event_id: activityId,
       rating: userRating,
       comment: feedback
     };
-
-    fetch('/api/ratings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newRating)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to submit rating');
-        return res.json();
-      })
-      .then(() => {
-        // 刷新评分列表
-        return fetch(`/api/ratings/${activityId}`)
-          .then(res => res.json())
-          .then(data => {
-            setRatings(data);
-            updateStats(data);
-            setFeedback('');
-            setUserRating(0);
-          });
-      })
-      .catch(err => console.error(err));
+  
+    try {
+      await axios.post('/api/ratings', newRating);
+  
+      const { data } = await axios.get(`/api/ratings/${activityId}`);
+      setRatings(data);
+      updateStats(data);
+      setFeedback('');
+      setUserRating(0);
+    } catch (err) {
+      console.error('Failed to submit rating:', err);
+    }
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-18">
       <button
         onClick={() => navigate(`/activity/${activityId}`)}
         className="mb-4 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
@@ -75,7 +67,9 @@ const RatingPage = () => {
         ← Back to Activity
       </button>
 
-      <h1 className="text-2xl font-bold mb-6">Activity Rating</h1>
+      <h1 className="text-2xl font-bold mb-6">
+        Rate: <span className="text-emerald-700">{title}</span>
+      </h1>
 
       <div className="mb-6">
         <p className="text-lg">Average Rating: <strong>{averageRating}</strong> ⭐</p>

@@ -17,3 +17,9 @@ export const validatePassword = (password) => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
+
+export const validatePadiCertification = (padiCert) => {
+  // Must start with a letter, allow alphanumeric and dashes, minimum 6 characters
+  const padiRegex = /^[A-Za-z][A-Za-z0-9-]{5,}$/;
+  return padiRegex.test(padiCert);
+};
