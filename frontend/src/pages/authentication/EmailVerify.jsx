@@ -54,7 +54,7 @@ const EmailVerify = () => {
     };
 
     useEffect(() => {
-        isLoggedin && userData, userData.isAccountVerified && navigate('/dashboard');
+        isLoggedin && userData, userData.isEmailVerified && navigate('/dashboard');
     }, [isLoggedin, userData])
 
     const handleSubmit = async (e) => {

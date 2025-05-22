@@ -18,3 +18,10 @@ export const submitDiveEntry = async (data) => {
     });
     return response.data;
 };
+
+export const updateDiveEntry = async (data) => {
+    const response = await axios.put('/api/dive-data', data, {
+        withCredentials: true,
+    });
+    return response.data;
+}

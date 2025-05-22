@@ -85,21 +85,34 @@ export const updateUserPassword = async (userId, newHashedPassword) => {
     const values = [newHashedPassword, userId];
     const result = await query(text, values);
     return result.rows[0];
-  };
+};
 
-export const updateUserStatus = async (userId, status) => {
-    try {
-        const text = `
-            UPDATE "User"
-            SET status = $1
-            WHERE user_id = $2
-            RETURNING user_id, name, email, status;
-        `;
-        const values = [status, userId];
-        const result = await query(text, values);
-        return result.rows[0]; // 返回更新后的用户信息
-    } catch (err) {
-        console.error("Error updating user status:", err.message);
-        throw err;
-    }
+export const fineUserByID = async (userId) => {
+    const text = `
+        SELECT user_id, name, email, role, created_at, is_email_verified, is_account_verified, status, verify_otp, padi_certification, is_padi_verified
+        FROM "User"
+        WHERE user_id = $1
+    `;
+    const values = [userId];
+    const result = await query(text, values);
+    return result.rows[0]; // returns undefined if not found
+};
+
+export const updateUserById = async (userId, updateFields) => {
+    const keys = Object.keys(updateFields);
+    const values = Object.values(updateFields);
+
+    if (keys.length === 0) return;
+
+    const setClause = keys.map((key, index) => `"${key}" = $${index + 1}`).join(', ');
+
+    const text = `
+        UPDATE "User"
+        SET ${setClause}
+        WHERE user_id = $${keys.length + 1}
+        RETURNING user_id, name, email, role, created_at, is_email_verified, is_account_verified, status, verify_otp, padi_certification, is_padi_verified
+    `;
+
+    const result = await query(text, [...values, userId]);
+    return result.rows[0];
 };

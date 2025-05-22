@@ -14,6 +14,8 @@ import {
     ListItemIcon,
     ListItemText,
     IconButton,
+    Typography,
+    Tooltip,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,7 +23,9 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import HistoryIcon from '@mui/icons-material/History';
 import LeaderboardIcon from '@mui/icons-material/EmojiEvents';
 import AddIcon from '@mui/icons-material/Add';
+import PersonIcon from '@mui/icons-material/Person';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import LogoutIcon from '@mui/icons-material/Logout';
 import navLogo from '../../assets/nav-logo.png'
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -44,40 +48,9 @@ const AuthenticatedNavBar = ({ children })  => {
         { label: 'Scoreboard', icon: <LeaderboardIcon />, path: '/scoreboard' },
         { label: 'Create Activity', icon: <AddIcon />, path: '/create-activity' },
         { label: 'Camera', icon: <CameraAltIcon />, path: '/camera' },
-        { label: 'Dive Lobby', icon: <LobbyIcon />, path: '/lobby' }
+        { label: 'Dive Lobby', icon: <LobbyIcon />, path: '/lobby' },
+        { label: 'Profile', icon: <PersonIcon  />, path: '/profile' }
     ];
-
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const handleOpenMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleCloseMenu = () => {
-    setAnchorEl(null);
-    };
-
-    const handleVerifyEmail = async () => {
-        try {
-            axios.defaults.withCredentials = true;
-
-            const { data } = await axios.post(backendUri + '/api/auth/send-verify-otp');
-
-            if(data.success) {
-                navigate('/email-verify');
-                toast.success(data.message);
-            } else {
-                toast.error(data.message);
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
-    }
-
-    const handleProfile = () => {
-        handleCloseMenu();
-        navigate('/profile');
-    };
 
     const handleLogout = async () => {
         try {
@@ -86,7 +59,6 @@ const AuthenticatedNavBar = ({ children })  => {
 
             data.success && setIsLoggedIn(false);
             data.success && setUserData(false);
-            handleCloseMenu();
             navigate('/login');
         } catch (error) {
             toast.error(error.message);
@@ -117,28 +89,6 @@ const AuthenticatedNavBar = ({ children })  => {
                             sx={{ height: 30, cursor: 'pointer' }}
                             onClick={() => navigate('/')}
                         />
-
-                        {/* Avatar */}
-                        <Avatar sx={{ bgcolor: 'black', width: 32, height: 32, fontSize: 14 }} onClick={handleOpenMenu}>
-                            {userData.name ? userData.name[0].toUpperCase() : <></>}
-                        </Avatar>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleCloseMenu}
-                            anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                            }}
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                        >
-                            {!userData?.isAccountVerified && (<MenuItem onClick={handleVerifyEmail}>Verify Email</MenuItem>)}
-                            <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
                     </Toolbar>
                 </AppBar>
                 <Box
@@ -155,15 +105,45 @@ const AuthenticatedNavBar = ({ children })  => {
                             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                         }}
                     >
-                        <Box  role="presentation" onClick={toggleDrawer}>
-                        <List>
-                            {navItems.map(({ label, icon, path }) => (
-                            <ListItem button key={label} onClick={() => navigate(path)}>
-                                <ListItemIcon>{icon}</ListItemIcon>
-                                <ListItemText primary={label} />
-                            </ListItem>
-                            ))}
-                        </List>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                            <Box sx={{ textAlign: 'center', py: 2 }}>
+                                <Avatar sx={{ margin: '0 auto', bgcolor: 'black' }}>
+                                    {userData.name?.[0]?.toUpperCase()}
+                                </Avatar>
+                                <Typography variant="subtitle2" mt={1}>
+                                    {userData.name}
+                                </Typography>
+                                <Typography variant="caption" color="textSecondary">
+                                    {userData.email}
+                                </Typography>
+                            </Box>
+                            <List sx={{ flexGrow: 1 }}>
+                                {navItems.map(({ label, icon, path }) =>{
+                                    const isRestricted = label === 'Create Activity' && !userData?.isPadiVerified;
+
+                                    return (
+                                        <ListItem
+                                        button
+                                        key={label}
+                                        onClick={() => !isRestricted && navigate(path)}
+                                        disabled={isRestricted}
+                                        >
+                                        <ListItemIcon>{icon}</ListItemIcon>
+                                        <ListItemText
+                                            primary={label}
+                                            primaryTypographyProps={isRestricted ? { color: 'text.disabled' } : {}}
+                                        />
+                                        </ListItem>
+                                    );
+                                })}
+                            </List>
+
+                            <Box sx={{ p: 2, borderTop: '1px solid #ccc' }}>
+                                <ListItem button onClick={handleLogout}>
+                                <ListItemIcon><LogoutIcon /></ListItemIcon>
+                                <ListItemText primary="Logout" />
+                                </ListItem>
+                            </Box>
                         </Box>
                     </Drawer>
                     <Drawer
@@ -174,17 +154,50 @@ const AuthenticatedNavBar = ({ children })  => {
                         }}
                         open
                     >
-                        <Box sx={{p: 6}}>
-                            <img src={logo}/>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                            <Box sx={{ textAlign: 'center', py: 2 }}>
+                                <Avatar sx={{ margin: '0 auto', bgcolor: 'black' }}>
+                                    {userData.name?.[0]?.toUpperCase()}
+                                </Avatar>
+                                <Typography variant="subtitle2" mt={1}>
+                                    {userData.name}
+                                </Typography>
+                                <Typography variant="caption" color="textSecondary">
+                                    {userData.email}
+                                </Typography>
+                            </Box>
+                            <List sx={{ flexGrow: 1 }}>
+                            {navItems.map(({ label, icon, path }) => {
+                                const isRestricted = label === 'Create Activity' && !userData?.isPadiVerified;
+
+                                return (
+                                    <Tooltip title={isRestricted ? 'PADI verification required' : ''}>
+                                        <ListItem
+                                        button
+                                        key={label}
+                                        onClick={() => !isRestricted && navigate(path)}
+                                        disabled={isRestricted}
+                                        >
+                                            <ListItemIcon>{icon}</ListItemIcon>
+                                            <ListItemText
+                                                primary={label}
+                                                primaryTypographyProps={isRestricted ? { color: 'text.disabled' } : {}}
+                                            />
+                                        </ListItem>
+                                    </Tooltip>
+                                );
+                            })}
+
+                            </List>
+
+                            <Box sx={{ p: 2, borderTop: '1px solid #ccc' }}>
+                                <ListItem button onClick={handleLogout}>
+                                <ListItemIcon><LogoutIcon /></ListItemIcon>
+                                <ListItemText primary="Logout" />
+                                </ListItem>
+                            </Box>
                         </Box>
-                        <List>
-                            {navItems.map(({ label, icon, path }) => (
-                            <ListItem button key={label} onClick={() => navigate(path)}>
-                                <ListItemIcon>{icon}</ListItemIcon>
-                                <ListItemText primary={label} />
-                            </ListItem>
-                            ))}
-                        </List>
+
                     </Drawer>
                 </Box>
                 <Box
@@ -199,4 +212,4 @@ const AuthenticatedNavBar = ({ children })  => {
     )
 }
 
-export default AuthenticatedNavBar
+export default AuthenticatedNavBar;

@@ -116,6 +116,13 @@ function App() {
         <Route path="/rating" element={<RatingPage />} />
         <Route path="/rating/:activityId" element={<RatingPage />} />
 
+          path="/rating/:activityId"
+          element={
+            <ProtectedWrapper>
+              <RatingPage />
+            </ProtectedWrapper>
+          }
+        />
       </Routes>
     </>
   )
