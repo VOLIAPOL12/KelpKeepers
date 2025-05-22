@@ -1,4 +1,4 @@
-import { createResetToken, validateEmail, validatePassword } from '../utils/authUtils.js';
+import { createResetToken, validateEmail, validatePassword, validatePadiCertification } from '../utils/authUtils.js';
 import {findOne, addUser, updateVerifyOtp, findById, verifyUserAccount, updateUserPassword, updateResetOtp, updateUserById} from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -6,10 +6,10 @@ import transporter from '../config/nodemailer.js';
 
 export const register = async (req, res, next) => {
     try {
-        const { name, email, password, role } = req.body;
-    
+        const { name, email, password, role, padiCertification } = req.body;
+        console.log(req.body);
         // Validate input
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !padiCertification) {
             return res.status(400).json({ message: 'All fields are required' });
         }
         
@@ -23,11 +23,17 @@ export const register = async (req, res, next) => {
             });
         }
 
+        if (!validatePadiCertification(padiCertification)) {
+            return res.status(400).json({ 
+                message: 'PADI format is wrong' 
+            });
+        }
+
         try {
             const existingUser = await findOne(email);
 
             if(existingUser.length !== 0) {
-                return res.json({ success: false, message: "user already exists"});
+                return res.status(401).json({ success: false, message: "user already exists"});
             }
 
             const salt = await bcrypt.genSalt(10);
@@ -37,7 +43,8 @@ export const register = async (req, res, next) => {
                 name,
                 email,
                 hashedPassword,
-                role
+                role,
+                padiCertification
             };
 
             const users = await addUser(userObj);
