@@ -75,21 +75,6 @@ function Restoration({ simulationData }) {
           </Box>
         ))}
       </Slider>
-
-      <Box sx={{ width: '80%', mt: 2, mx: 'auto' }}>
-        <input
-          type="range"
-          min={0}
-          max={simulationImages.length - 1}
-          value={currentSlide}
-          onChange={(e) => {
-            const index = Number(e.target.value);
-            setCurrentSlide(index);
-            simulationSliderRef.current.slickGoTo(index);
-          }}
-          style={{ width: '100%' }}
-        />
-      </Box>
     </Box>
   );
 }
