@@ -9,24 +9,14 @@ export const getDivingHistory = async (req, res) => {
     
         const [diveHistoryData, total] = await Promise.all([
             findDiveHistoryData(userId, limit, offset),
-            countDiveHistory(userId)
+            countDiveHistory(userId),
         ]);
-
-        const enriched = await Promise.all(
-            diveHistoryData.rows.map(async (row) => {
-            const check = await query(
-                `SELECT 1 FROM "DiveResult"
-                WHERE user_id = $1 AND event_id = $2
-                LIMIT 1`,
-                [userId, row.event_id]
-            );
     
-            return {
-                ...row,
-                resultExists: check.rows.length > 0,
-            };
-            })
-        );
+        // ✅ Use result_id already returned in the query
+        const enriched = diveHistoryData.rows.map((row) => ({
+            ...row,
+            resultExists: !!row.result_id, // true if result_id is not null/undefined
+        }));
     
         res.json({
             total,
@@ -34,12 +24,8 @@ export const getDivingHistory = async (req, res) => {
             limit: Number(limit),
             data: enriched,
         });
-  
     } catch (error) {
+        console.error('Error retrieving dive history:', error.message);
         res.status(400).json({ success: false, message: error.message });
     }
-};
-
-export const getDivingHistoryByID = async (req, res) => {
-
-}
+  };

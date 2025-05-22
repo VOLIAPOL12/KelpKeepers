@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Typography, IconButton, Collapse, Box, Chip, Button
+  Paper, Typography, IconButton, Collapse, Box, Chip, Button,
+  Grid
 } from '@mui/material';
 import {
   KeyboardArrowDown as ArrowDownIcon,
@@ -16,6 +17,9 @@ import DiveLogDialog from '../components/organisms/DiveLogDialog';
 const Row = ({ activity, onNavigate }) => {
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  const navigate = useNavigate();
+
   return (
     <>
       <TableRow hover>
@@ -27,15 +31,12 @@ const Row = ({ activity, onNavigate }) => {
         <TableCell>{activity.title}</TableCell>
         <TableCell>{activity.date}</TableCell>
         <TableCell>
-          {activity.locked ? <LockIcon fontSize="small" /> : 'Unlocked'}
-        </TableCell>
-        <TableCell>
-          <Chip label="slot" color="success" size="small" />
-        </TableCell>
-        <TableCell>
-          <Button variant="outlined" size="small" onClick={() => onNavigate(`/activity/${activity.event_id}`)}>
-            Rate
-          </Button>
+        {activity.has_rated ? (
+          <Button disabled>Already Rated</Button>
+        ) : (
+          <Button onClick={() => navigate(`/rate/${activity.event_id}`)}>Rate</Button>
+        )}
+
           <Button
             variant="contained"
             size="small"
@@ -51,14 +52,23 @@ const Row = ({ activity, onNavigate }) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={2}>
-              <Typography variant="subtitle2">Details</Typography>
-              <Typography variant="body2">
-                {/* Replace with real activity data */}
-                Dive type: {activity.type || 'Cleanup Dive'} <br />
-                Instructor: {activity.instructor || 'N/A'} <br />
-                Location: {activity.location || 'Not specified'} <br />
-                Notes: {activity.notes || 'No additional information provided.'}
+              <Typography variant="subtitle2" gutterBottom>
+                Dive Log Summary
               </Typography>
+              <Grid container spacing={2} sx={{width: '100%'}}>
+                <Grid item size={{xs:12, sm:6}}>
+                  <Typography variant="body2"><strong>Date:</strong> {activity.log_date?.slice(0, 10) || 'N/A'}</Typography>
+                  <Typography variant="body2"><strong>Start Time:</strong> {activity.log_start_time?.slice(0, 5) || 'N/A'}</Typography>
+                  <Typography variant="body2"><strong>Duration:</strong> {activity.result_duration ? `${activity.result_duration} min` : 'N/A'}</Typography>
+                  <Typography variant="body2"><strong>Temperature:</strong> {activity.temperature_celsius ? `${activity.temperature_celsius}°C` : 'N/A'}</Typography>
+                </Grid>
+
+                <Grid item size={{xs:12, sm:6}}>
+                  <Typography variant="body2"><strong>Latitude:</strong> {activity.latitude || 'N/A'}</Typography>
+                  <Typography variant="body2"><strong>Longitude:</strong> {activity.longitude || 'N/A'}</Typography>
+                  <Typography variant="body2"><strong>Notes:</strong> {activity.notes || 'No notes available.'}</Typography>
+                </Grid>
+              </Grid>
             </Box>
           </Collapse>
         </TableCell>
@@ -66,8 +76,7 @@ const Row = ({ activity, onNavigate }) => {
       <DiveLogDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        eventId={activity.event_id}
-        eventTitle={activity.title}
+        existingData={activity}
       />
     </>
   );
@@ -127,8 +136,6 @@ const DivingHistory = () => {
                 <TableCell />
                 <TableCell><strong>Title</strong></TableCell>
                 <TableCell><strong>Date</strong></TableCell>
-                <TableCell><strong>Status</strong></TableCell>
-                <TableCell><strong>Slot</strong></TableCell>
                 <TableCell><strong>Actions</strong></TableCell>
               </TableRow>
             </TableHead>

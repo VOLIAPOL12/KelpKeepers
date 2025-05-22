@@ -104,6 +104,17 @@ const AuthenticatedNavBar = ({ children })  => {
                         }}
                     >
                         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                            <Box sx={{ textAlign: 'center', py: 2 }}>
+                                <Avatar sx={{ margin: '0 auto', bgcolor: 'black' }}>
+                                    {userData.name?.[0]?.toUpperCase()}
+                                </Avatar>
+                                <Typography variant="subtitle2" mt={1}>
+                                    {userData.name}
+                                </Typography>
+                                <Typography variant="caption" color="textSecondary">
+                                    {userData.email}
+                                </Typography>
+                            </Box>
                             <List sx={{ flexGrow: 1 }}>
                                 {navItems.map(({ label, icon, path }) =>{
                                     const isRestricted = label === 'Create Activity' && !userData?.isPadiVerified;
