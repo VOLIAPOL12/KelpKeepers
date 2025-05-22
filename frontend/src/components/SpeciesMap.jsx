@@ -1,9 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Box } from '@mui/material';
 import useSpeciesStore from '../store/speciesStore';
+import redExclamationIcon from '../assets/images/red exclamation mark.png';
+
 
 const defaultIcon = new L.Icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -35,7 +38,6 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
   const [currentZoom, setCurrentZoom] = useState(6.5);
   const [visibleData, setVisibleData] = useState([]);
 
-
   const speciesMap = {
     "Sea Star": "seastar",
     "Leafy Seadragon": "commonSeadragon",
@@ -53,6 +55,7 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
     seastar: new L.Icon({ iconUrl: defaultIcon.options.iconUrl, iconSize: [25, 41], className: 'seastar-marker' }),
     spottedHandfish: new L.Icon({ iconUrl: defaultIcon.options.iconUrl, iconSize: [25, 41], className: 'handfish-marker' }),
     kelp: new L.Icon({ iconUrl: defaultIcon.options.iconUrl, iconSize: [25, 41], className: 'kelp-marker' }),
+    kelpRecent: new L.Icon({ iconUrl: redExclamationIcon, iconSize: [35, 55], popupAnchor: [0, -41] }),
     'sea-urchin': new L.Icon({ iconUrl: defaultIcon.options.iconUrl, iconSize: [25, 41], className: 'urchin-marker' }),
     'dive-sites': new L.Icon({ iconUrl: defaultIcon.options.iconUrl, iconSize: [25, 41], className: 'divesite-marker' })
   };
@@ -64,7 +67,6 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
     if (!data['sea-urchin']) fetchData('sea-urchin');
   }, [normalizedSpecies, fetchData]);
 
-
   useEffect(() => {
     if (filteredData.length > 0) {
       if (mapBounds) {
@@ -75,8 +77,7 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
       }
     }
   }, [filteredData, mapBounds, currentZoom]);
-  
-  
+
   useEffect(() => {
     if (data[normalizedSpecies]) {
       const isDiveSites = normalizedSpecies === 'dive-sites';
@@ -89,8 +90,8 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
   }, [data, normalizedSpecies, selectedYear]);
 
   const getLimitByZoom = (zoom) => {
-    if (zoom >= 9) return 125; 
-    if (zoom >= 8) return 100;    
+    if (zoom >= 9) return 125;
+    if (zoom >= 8) return 100;
     if (zoom >= 7) return 75;
     if (zoom >= 6) return 50;
     return 25;
@@ -103,45 +104,52 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
       const lng = parseFloat(point.decimalLongitude);
       return !isNaN(lat) && !isNaN(lng) && mapBounds.contains([lat, lng]);
     });
-    return visiblePoints.slice(0, getLimitByZoom(currentZoom));  
+    return visiblePoints.slice(0, getLimitByZoom(currentZoom));
   };
 
   if (!data[normalizedSpecies]) return <div>Loading...</div>;
 
   return (
     <>
-      {/* Toggle Buttons */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 1, pr: 2 }}>
-        <button className="dive-toggle-button" onClick={() => setShowDiveSites(!showDiveSites)}>
+        <button
+          className={`dive-toggle-button ${showDiveSites ? 'active' : ''}`}
+          onClick={() => setShowDiveSites(!showDiveSites)}
+        >
           {showDiveSites ? 'Hide Dive Sites' : 'Show Dive Sites'}
         </button>
 
         {normalizedSpecies !== 'kelp' && (
-          <button className="kelp-toggle-button" onClick={() => setShowKelp(!showKelp)}>
+          <button
+            className={`kelp-toggle-button ${showKelp ? 'active' : ''}`}
+            onClick={() => setShowKelp(!showKelp)}
+          >
             {showKelp ? 'Hide Kelp' : 'Show Kelp'}
           </button>
         )}
 
         {normalizedSpecies !== 'sea-urchin' && (
-          <button className="urchin-toggle-button" onClick={() => setShowSeaUrchin(!showSeaUrchin)}>
+          <button
+            className={`urchin-toggle-button ${showSeaUrchin ? 'active' : ''}`}
+            onClick={() => setShowSeaUrchin(!showSeaUrchin)}
+          >
             {showSeaUrchin ? 'Hide Sea Urchin' : 'Show Sea Urchin'}
           </button>
         )}
       </Box>
 
+
       <MapContainer
         center={[-42.0, 146.5]}
         zoom={currentZoom}
         style={{ height: '60vh', width: '100%' }}
-        
         whenCreated={(map) => {
           setTimeout(() => {
-            map.invalidateSize();  
-            setMapBounds(map.getBounds()); 
+            map.invalidateSize();
+            setMapBounds(map.getBounds());
             setCurrentZoom(map.getZoom());
-          }, 100); 
+          }, 100);
         }}
-        
       >
         <MapEventHandler setBounds={setMapBounds} setZoom={setCurrentZoom} />
 
@@ -151,24 +159,45 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
         />
 
         {/* 当前物种 */}
-        
         {visibleData.map((point, index) => {
           const lat = parseFloat(point.decimalLatitude);
           const lng = parseFloat(point.decimalLongitude);
+
+          const isKelp = normalizedSpecies === 'kelp';
+          const uploadDate = new Date(point.uploadtime);
+          const now = new Date();
+          const uploadDay = new Date(uploadDate.getFullYear(), uploadDate.getMonth(), uploadDate.getDate());
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          const dayDifference = Math.abs(today - uploadDay) / (1000 * 60 * 60 * 24);
+          const isRecentUpload = dayDifference <= 7;
+          const icon = isKelp ? (isRecentUpload ? iconMap['kelpRecent'] : iconMap['kelp']) : (iconMap[normalizedSpecies] || defaultIcon);
+
           return (
-            <Marker key={`species-${index}`} position={[lat, lng]} icon={iconMap[normalizedSpecies] || defaultIcon}>
+            <Marker key={`species-${index}`} position={[lat, lng]} icon={icon}>
               <Popup>
-                {species.toUpperCase()}<br />
-                Year: {point.year}<br />
-                Location: {point.stateProvince}
+                {isKelp ? (
+                  <>
+                    KELP<br />
+                    Year: {point.year}<br />
+                    Uploaded: {point.uploadtime}<br />
+                    Location: {point.stateProvince}
+                  </>
+                ) : (
+                  <>
+                    {species.toUpperCase()}<br />
+                    Year: {point.year}<br />
+                    Location: {point.stateProvince}
+                  </>
+                )}
               </Popup>
             </Marker>
           );
         })}
 
-
         {/* Dive Sites */}
-        {showDiveSites && filterVisiblePoints(data['dive-sites'] || []).map((site, idx) => {
+        {showDiveSites && (
+          (mapBounds ? filterVisiblePoints(data['dive-sites']) : (data['dive-sites'] || []).slice(0, getLimitByZoom(currentZoom)))
+        ).map((site, idx) => {
           const lat = parseFloat(site.decimalLatitude);
           const lng = parseFloat(site.decimalLongitude);
           return (
@@ -181,14 +210,28 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
         })}
 
         {/* Kelp Points */}
-        {showKelp && filterVisiblePoints(data['kelp'] || []).map((kelpPoint, index) => {
+        {showKelp && (
+          (mapBounds ? filterVisiblePoints(data['kelp']) : (data['kelp'] || []).slice(0, getLimitByZoom(currentZoom)))
+        ).map((kelpPoint, index) => {
           const lat = parseFloat(kelpPoint.decimalLatitude);
           const lng = parseFloat(kelpPoint.decimalLongitude);
+          if (isNaN(lat) || isNaN(lng)) return null;
+
+          const uploadDate = new Date(kelpPoint.uploadtime);
+          const now = new Date();
+          const uploadDay = new Date(uploadDate.getFullYear(), uploadDate.getMonth(), uploadDate.getDate());
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          const dayDifference = Math.abs(today - uploadDay) / (1000 * 60 * 60 * 24);
+          const isRecentUpload = dayDifference <= 1;
+
+          const icon = isRecentUpload ? iconMap['kelpRecent'] : iconMap['kelp'];
+
           return (
-            <Marker key={`kelp-${index}`} position={[lat + 0.002, lng + 0.002]} icon={iconMap['kelp']}>
+            <Marker key={`kelp-${index}`} position={[lat + 0.002, lng + 0.002]} icon={icon}>
               <Popup>
                 KELP<br />
                 Year: {kelpPoint.year}<br />
+                Uploaded: {kelpPoint.uploadtime}<br />
                 Location: {kelpPoint.stateProvince}
               </Popup>
             </Marker>
@@ -196,7 +239,9 @@ const SpeciesMap = ({ species, selectedYear = 'All' }) => {
         })}
 
         {/* Sea Urchin Points */}
-        {showSeaUrchin && filterVisiblePoints(data['sea-urchin'] || []).map((urchinPoint, index) => {
+        {showSeaUrchin && (
+          (mapBounds ? filterVisiblePoints(data['sea-urchin']) : (data['sea-urchin'] || []).slice(0, getLimitByZoom(currentZoom)))
+        ).map((urchinPoint, index) => {
           const lat = parseFloat(urchinPoint.decimalLatitude);
           const lng = parseFloat(urchinPoint.decimalLongitude);
           return (

@@ -5,6 +5,8 @@ import FadeTransition from '../components/molecules/FadeTransition';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useHeightAdjustment from '../components/hooks/useHeightAdjustment';
+import useSpeciesStore from '../store/speciesStore';
+
 
 function HomePage() {
   const heroRef = useRef(null);
@@ -29,7 +31,12 @@ function HomePage() {
 
   useHeightAdjustment(heroRef);
 
+  const { fetchData } = useSpeciesStore();
+  
   useEffect(() => {
+    fetchData('kelp');
+    fetchData('sea-urchin');
+    fetchData('dive-sites');
     const timers = [
       setTimeout(() => setDarkOverlay(true), 300),
       setTimeout(() => setShowTitle(true), 500),
