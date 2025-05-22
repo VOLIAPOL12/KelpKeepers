@@ -150,41 +150,66 @@ const DashboardGrid = () => {
       <Container maxWidth="100%">
         <Grid container spacing={6}>
           <Grid item size={{ xs: 12 }}>
-            <DashboardCard title={`Hello ${userData.name}. Your next event:`}>
-              {isLoading ? (
-                <Box display="flex" justifyContent="center" alignItems="center" height="200px">
-                  <CircularProgress />
-                </Box>
-              ) : (
-                <Grid container spacing={5}>
-                  <Grid item size={{ xs: 12, sm: 6, md: 6 }}>
-                    <Typography variant="h3" data-tour="dive-title">Next Dive Event:</Typography>
-                    <Typography variant="h5"><strong>{dashboardData.upcomingDive[0].title}</strong></Typography>
-                    <Typography variant="subtitle1" data-tour="dive-location">
-                      <strong>Location</strong>:
-                      <DiveLocationLink
-                        name={dashboardData.upcomingDive[0].site_name}
-                        latitude={dashboardData.upcomingDive[0].decimalLatitude}
-                        longitude={dashboardData.upcomingDive[0].decimalLongitude}
-                      />
-                    </Typography>
-                    <Typography variant="subtitle1" data-tour="dive-date">
-                      <strong>Dive Time</strong>: {formatDiveDateTime(dashboardData.upcomingDive[0].date)}
-                    </Typography>
-                  </Grid>
-                  <Grid item sx={{ textAlign: { xs: 'left', md: 'right' } }} size={{ xs: 12, sm: 6, md: 6 }} data-tour="forecast-info">
-                    <Typography variant="h3">Forecast</Typography>
-                    <Typography variant="subtitle1">{forecast.temperatureMax.value + " " + forecast.temperatureMin.value}</Typography>
-                    <Typography variant="subtitle1">UV Index: {forecast.uvIndexMax} Weather: {forecast.weatherCode}</Typography>
-                    <Typography variant="subtitle1">Ocean Current Direction: {marine.oceanCurrentDirection.value + ' ' + marine.oceanCurrentDirection.unit}</Typography>
-                  </Grid>
+          <DashboardCard title={`Hello ${userData.name}. Your next event:`}>
+            {isLoading ? (
+              <Box display="flex" justifyContent="center" alignItems="center" height="200px">
+                <CircularProgress />
+              </Box>
+            ) : dashboardData.upcomingDive.length !== 0 ? (
+              <Grid container spacing={5}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <Typography variant="h3" data-tour="dive-title">Next Dive Event:</Typography>
+                  <Typography variant="h5">
+                    <strong>{dashboardData.upcomingDive[0].title}</strong>
+                  </Typography>
+                  <Typography variant="subtitle1" data-tour="dive-location">
+                    <strong>Location</strong>:{' '}
+                    <DiveLocationLink
+                      name={dashboardData.upcomingDive[0].site_name}
+                      latitude={dashboardData.upcomingDive[0].decimalLatitude}
+                      longitude={dashboardData.upcomingDive[0].decimalLongitude}
+                    />
+                  </Typography>
+                  <Typography variant="subtitle1" data-tour="dive-date">
+                    <strong>Dive Time</strong>: {formatDiveDateTime(dashboardData.upcomingDive[0].date)}
+                  </Typography>
                 </Grid>
-              )}
-            </DashboardCard>
+
+                <Grid item xs={12} sm={6} md={6} sx={{ textAlign: { xs: 'left', md: 'right' } }} data-tour="forecast-info">
+                  <Typography variant="h3">Forecast</Typography>
+                  <Typography variant="subtitle1">
+                    {console.log(forecast)}
+                    {forecast.temperatureMax.value + " " + forecast.temperatureMin.value}
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    UV Index: {forecast.uvIndexMax} Weather: {forecast.weatherCode}
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    Ocean Current Direction: {marine.oceanCurrentDirection.value + ' ' + marine.oceanCurrentDirection.unit}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : (
+              <Box textAlign="center" py={4}>
+                <Typography variant="h6" color="textSecondary">
+                  No upcoming dive events yet. Join or create one to get started!
+                </Typography>
+              </Box>
+            )}
+          </DashboardCard>
+
           </Grid>
 
-          <Grid item size={{ xs: 12, sm: 6, md: 3 }} data-tour="dive-minutes">
-            {isLoading ? <CircularProgressBox /> : <StatCard icon={<AccessTimeIcon color="primary" />} label="Dive Minutes" value={dashboardData.total_minutes_dove} />}
+          <Grid item xs={12} sm={6} md={3} data-tour="dive-minutes">
+            {isLoading || dashboardData.total_minutes_dove == null ? (
+              <CircularProgressBox />
+            ) : (
+              <StatCard
+                icon={<AccessTimeIcon color="primary" />}
+                label="Dive Minutes"
+                value={dashboardData.total_minutes_dove}
+              />
+            )}
           </Grid>
 
           <Grid item size={{ xs: 12, sm: 6, md: 3 }} data-tour="kelp-found">

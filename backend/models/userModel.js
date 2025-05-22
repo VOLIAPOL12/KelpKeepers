@@ -8,10 +8,10 @@ export const findOne = async (email) => {
 export const addUser = async(user) => {
     try {
         const result = await query(
-            `INSERT INTO "User" (name, email, password_hash, role) 
-            VALUES ($1, $2, $3, $4) 
+            `INSERT INTO "User" (name, email, password_hash, role, padi_certification, is_padi_verified) 
+            VALUES ($1, $2, $3, $4, $5, FALSE) 
             RETURNING user_id, name, email, role`,
-            [user.name, user.email, user.hashedPassword, user.role]
+            [user.name, user.email, user.hashedPassword, user.role, user.padi_certification]
         );
         return result.rows;
     } catch (err) {

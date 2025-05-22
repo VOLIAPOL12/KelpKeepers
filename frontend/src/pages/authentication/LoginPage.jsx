@@ -33,6 +33,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [agreed, setAgreed] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [padiCertification, setPadiCertification] = useState('');
 
   const navigate = useNavigate();
   const { backendUri, setIsLoggedIn, getUserData, getAuthState } = useContext(AppContent);
@@ -45,6 +46,12 @@ function LoginPage() {
       setShowTerms(true);
     }
   }, [isLogin]);
+
+  const validatePadiCertification = (padiCert) => {
+    // Must start with a letter, allow alphanumeric and dashes, minimum 6 characters
+    const padiRegex = /^[A-Za-z][A-Za-z0-9-]{5,}$/;
+    return padiRegex.test(padiCert);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +77,11 @@ function LoginPage() {
       return;
     }
 
+    if (state === 'Sign Up' && !validatePadiCertification(padiCertification)) {
+      toast.error('Please enter a valid PADI certification');
+      return;
+    }
+
     if (!password) {
       toast.error('Password is required');
       return;
@@ -83,12 +95,13 @@ function LoginPage() {
     try {
       if (state === "Sign Up") {
         const role = "diver";
-        const { data } = await axios.post(backendUri + '/api/auth/register', { name, email, password, role });
+        const { data } = await axios.post(backendUri + '/api/auth/register', { name, email, password, role, padiCertification });
         if (data.success) {
           setIsLoggedIn(true);
           await getAuthState();
           await getUserData();
           navigate('/dashboard');
+          toast.success('Please wait 3 business days for your PADI to be validated. Only then can you join or create Dives');
         } else {
           toast.error(data.message);
         }
@@ -152,12 +165,20 @@ function LoginPage() {
 
         <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           {state === 'Sign Up' && (
-            <CustomInput
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Full Name"
-              icon={<Person sx={{ color: 'text.secondary' }} />}
-            />
+            <>
+              <CustomInput
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full Name"
+                icon={<Person sx={{ color: 'text.secondary' }} />}
+              />
+              <CustomInput
+                value={padiCertification}
+                onChange={(e) => setPadiCertification(e.target.value)}
+                placeholder="PADI Certification"
+                icon={<Person sx={{ color: 'text.secondary' }} />}
+              />
+            </>
           )}
           <CustomInput
             value={email}
