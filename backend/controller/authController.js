@@ -1,15 +1,15 @@
-import { createResetToken, validateEmail, validatePassword } from '../utils/authUtils.js';
-import {findOne, addUser, updateVerifyOtp, findById, verifyUserAccount, updateUserPassword, updateResetOtp} from '../models/userModel.js';
+import { createResetToken, validateEmail, validatePassword, validatePadiCertification } from '../utils/authUtils.js';
+import {findOne, addUser, updateVerifyOtp, findById, verifyUserAccount, updateUserPassword, updateResetOtp, updateUserById} from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import transporter from '../config/nodemailer.js';
 
 export const register = async (req, res, next) => {
     try {
-        const { name, email, password, role } = req.body;
-    
+        const { name, email, password, role, padiCertification } = req.body;
+        console.log(req.body);
         // Validate input
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !padiCertification) {
             return res.status(400).json({ message: 'All fields are required' });
         }
         
@@ -23,11 +23,17 @@ export const register = async (req, res, next) => {
             });
         }
 
+        if (!validatePadiCertification(padiCertification)) {
+            return res.status(400).json({ 
+                message: 'PADI format is wrong' 
+            });
+        }
+
         try {
             const existingUser = await findOne(email);
 
             if(existingUser.length !== 0) {
-                return res.json({ success: false, message: "user already exists"});
+                return res.status(401).json({ success: false, message: "user already exists"});
             }
 
             const salt = await bcrypt.genSalt(10);
@@ -37,7 +43,8 @@ export const register = async (req, res, next) => {
                 name,
                 email,
                 hashedPassword,
-                role
+                role,
+                padiCertification
             };
 
             const users = await addUser(userObj);
@@ -261,3 +268,38 @@ export const resetPassword = async (req, res) => {
         res.status(500).json({ success: false, message: error.message})
     }
 }
+
+export const updateUserProfile = async (req, res) => {
+    try {
+        const { userId, name, password, padi_certification } = req.body;
+    
+        const user = await findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+    
+        const updateFields = {};
+    
+        if (name && name.trim() !== '') {
+            updateFields.name = name.trim();
+        }
+    
+        if (padi_certification && padi_certification.trim() !== '') {
+            updateFields.padi_certification = padi_certification.trim();
+        }
+    
+        if (password && password.trim() !== '') {
+            const hashed = await bcrypt.hash(password.trim(), 10);
+            updateFields.password_hash = hashed;
+        }
+    
+        if (Object.keys(updateFields).length === 0) {
+            return res.status(400).json({ success: false, message: 'No valid fields provided for update.' });
+        }
+    
+        await updateUserById(userId, updateFields);
+    
+        res.json({ success: true, message: 'Profile updated successfully' });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+  };
+  

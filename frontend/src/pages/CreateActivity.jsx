@@ -15,6 +15,7 @@ import 'leaflet/dist/leaflet.css';
 import useDivingSiteStore from '../store/useDivingSiteStore';
 import axios from 'axios';
 import { AppContent } from '../context/AppContext';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const steps = ['Dive Details', 'Select Location'];
@@ -24,9 +25,17 @@ const CreateActivity = () => {
   const theme = useTheme();
   const [page, setPage] = useState(1);
   const [selectedSite, setSelectedSite] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const { diveSites, loadDiveSites, loading } = useDivingSiteStore();
   const { userData } = useContext(AppContent);
+
+  useEffect(() => {
+    if (!userData?.isPadiVerified) {
+      toast.error("Please verify your PADI before you create an activity!")
+      navigate('/dashboard');
+    }
+  }, [userData, navigate]);
 
   const [formData, setFormData] = useState({
     host_user_id: '',
@@ -36,6 +45,29 @@ const CreateActivity = () => {
     slots: '',
     location: null,
   });
+  
+
+  const validatePage1 = () => {
+    const newErrors = {};
+    if (!formData.title.trim()) newErrors.title = "Title is required.";
+    if (!formData.description.trim()) newErrors.description = "Description is required.";
+    if (!formData.date) {
+      newErrors.date = "Date is required.";
+    } else if (new Date(formData.date) < new Date()) {
+      newErrors.date = "Date must be in the future.";
+    }
+    if (!formData.slots || parseInt(formData.slots) <= 0 || parseInt(formData.slot) >= 6) newErrors.slots = "Please enter a valid slot number.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  
+  const validatePage2 = () => {
+    if (!formData.location) {
+      toast.error("Please select a dive site before submitting.");
+      return false;
+    }
+    return true;
+  };
 
   useEffect(() => {
     if (page === 2 && diveSites.length === 0) loadDiveSites();
@@ -51,10 +83,14 @@ const CreateActivity = () => {
     setFormData({ ...formData, location: site.id });
   };
 
-  const nextPage = () => setPage((prev) => prev + 1);
+  const nextPage = () => {
+    if (page === 1 && !validatePage1()) return;
+    setPage((prev) => prev + 1);
+  };
   const prevPage = () => setPage((prev) => prev - 1);
 
   const handleSubmit = async () => {
+    if (!validatePage2()) return;
     try {
       const payload = {
         host_user_id: userData.user_id,
@@ -94,6 +130,8 @@ const CreateActivity = () => {
               value={formData.title}
               onChange={handleChange('title')}
               fullWidth
+              error={!!errors.title}
+              helperText={errors.title}
               required
             />
             <TextField
@@ -103,6 +141,8 @@ const CreateActivity = () => {
               fullWidth
               multiline
               rows={3}
+              error={!!errors.description}
+              helperText={errors.description}
               required
             />
             <TextField
@@ -112,6 +152,8 @@ const CreateActivity = () => {
               onChange={handleChange('date')}
               fullWidth
               InputLabelProps={{ shrink: true }}
+              error={!!errors.date}
+              helperText={errors.date}
               required
             />
             <TextField
@@ -119,6 +161,8 @@ const CreateActivity = () => {
               type="number"
               value={formData.slots}
               onChange={handleChange('slots')}
+              error={!!errors.slots}
+              helperText={errors.slots}
               fullWidth
               required
               inputProps={{ min: 1 }}

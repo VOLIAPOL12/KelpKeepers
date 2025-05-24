@@ -86,7 +86,7 @@ const DiveLobby = () => {
   };
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 4, width: '90%', margin: 'auto' }}>
+    <TableContainer component={Paper} sx={{ mt: 4, width: '90%', margin: 'auto', py: 10 }}>
       <Typography variant="h5" align="center" gutterBottom sx={{ mt: 2 }}>
         Available Diving Activities
       </Typography>

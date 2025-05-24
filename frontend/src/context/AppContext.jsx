@@ -34,18 +34,36 @@ export const AppContextProvider = (props) => {
     }
   };
 
-  const getUserData = async () => {
-    try {
-      const { data } = await axios.get(`${backendUri}/api/user/data`);
-      if (data.success) {
-        setUserData(data.userData);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
+    const getUserData = async () => {
+        try {
+            const { data } = await axios.get(backendUri + '/api/user/data');
+            data.success ? setUserData(data.userData) : toast.error(data.message);
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
-  };
+
+    const updateUserProfile = async (updateFields) => {
+        try {
+            const { data } = await axios.post(backendUri + '/api/auth/update-profile', {
+                userId: userData.user_id,
+                ...updateFields,
+            });
+    
+            if (data.success) {
+                toast.success(data.message || "Profile updated successfully.");
+                await getUserData(); // refresh user data after update
+            } else {
+                toast.error(data.message || "Failed to update profile.");
+            }
+    
+            return data.success;
+        } catch (error) {
+            toast.error(error.response?.data?.message || error.message);
+            return false;
+        }
+    };
+    
 
   useEffect(() => {
     getAuthState();
@@ -61,6 +79,7 @@ export const AppContextProvider = (props) => {
     loading,
     setLoading,
     getAuthState,
+    updateUserProfile
   };
 
   return (

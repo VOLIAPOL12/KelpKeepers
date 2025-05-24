@@ -17,7 +17,7 @@ export const uploadDiveData = async (req, res) => {
         created_at,
         } = req.body;
 
-        const user_id = req.user?.id || req.body.userId;
+        const user_id = req.body.userId;
         if (!user_id) {
         return res.status(401).json({ success: false, message: 'User not authenticated.' });
         }
@@ -60,5 +60,57 @@ export const uploadDiveData = async (req, res) => {
     } catch (error) {
         console.error('Upload dive data error:', error.message);
         res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export const updateDiveData = async (req, res) => {
+    try {
+        const {
+        result_id,
+        found_kelp,
+        plant_kelp,
+        remove_urchin,
+        duration,
+        date,
+        start_time,
+        temperature_celsius,
+        latitude,
+        longitude,
+        notes,
+        } = req.body;
+
+        const user_id = req.body.userId;
+
+        if (!result_id || !user_id) {
+        return res.status(400).json({ message: 'Missing result ID or user ID' });
+        }
+
+        await query(
+        `UPDATE "DiveResult"
+        SET "found kelp" = $1,
+            "plant kelp" = $2,
+            "remove urchin" = $3,
+            duration = $4
+        WHERE result_id = $5 AND user_id = $6`,
+        [found_kelp, plant_kelp, remove_urchin, duration, result_id, user_id]
+        );
+
+        await query(
+        `UPDATE "DiveLog"
+        SET date = $1,
+            start_time = $2,
+            duration_minutes = $3,
+            temperature_celsius = $4,
+            latitude = $5,
+            longitude = $6,
+            notes = $7
+        WHERE dive_result_id = $8`,
+        [date, start_time, duration, temperature_celsius, latitude, longitude, notes, result_id]
+        );
+
+        return res.json({ success: true, message: 'Dive data updated successfully' });
+    } catch (err) {
+        console.error('Update dive data error:', err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 };

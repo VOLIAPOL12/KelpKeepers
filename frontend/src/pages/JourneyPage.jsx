@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Box, Fade, Container } from '@mui/material';
-import jorney from "../assets/journey.png"
+import jorney from "../assets/images/pagebackground.jpg"
 import ProgressBar from "../components/atoms/ProgressBar"
 import BouncingArrow from '../components/atoms/BouncingArrow';
 import FadeTypography from '../components/atoms/FadeTypography';

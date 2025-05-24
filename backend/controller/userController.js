@@ -1,11 +1,11 @@
-import { findById, updateUserStatus } from "../models/userModel.js";
+import { fineUserByID, updateUserStatus, findById } from "../models/userModel.js";
 
 // 获取用户数据
 export const getUserData = async (req, res) => {
     try {
         const { userId } = req.body; // 从请求中获取 userId
 
-        const user = await findById(userId);
+        const user = await fineUserByID(userId);
 
         if (!user) {
             return res.status(401).json({ success: false, message: "User not found" });
@@ -16,9 +16,14 @@ export const getUserData = async (req, res) => {
             userData: {
                 user_id: user.user_id,
                 name: user.name,
-                isAccountVerified: user.is_email_verified,
+                email: user.email,
+                role: user.role,
+                isEmailVerified: user.is_email_verified,
                 user_status: user.user_status, // 确保这里有user_status字段
-                joined_event_id: user.joined_event_id  // 确保这里有joined_event_id字段
+                joined_event_id: user.joined_event_id,  // 确保这里有joined_event_id字段
+                createdAt: user.created_at,
+                padiCertification: user.padi_certification || null,
+                isPadiVerified: user.is_padi_verified || false
             }
         });
     } catch (error) {

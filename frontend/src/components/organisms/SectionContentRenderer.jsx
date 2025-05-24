@@ -4,6 +4,7 @@ import SliderSection from "../molecules/SliderSection";
 import { Box, Card, Typography } from "@mui/material";
 import InfoGraphSection from "../molecules/InfoGraphSection";
 import SpeciesMap from "../SpeciesMap";
+import Restoration from "../molecules/Restoration";
 
 const SectionContentRenderer = ({ section }) => {
     switch (section.type) {
