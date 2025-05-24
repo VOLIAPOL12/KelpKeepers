@@ -34,7 +34,7 @@ const Row = ({ activity, onNavigate }) => {
         {activity.has_rated ? (
           <Button disabled>Already Rated</Button>
         ) : (
-          <Button onClick={() => navigate(`/rate/${activity.event_id}`)}>Rate</Button>
+          <Button onClick={() => navigate(`/rating/${activity.event_id}`)}>Rate</Button>
         )}
 
           <Button
