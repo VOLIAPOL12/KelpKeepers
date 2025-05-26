@@ -38,7 +38,7 @@ function App() {
             </UnauthenticatedPageWrapper>
           }
         />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<UnauthenticatedPageWrapper><LoginPage /></UnauthenticatedPageWrapper>} />
         <Route path="/forgot" element={<ResetPasswordPage />} />
         <Route
           path="/dashboard"

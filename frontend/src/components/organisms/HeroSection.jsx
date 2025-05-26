@@ -57,7 +57,6 @@ function HeroSection({
         <Grid container spacing={2}>
           <Fade in={showSubtitle} timeout={1000}>
             <Grid item xs={12} md={6} sx={{
-              borderRight: { xs: 'none', md: '2px solid white' },
               pr: { md: 4 },
             }}>
               <FadeTypography 
