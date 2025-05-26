@@ -43,7 +43,7 @@ export const getDivingHistory = () => {
           },
           {
             id: '3',
-            name: 'Charlie',
+            name: 'Joshua',
             score: 82,
             avatar: 'https://i.pravatar.cc/150?img=3',
           },

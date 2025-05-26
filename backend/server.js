@@ -21,6 +21,7 @@ import ratingsRouter from './routes/ratingRoutes.js'; // ⭐️ 这是你新增�
 import diveResultRoutes from './routes/diveResultRoutes.js';
 import diveHistoryRoutes from './routes/diveHistoryRoutes.js';
 import diveDataRoutes from './routes/diveDataRoutes.js';
+import scoreboardRoutes from './routes/scoreboardRoutes.js';
 
 // 初始化 dotenv
 dotenv.config();
@@ -57,6 +58,7 @@ app.use('/api/dashboard-data', dashboardRoutes);
 app.use('/api/dive-result', diveResultRoutes);
 app.use('/api/dive-history', diveHistoryRoutes);
 app.use('/api/dive-data', diveDataRoutes);
+app.use('/api/scoreboard', scoreboardRoutes);
 
 // 前端部署支持
 if (process.env.NODE_ENV === "production") {

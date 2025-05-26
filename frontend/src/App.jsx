@@ -18,6 +18,7 @@ import EmailVerify from './pages/authentication/EmailVerify';
 import PhotoCapturePage from './pages/PhotoCapturePage';
 import Scoreboard from './pages/ScoreBoard.jsx';
 import RatingPage from './pages/RatingPage.jsx';
+import DiveLobby from './pages/DiveLobby'; 
 
   
 function App() {
@@ -37,7 +38,7 @@ function App() {
             </UnauthenticatedPageWrapper>
           }
         />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<UnauthenticatedPageWrapper><LoginPage /></UnauthenticatedPageWrapper>} />
         <Route path="/forgot" element={<ResetPasswordPage />} />
         <Route
           path="/dashboard"
@@ -103,6 +104,15 @@ function App() {
             </ProtectedWrapper>
           }
         />
+        <Route
+          path="/lobby"
+          element={
+            <ProtectedWrapper>
+              <DiveLobby/>
+            </ProtectedWrapper>
+          }
+        />
+
         <Route
           path="/rating/:activityId"
           element={

@@ -4,6 +4,7 @@ import userAuth from '../middleware/userAuth.js';
 
 const router = express.Router();
 
+// 加入活动的路由
 router.post('/', userAuth, joinDiveEvent);
 
 export default router;

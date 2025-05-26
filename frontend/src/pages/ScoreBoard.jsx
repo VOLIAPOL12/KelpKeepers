@@ -1,86 +1,129 @@
-import React, { useEffect, useState } from 'react';
-import { getScoreboard } from '../mocks/api';
+import React, { useEffect } from 'react';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Alert,
+  Chip
+} from '@mui/material';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import useScoreboardStore from '../store/useScoreboardStore';
+import { deepPurple, amber, grey, orange } from '@mui/material/colors';
+
+const getMedal = (rank) => {
+  const commonStyle = { mr: 1, verticalAlign: 'middle' };
+  switch (rank) {
+    case '1':
+      return <EmojiEventsIcon sx={{ ...commonStyle, color: amber[500] }} />;
+    case '2':
+      return <EmojiEventsIcon sx={{ ...commonStyle, color: grey[500] }} />;
+    case '3':
+      return <EmojiEventsIcon sx={{ ...commonStyle, color: orange[400] }} />;
+    default:
+      return null;
+  }
+};
 
 export default function Scoreboard() {
-  const [scores, setScores] = useState([]);
+  const { top10, currentUser, loading, error, fetchLeaderboard } = useScoreboardStore();
 
   useEffect(() => {
-    getScoreboard().then(setScores);
+    fetchLeaderboard();
   }, []);
 
-  const handleBack = () => {
-    window.history.back();
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-teal-100 via-blue-50 to-white py-12 px-4 font-sans">
-      <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-md border border-teal-200 rounded-3xl shadow-2xl p-8">
-        {/* Back Button */}
-        <button
-          onClick={handleBack}
-          className="mb-6 px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-full shadow transition-all font-semibold text-sm"
-        >
-          ← Back
-        </button>
+    <Container maxWidth="md" sx={{ mt: 8, mb: 6 }}>
+      <Card elevation={6} sx={{ background: 'linear-gradient(to bottom right, #e0f7fa, #ffffff)', borderRadius: 4 }}>
+        <CardContent>
+          <Typography variant="h4" fontWeight="bold" align="center" gutterBottom>
+            🌊 KelpKeeper Leaderboard
+          </Typography>
 
-        <h2 className="text-4xl font-extrabold text-center text-teal-900 mb-10 tracking-wide">
-          🌿 Kelpkeeper Leaderboard
-        </h2>
+          {loading && (
+            <Box display="flex" justifyContent="center" mt={4}>
+              <CircularProgress />
+            </Box>
+          )}
 
-        {scores.length === 0 ? (
-          <p className="text-center text-gray-500">Loading scores...</p>
-        ) : (
-          <ol className="space-y-4">
-            {scores
-              .sort((a, b) => b.score - a.score)
-              .map((user, index) => {
-                const getTierStyle = () => {
-                  switch (index) {
-                    case 0:
-                      return 'bg-yellow-100 border-yellow-400 text-yellow-800';
-                    case 1:
-                      return 'bg-gray-200 border-gray-400 text-gray-800';
-                    case 2:
-                      return 'bg-orange-100 border-orange-400 text-orange-800';
-                    default:
-                      return 'bg-teal-50 border-teal-200 text-teal-800';
-                  }
-                };
+          {error && (
+            <Alert severity="error" sx={{ my: 4 }}>
+              {error}
+            </Alert>
+          )}
 
-                const tierStyle = getTierStyle();
+          {!loading && !error && (
+            <>
+              <TableContainer component={Paper} elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+                <Table>
+                  <TableHead sx={{ backgroundColor: '#004d40' }}>
+                    <TableRow>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Rank</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Name</TableCell>
+                      <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Score</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {top10.map((user, idx) => (
+                      <TableRow
+                        key={user.user_id}
+                        hover
+                        sx={{
+                          transition: 'all 0.2s ease-in-out',
+                          '&:hover': {
+                            transform: 'scale(1.01)',
+                            boxShadow: 3,
+                          }
+                        }}
+                      >
+                        <TableCell>
+                          <Box display="flex" alignItems="center">
+                            {getMedal(user.rank)}
+                            <Typography fontWeight="bold">#{user.rank}</Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>
+                          <Box display="flex" alignItems="center" gap={2}>
+                            <Avatar sx={{ bgcolor: deepPurple[500] }}>
+                              {user.name[0].toUpperCase()}
+                            </Avatar>
+                            <Typography>{user.name}</Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>
+                          <Chip
+                            label={user.total_score}
+                            color="primary"
+                            sx={{ fontWeight: 'bold', fontSize: '1rem' }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
 
-                return (
-                  <li
-                    key={user.id}
-                    className={`flex items-center justify-between p-4 rounded-xl border-l-8 ${tierStyle} hover:scale-[1.01] transition-transform duration-200 shadow-sm`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="text-xl font-extrabold w-6 text-right text-teal-700">{index + 1}</div>
-                      <img
-                        src={user.avatar}
-                        alt={`${user.name} avatar`}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow"
-                      />
-                      <div className="flex flex-col">
-                        <span className="text-lg font-semibold">{user.name}</span>
-                        <span className="text-xs text-gray-500 tracking-wide uppercase">
-                          {index === 0
-                            ? '🌟 Kelp Champion'
-                            : index === 1
-                            ? '🥈 Ocean Guardian'
-                            : index === 2
-                            ? '🥉 Sea Steward'
-                            : 'Diver'}
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-lg font-bold text-blue-700">Score: {user.score}</span>
-                  </li>
-                );
-              })}
-          </ol>
-        )}
-      </div>
-    </div>
+              {currentUser && (
+                <Box mt={4} p={3} borderRadius={3} bgcolor="#e3f2fd" boxShadow={2}>
+                  <Typography align="center" fontSize="1.1rem">
+                    👤 You are currently ranked <strong>#{currentUser.rank}</strong> with a score of <strong>{currentUser.total_score}</strong>.
+                  </Typography>
+                </Box>
+              )}
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </Container>
   );
 }
