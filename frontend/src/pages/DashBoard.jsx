@@ -51,6 +51,11 @@ const DashboardGrid = () => {
     loadDashboardData().finally(() => {
       setLoading(false);
     });
+
+    const completed = localStorage.getItem('kelpkeepers_tour_completed');
+    if (completed) {
+      setShowIntroPrompt(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -65,20 +70,8 @@ const DashboardGrid = () => {
 
   const steps = [
     {
-      target: '[data-tour="dive-title"]',
+      target: '[data-tour="next-dive-event"]',
       content: 'Welcome to your dive mission control. This is the name of your next restoration expedition.',
-    },
-    {
-      target: '[data-tour="dive-location"]',
-      content: 'This location links directly to your dive site on the map. It’s where your next kelp-saving mission begins.',
-    },
-    {
-      target: '[data-tour="dive-date"]',
-      content: 'Here’s when your next dive kicks off. Mark your calendar and prep your gear!',
-    },
-    {
-      target: '[data-tour="forecast-info"]',
-      content: 'Knowing the sea’s mood matters. Here you’ll find weather, UV levels, and ocean currents to plan your dive safely.',
     },
     {
       target: '[data-tour="dive-minutes"]',
@@ -129,6 +122,12 @@ const DashboardGrid = () => {
         steps={steps}
         run={runTour}
         continuous
+        callback={(data) => {
+          const { status } = data;
+          if (['finished', 'skipped'].includes(status)) {
+            localStorage.setItem('kelpkeepers_tour_completed', 'true');
+          }
+        }}
         scrollToFirstStep={false}
         scrollToSteps={false}
         disableScrolling
@@ -149,7 +148,7 @@ const DashboardGrid = () => {
 
       <Container maxWidth="100%">
         <Grid container spacing={6}>
-          <Grid item size={{ xs: 12 }}>
+          <Grid item size={{ xs: 12 }} data-tour="next-dive-event">
           <DashboardCard title={`Hello ${userData.name}. Your next event:`}>
             {isLoading ? (
               <Box display="flex" justifyContent="center" alignItems="center" height="200px">
@@ -158,11 +157,11 @@ const DashboardGrid = () => {
             ) : dashboardData.upcomingDive.length !== 0 ? (
               <Grid container spacing={5}>
                 <Grid item xs={12} sm={6} md={6}>
-                  <Typography variant="h3" data-tour="dive-title">Next Dive Event:</Typography>
+                  <Typography variant="h3">Next Dive Event:</Typography>
                   <Typography variant="h5">
                     <strong>{dashboardData.upcomingDive[0].title}</strong>
                   </Typography>
-                  <Typography variant="subtitle1" data-tour="dive-location">
+                  <Typography variant="subtitle1" >
                     <strong>Location</strong>:{' '}
                     <DiveLocationLink
                       name={dashboardData.upcomingDive[0].site_name}
@@ -170,12 +169,12 @@ const DashboardGrid = () => {
                       longitude={dashboardData.upcomingDive[0].decimalLongitude}
                     />
                   </Typography>
-                  <Typography variant="subtitle1" data-tour="dive-date">
+                  <Typography variant="subtitle1">
                     <strong>Dive Time</strong>: {formatDiveDateTime(dashboardData.upcomingDive[0].date)}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={6} sx={{ textAlign: { xs: 'left', md: 'right' } }} data-tour="forecast-info">
+                <Grid item xs={12} sm={6} md={6} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
                   <Typography variant="h3">Forecast</Typography>
                   <Typography variant="subtitle1">
                     {console.log(forecast)}
@@ -203,12 +202,18 @@ const DashboardGrid = () => {
           <Grid item xs={12} sm={6} md={3} data-tour="dive-minutes">
             {isLoading || dashboardData.total_minutes_dove == null ? (
               <CircularProgressBox />
-            ) : (
+            ) : dashboardData.upcomingDive.length !== 0 ? (
               <StatCard
                 icon={<AccessTimeIcon color="primary" />}
                 label="Dive Minutes"
                 value={dashboardData.total_minutes_dove}
               />
+            ):(
+              <Box textAlign="center" py={4}>
+                <Typography variant="h6" color="textSecondary">
+                  No upcoming dive events yet. Join or create one to get started!
+                </Typography>
+              </Box>
             )}
           </Grid>
 
